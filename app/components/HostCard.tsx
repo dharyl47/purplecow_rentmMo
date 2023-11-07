@@ -4,7 +4,7 @@ import book_car from '../assets/sprites/car-rental.png';
 import Image from 'next/image';
 const HostCard = () => {
 	return (
-		<div className='relative bg-black rounded-2xl flex items-center justify-center'>
+		<div className='relative bg-gray-950 rounded-2xl flex items-center justify-center'>
 			<Image className='transition-opacity rounded-2xl items-center opacity-40' src={host} width='600' alt='Host' />
 			<div className='absolute flex flex-col items-center justify-evenly w-full h-full px-20 font-Messina-Sans'>
 				<Image src={book_car} alt='book_car' width='80' />
@@ -14,7 +14,7 @@ const HostCard = () => {
 				</p>
 				<a
 					href='/listing'
-					className='px-4 py-2 font-bold bg-yellow rounded-full shadow-md hover:scale-105 transition-transform'
+					className='px-4 py-2 font-bold bg-yellow-300 rounded-full shadow-md hover:scale-105 transition-transform'
 				>
 					Become a host
 				</a>
