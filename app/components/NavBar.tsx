@@ -22,7 +22,7 @@ const Navbar = () => {
 
   const scrollByScreenHeight = () => {
     // Use the router object to navigate
-    router.push('/landing');
+    router.push('/');
 
     setTimeout(() => {
       const screenHeight = window.innerHeight;
