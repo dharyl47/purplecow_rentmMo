@@ -91,7 +91,7 @@ const Navbar = () => {
 											: 'text-white cursor-pointer text-xl pt-10 lg:pt-0 lg:ml-5 xl:ml-10 transition'
 									}
 								>
-									<ButtonLink text='Sign up' to='/register' />
+									<ButtonLink text='Sign up' to='/registration' />
 								</li>
 								<li
 									className={
