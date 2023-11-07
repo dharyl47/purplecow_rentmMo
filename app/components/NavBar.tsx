@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+'use client';
+import { useState } from 'react';
 import { useUser } from  './../hooks/useUser';
-import { ButtonLink, ButtonLinkNoFillRounded } from './Buttons';
+import { ButtonLink, ButtonLinkNoFillRounded, ButtonLinkFill } from './Buttons';
 import { FaBars, FaXmark } from 'react-icons/fa6';
 import { BiUser, BiHelpCircle, BiLogOut } from 'react-icons/bi';
-import '../index.css';
 import axios from 'axios';
 import  Link  from 'next/link';
-import { useRouter } from 'next/router'; // Import useRouter from 'next/router' to access the routing functionality
+import { useRouter } from 'next/navigation'; // Import useRouter from 'next/router' to access the routing functionality
 import logo from '../assets/logo/RentMo-logo.svg';
 import avatar from '../assets/logo/avatar-logo.png';
 import Image from 'next/image';
@@ -48,7 +48,7 @@ const Navbar = () => {
 			<nav className='w-full border-b 2xl:px-36 px-4 border-none bg-black bg-opacity-0'>
 				<div className='py-5 lg:py-0 container mx-auto xl:px-2 px-0 flex w-full items-center justify-between'>
 					<a aria-label='Home. logo' role='img' href='/landing'>
-						<img
+						<Image
 							className='w-24 lg:w-36 sm:w-32 xl:w-48  hover:scale-105 hover:drop-shadow-md transition-all'
 							src={logo}
 							alt='logo'
@@ -77,7 +77,7 @@ const Navbar = () => {
 								<li className='text-white  cursor-pointer text-xl pt-10 lg:pt-0 lg:ml-5 xl:ml-10 transition'>
 									<ButtonLink text='Support' to='/support' />
 								</li>
-								<li className='text-yellow font-bold cursor-pointer text-xl pt-10 lg:pt-0 lg:ml-5 xl:ml-10 transition'>
+								<li className='text-yellow-300 font-bold cursor-pointer text-xl pt-10 lg:pt-0 lg:ml-5 xl:ml-10 transition'>
 									<ButtonLinkNoFillRounded text='Become a host' to={store.user ? '/listing' : '/login'} />
 								</li>
 								<span className=' xl:mx-10 lg:mt-0 lg:w-[2px] lg:h-10 bg-dark600 bg-white lg:mx-5 w-3/4 h-[1px] mt-14'></span>

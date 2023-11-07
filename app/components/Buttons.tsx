@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import  Link  from 'next/link';
 
@@ -12,7 +13,7 @@ interface ButtonLinkProps {
 
 export const ButtonFillRounded = ({ text }: ButtonProps) => {
 	return (
-		<button className='text-black rounded-full w-44 h-16 bg-yellow font-bold text-xl shadow-md hover:shadow-buttonbox transition'>
+		<button className='text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition'>
 			{text}
 		</button>
 	);
@@ -22,7 +23,7 @@ export const ButtonFillRoundedFull = ({ text, to }: ButtonLinkProps) => {
 	return (
 		<Link
 			href={to}
-			className='text-black rounded-full w-full py-2 bg-yellow font-bold text-md hover:shadow-md transition'
+			className='text-black rounded-full w-full py-2 bg-yellow-300 font-bold text-md hover:shadow-md transition'
 		>
 			{text}
 		</Link>
@@ -34,7 +35,7 @@ export const ButtonFill = ({ text }: ButtonProps) => {
 		<button
 			type='submit'
 			role='button'
-			className='focus:ring-2 focus:ring-offset-2 focus:ring-yellow text-sm font-semibold leading-none text-black focus:outline-none bg-yellow rounded hover:opacity-70 py-4 w-full transition'
+			className='focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 text-sm font-semibold leading-none text-black focus:outline-none bg-yellow-300 rounded hover:opacity-70 py-4 w-full transition'
 		>
 			{text}
 		</button>
@@ -45,7 +46,7 @@ export const ButtonNoFillRounded = ({ text }: ButtonProps) => {
 	return (
 		<a
 			href='#report-listings'
-			className='rounded-full px-4 py-2 ring-1 ring-yellow300 text-yellow300 hover:text-yellow hover:ring-yellow font-bold drop-shadow-sm transition-colors'
+			className='rounded-full px-4 py-2 ring-1 ring-yellow-300 text-yellow-300 hover:text-yellow-300 hover:ring-yellow-300 font-bold drop-shadow-sm transition-colors'
 		>
 			{text}
 		</a>
@@ -54,7 +55,7 @@ export const ButtonNoFillRounded = ({ text }: ButtonProps) => {
 
 export const ButtonLink = ({ text, to }: ButtonLinkProps) => {
 	return (
-		<Link href={to} className=' hover:text-yellow transition'>
+		<Link href={to} className=' hover:text-yellow-300 transition'>
 			{text}
 		</Link>
 	);
@@ -64,7 +65,7 @@ export const ButtonLinkFill = ({ text, to }: ButtonLinkProps) => {
 	return (
 		<a
 			href={to}
-			className=' text-center focus:ring-2 focus:ring-offset-2 focus:ring-yellow text-sm font-semibold leading-none text-white focus:outline-none bg-dark600 rounded hover:opacity-70 py-4 w-full transition'
+			className=' text-center focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 text-sm font-semibold leading-none text-white focus:outline-none bg-dark600 rounded hover:opacity-70 py-4 w-full transition'
 		>
 			{text}
 		</a>
@@ -72,7 +73,7 @@ export const ButtonLinkFill = ({ text, to }: ButtonLinkProps) => {
 };
 export const ButtonLinkNoFillRounded = ({ text, to }: ButtonLinkProps) => {
 	return (
-		<Link href={to} className=' hover:text-white hover:ring-white transition ring-yellow ring-2 rounded-full py-4 px-8 '>
+		<Link href={to} className=' hover:text-white hover:ring-white transition ring-yellow-300 ring-2 rounded-full py-4 px-8 '>
 			{text}
 		</Link>
 	);
