@@ -6,37 +6,46 @@ import {
   ButtonFill,
   GoogleButton,
 } from "../../components/Buttons";
-import { TextField } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 
 interface UserSignUp {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
+  authProvider: string;
 }
 const initialUserState: UserSignUp = {
   firstName: "",
   lastName: "",
   email: "",
   password: "",
+  authProvider: "form",
 };
 
 const GButton = () => {
   const [user, setUser] = useState(initialUserState);
 
-  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
-    e.preventDefault();
-    try {
-      const req = await axios.post("/api/v1/auth/register", user);
-      console.log(req.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+ const handleSubmit = async (e: any) => {
+   e.preventDefault();
+   try {
+     // Check if the email exists before proceeding with registration
+     const emailCheckResponse = await axios.get(
+       `/api/users?email=${user.email}`
+     );
+     alert("Email already exists");
+   } catch (error) {
+     console.error("Catch error: "+error);
+     try {
+     const registrationResponse = await axios.post("/api/users", user);
+      console.log(registrationResponse.data);
+       } catch (error) {}
+   }
+ };
 
-  const handleChange = (e: any) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-  };
+ const handleChange = (e: any) => {
+   setUser({ ...user, [e.target.name]: e.target.value });
+ };
 
   return (
     <div className="flex flex-col items-center -mt-14 justify-center w-full min-h-screen px-0 font-Messina-Sans overflow-x-hidden">
@@ -124,8 +133,21 @@ const GButton = () => {
         </div>
 
         <div className="mt-8 flex xl:flex-row flex-col gap-5">
-          <ButtonFill text="Create my account" />
-          <ButtonLinkFill text="Return" to="/landing" />
+          <Button
+            className="focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 text-sm font-semibold leading-none text-black focus:outline-none bg-yellow-300 rounded hover:opacity-70 py-4 w-full transition"
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit} // Automatically check email and proceed with registration
+          >
+            Create my account
+          </Button>
+          <a
+            className="text-center focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 text-sm font-semibold leading-none text-white focus:outline-none bg-gray-700 rounded hover:opacity-70 py-4 w-full transition"
+            href="/"
+          >
+            Return
+          </a>{" "}
+          {/* Use an anchor tag for navigation */}
         </div>
       </form>
     </div>

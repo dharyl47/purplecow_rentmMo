@@ -64,13 +64,13 @@ export const ButtonLink = ({ text, to }: ButtonLinkProps) => {
 
 export const ButtonLinkFill = ({ text, to }: ButtonLinkProps) => {
 	return (
-		<a
-			href={to}
-			className=' text-center focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 text-sm font-semibold leading-none text-white focus:outline-none bg-dark600 rounded hover:opacity-70 py-4 w-full transition'
-		>
-			{text}
-		</a>
-	);
+    <a
+      href={to}
+      className=" text-center focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 text-sm font-semibold leading-none text-white focus:outline-none bg-gray-700 rounded hover:opacity-70 py-4 w-full transition"
+    >
+      {text}
+    </a>
+  );
 };
 export const ButtonLinkNoFillRounded = ({ text, to }: ButtonLinkProps) => {
 	return (
