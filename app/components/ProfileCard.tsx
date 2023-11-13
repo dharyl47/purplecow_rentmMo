@@ -1,9 +1,13 @@
+'use client';
 import React, { useState, useEffect } from 'react';
 import UpdateProfile from './../forms/UpdateProfileForm';
-import ProfileCardText from './ProfileCardText';
+//import ProfileCardText from './ProfileCardText';
 import { Modal } from 'react-responsive-modal';
-import { initialUserProfile } from './../types/initialInfo.js';
+import { initialUserProfile } from '../types/initialInfo';
 import axios from 'axios';
+import Image from "next/image";
+import avatar from '../assets/logo/avatar-logo.png';
+import badge from '../assets/logo/icons8-verified-badge.png'
 import 'react-responsive-modal/styles.css';
 
 const ProfileCard = () => {
@@ -47,9 +51,9 @@ const ProfileCard = () => {
           <p className=" text-sm">Joined {yearJoined}</p>
         </div>
         <div className=" self-center overflow-hidden flex justify-center w-32 h-32 rounded-full shadow-xl">
-          <img
+          <Image
             className="object-cover select-none w-40"
-            src="../src/assets/logo/avatar-logo.png"
+            src={avatar}
             alt="logo"
           />
         </div>
@@ -60,7 +64,7 @@ const ProfileCard = () => {
           Update Profile
         </button>
         <div className="flex flex-col w-full lg:w-96 h-fit sm:px-10 px-2 py-5 gap-2 text-sm overflow-hidden">
-          <ProfileCardText
+          {/* <ProfileCardText
             image="../src/assets/logo/icons8-phone.png"
             text={phoneNumber}
           />
@@ -91,14 +95,14 @@ const ProfileCard = () => {
           <ProfileCardText
             image="../src/assets/logo/icons8-verified.png"
             text={isVerified}
-          />
+          /> */}
 
           <span className="self-center my-5 w-full h-[2px] bg-gray-500"></span>
           <div className="flex items-center justify-center w-full  gap-1">
-            <img
+            <Image
               className="w-8"
-              src="../src/assets/logo/icons8-verified-badge.png"
-              alt="logo"
+              src={badge}
+              alt="badge"
             />
             <h1 className="font-bold no-select">Badges</h1>
           </div>

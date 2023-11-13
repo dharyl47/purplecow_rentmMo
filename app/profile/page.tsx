@@ -1,3 +1,4 @@
+'use client';
 import Navbar from '../components/NavBar';
 import Reviews from '../components/Reviews';
 import ProfileCard from '../components/ProfileCard';

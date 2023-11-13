@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import { ICar } from '../types/types';
 import imageUnavailable from '../assets/logo/image_not_available.png';
@@ -7,6 +8,8 @@ import axios from 'axios';
 import Modal from 'react-responsive-modal';
 import ListingStepper from './ListingStepperUpdate';
 import { initialInfoState } from '../types/initialInfo';
+import iconsCar from '../assets/logo/icons8-car.png'
+import Image from "next/image";
 import 'react-responsive-modal/styles.css';
 
 const MyListings = () => {
@@ -15,7 +18,7 @@ const MyListings = () => {
 	const [itemsPerPage, setItemsPerPage] = useState(4); // Number of items to display per page
 	const [data, setData] = useState<ICar[]>([]);
 	const [deleteItem, setDeleteItem] = useState<ICar>();
-	const [currentItems, setCurrentItems] = useState<ICar[]>([]);
+	const [currentItems, setCurrentItems] = useState<ICar[]>([]); 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -104,9 +107,10 @@ const MyListings = () => {
         className="w-full h-fit flex flex-col items-center justify-center p-0 gap-10"
       >
         <div className="flex w-full items-center">
-          <img
+          <Image
             className="h-8"
-            src="../src/assets/logo/icons8-car.png"
+            width={30}
+            src={iconsCar}
             alt="logo"
           />
           <p className="block p-2 no-select w-full">

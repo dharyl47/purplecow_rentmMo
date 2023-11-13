@@ -38,7 +38,7 @@ const GButton = () => {
      const emailCheckResponse = await axios.get(
        `/api/users?email=${user.email}`
      );
-     alert("Email already exists");
+     
      store.setUser(emailCheckResponse.data);
      navigate.push("/profile");
    } catch (error) {
