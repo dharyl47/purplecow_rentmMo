@@ -11,9 +11,11 @@ export interface ICar {
 	price: number | null;
 	zipCode: string;
 	licensePlateNumber: string;
+	lat: string;
+	lon: string;
 	carRegistrationNumber: string;
 	carAvailability: ICarAvailability;
-	vehiclePhotos: string;
+	vehiclePhotos: string[];
 }
 
 interface ICarAvailability {

@@ -44,7 +44,7 @@ const MyListings = () => {
 	const handleDelete = async () => {
 		const deleteItemID = deleteItem?._id;
 		try {
-			const response = await axios.delete(`/api/v1/host/listing/${deleteItemID}`);
+			const response = await axios.delete(`/api/listing/${deleteItemID}`);
 			window.location.reload();
 		} catch (error) {
 			console.log(error);
@@ -94,7 +94,7 @@ const MyListings = () => {
 	};
 	const fetchData = async () => {
 		try {
-			const response = await axios.get('/api/v1/host/listing/my-listings'); // Replace with your API endpoint
+			const response = await axios.get('/api/listing'); // Replace with your API endpoint
 			setData(response.data.listingsByUser); // Update the 'data' state with fetched data
 		} catch (error) {
 			console.error('Error fetching data:', error);

@@ -55,13 +55,13 @@ export default function ListingStepper({ itemData }: Props) {
 				}
 			}
 
-			const response = await axios.patch(`/api/v1/host/listing/${itemData._id}`, formData, {
+			const response = await axios.patch(`/api/listings/${itemData._id}`, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data', // Set proper content type
 				},
 			});
 			console.log(response);
-			window.location.href = '/profile';
+			window.location.href = 'profile';
 		} catch (error) {
 			setIsComplete(false);
 			console.log(error);

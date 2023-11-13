@@ -9,6 +9,8 @@ export const initialInfoState = {
 	country: '',
 	price: null,
 	zipCode: '',
+	lat: '',
+	lon: '',
 	licensePlateNumber: '',
 	carRegistrationNumber: '',
 	carAvailability: { startDate: new Date(), endDate: new Date() },
