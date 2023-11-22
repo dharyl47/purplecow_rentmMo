@@ -58,3 +58,16 @@ export async function POST(request) {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
+export async function GET() {
+  try {
+    await connectMongoDB();
+
+    // Fetch all listings
+    const listings = await ListingModel.find({});
+
+    return NextResponse.json({ listings }, { status: 200 });
+  } catch (error) {
+    console.error("Error fetching listings:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}

@@ -93,13 +93,13 @@ const MyListings = () => {
 		setCurrentPage(newPage);
 	};
 	const fetchData = async () => {
-		try {
-			const response = await axios.get('/api/listing'); // Replace with your API endpoint
-			setData(response.data.listingsByUser); // Update the 'data' state with fetched data
-		} catch (error) {
-			console.error('Error fetching data:', error);
-		}
-	};
+    try {
+      const response = await axios.get("/api/listing");
+      setData(response.data.listings); // Assuming the returned object has a key 'listings'
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 	return (
     <>
       <div

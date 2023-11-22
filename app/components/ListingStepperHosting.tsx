@@ -44,13 +44,13 @@ export default function ListingStepper() {
 
 	const handleChange = (e: any) => {
     if (e.target.name === "startDate" || e.target.name === "endDate") {
-      setListingInfo({
-        ...listingInfo,
-        carAvailability: {
-          ...listingInfo.carAvailability,
-          [e.target.name]: e.target.value, // Keep date values as Date objects
-        },
-      });
+     setListingInfo({
+       ...listingInfo,
+       carAvailability: {
+         ...listingInfo.carAvailability,
+         [e.target.name]: new Date(e.target.value), // Convert the string to a Date object
+       },
+     });
     } else {
       setListingInfo({ ...listingInfo, [e.target.name]: e.target.value });
     }
@@ -59,31 +59,24 @@ export default function ListingStepper() {
 	const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     try {
-      const formData = new FormData();
       setIsLoading(true);
 
-      for (const key in listingInfo) {
-        if (key === "vehiclePhotos") {
-          const vehiclePhotos = listingInfo[key] as File[];
-          vehiclePhotos.forEach((photo, index) => {
-            formData.append("vehiclePhotos", photo); // Use the same field name for all images
-          });
-        } 
-		// else if (key === "carAvailability") {
-        //   formData.append(key, JSON.stringify(listingInfo[key]));
-        // } 
-		else {
-          formData.append(key, (listingInfo as any)[key]);
-        }
-      }
-	   console.log("form Data: ", formData);
-	    console.log("listingInfo Data: ", listingInfo);
-	   
-      const response = await axios.post("/api/listing", formData, {
+      // Ensure the vehiclePhotos field matches the expected structure (array of strings)
+      const formattedListingInfo = {
+        ...listingInfo,
+        vehiclePhotos: listingInfo.vehiclePhotos.map((photo: any) =>
+          typeof photo === "string" ? photo : photo.name
+        ),
+      };
+
+      console.log(formattedListingInfo);
+
+      const response = await axios.post("/api/listing", formattedListingInfo, {
         headers: {
-          "Content-Type": "multipart/form-data", // Set proper content type
+          "Content-Type": "application/json", // Set proper content type for JSON
         },
       });
+
       console.log(response.data);
       window.location.href = "profile";
     } catch (error) {
@@ -92,6 +85,8 @@ export default function ListingStepper() {
       console.log(error);
     }
   };
+
+
 
 
 	const renderStepContent = () => {

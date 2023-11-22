@@ -37,7 +37,7 @@ const Navbar = () => {
     try {
       const response = await axios.get('/api/v1/auth/logout');
       // Use the router object to navigate
-      router.push('/landing');
+      router.push('/');
     } catch (error) {
       console.log(error);
     }
