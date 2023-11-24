@@ -257,23 +257,38 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<Location>({
-    lat: 0,
-    lng: 0,
+    lat: null,
+    lng: null,
   });
 
-  const handleModalOpen = () => {
-    setModalOpen(true);
-  };
+  const handleLocationSelect = (location: Location) => {
+    // Update the state with the selected location
+    console.log("Selected Location:", location);
+    setSelectedLocation(location);
 
-  const handleModalClose = () => {
-    setModalOpen(false);
-  };
+    // Update the form data with the selected location
+    handleChange({
+      target: {
+        name: 'lat',
+        value: location.lat,
+      },
+    });
 
-    const handleLocationSelect = (location: Location) => {
-      // Update the state with the selected location
-      setSelectedLocation(location);
+    handleChange({
+      target: {
+        name: 'lon',
+        value: location.lng,
+      },
+    });
     };
 
+    const handleModalOpen = () => {
+      setModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+      setModalOpen(false);
+    };
     const handleCloseButtonClick = () => {
       setModalOpen(false);
     };
@@ -355,6 +370,30 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
                 required
               />
             </div>
+            <p>
+            <TextField
+              variant="outlined"
+              size="small"
+              onChange={handleChange}
+              name="lat"
+              id="lat"
+              value={personalInfo.lat}
+              type="number"
+              placeholder="Latitude"
+              required
+            />
+            <TextField
+              variant="outlined"
+              size="small"
+              onChange={handleChange}
+              name="lon"
+              id="lon"
+              value={personalInfo.lon}
+              type="number"
+              placeholder="Longitude"
+              required
+            />
+            </p>
             <div className="flex flex-col lg:mt-0 mt-5 w-full">
               <label className="mb-3 text-sm leading-none text-dark900">
                 City
@@ -478,7 +517,7 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
           </Modal>
         </div>
         {/* Display or use selectedLocation in your form */}
-      <p>Selected Location: {`Lat: ${selectedLocation.lat}, Lng: ${selectedLocation.lng}`}</p>
+      {/* <p>Selected Location: {`Lat: ${selectedLocation.lat}, Lng: ${selectedLocation.lng}`}</p> */}
       </ThemeProvider>
       
     </>

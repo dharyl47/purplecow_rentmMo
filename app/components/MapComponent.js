@@ -65,8 +65,8 @@ const MapComponent = ({ onLocationSelect }) => {
   });
 
   const [selectedLocation, setSelectedLocation] = useState({
-    lng: 0,
     lat: 0,
+    lng: 0,
   });
 
   const handleMapClick = (event) => {
