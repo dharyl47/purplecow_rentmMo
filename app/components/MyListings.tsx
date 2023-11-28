@@ -11,6 +11,8 @@ import { initialInfoState } from '../types/initialInfo';
 import iconsCar from '../assets/logo/icons8-car.png'
 import Image from "next/image";
 import 'react-responsive-modal/styles.css';
+import noImage from "../assets/images/noImage.png";
+
 
 const MyListings = () => {
 	const [update, setUpdate] = useState(false);
@@ -100,6 +102,8 @@ const MyListings = () => {
       console.error("Error fetching data:", error);
     }
   };
+
+  
 	return (
     <>
       <div
@@ -119,19 +123,29 @@ const MyListings = () => {
               key={index}
             >
               <div className="relative transition p-2">
-                <Image
-                  src={
-                    item?.vehiclePhotos?.[0]
-                      ? item.vehiclePhotos[0].toString()
-                      : imageUnavailable
-                  }
-                  alt={`Image ${index}`}
-                  onError={(e: any) => {
-                    e.target.src = imageUnavailable; // Set a default image when the original image fails to load
-                    e.target.onerror = null; // Prevent infinite loop in case the fallback image also fails
-                  }}
-                  className="mx-auto w-full h-48 object-cover select-none object-center rounded-md"
-                />
+                {item?.vehiclePhotos?.[0] &&
+                  (item.vehiclePhotos[0].startsWith("http://") ||
+                  item.vehiclePhotos[0].startsWith("https://") ? (
+                    <Image
+                      src={item.vehiclePhotos[0].toString()}
+                      width={200}
+                      height={200}
+                      alt={`Image ${index}`}
+                      onError={(e: any) => {
+                        e.target.src = imageUnavailable;
+                        e.target.onerror = null;
+                      }}
+                      className="mx-auto w-full h-48 object-cover select-none object-center rounded-md"
+                    />
+                  ) : (
+                    <Image
+                      src={imageUnavailable}
+                      width={200}
+                      height={200}
+                      alt={`Image ${index}`}
+                      className="mx-auto w-full h-48 object-cover select-none object-center rounded-md"
+                    />
+                  ))}
               </div>
 
               <CardContent className="flex flex-col w-full h-12 gap-0 justify-center text-center items-center">
