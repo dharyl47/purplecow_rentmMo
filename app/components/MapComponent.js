@@ -55,7 +55,7 @@ import ReactMapGL, { Marker } from "react-map-gl";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { RouteModule } from 'next/dist/server/future/route-modules/route-module';
 
-const MapComponent = ({ onLocationSelect }) => {
+const MapComponent = ({ handleChangeLat, handleChangeLon }) => {
   const defaultLocation = { lat: 7.1907, lng: 125.4553 };
   // Local state for viewport
   const [viewPort, setViewport] = useState({
@@ -74,29 +74,22 @@ const MapComponent = ({ onLocationSelect }) => {
     if (event.lngLat) {
       const { lng, lat } = event.lngLat;
       console.log("Clicked Coordinates: lat =", lat, "lng =", lng);
-  
+      
       setSelectedLocation({ lat, lng });
       setViewport({
         ...viewPort,
         latitude: lat,
         longitude: lng,
       });
-  
-      onLocationSelect({ lat, lng });
+     handleChangeLon('lon', lng);
     } else {
       console.error("Invalid event object or lngLat format:", event);
     }
   };
-
-  // const resetToDefault = () => {
-  //   setSelectedLocation({ ...defaultLocation });
-  //   setViewport({
-  //     ...viewport,
-  //     latitude: defaultLocation.lat,
-  //     longitude: defaultLocation.lng,
-  //   });
-  //   onLocationSelect({ ...defaultLocation });
-  // };
+    // Log coordinates when selectedLocation changes
+    useEffect(() => {   
+       handleChangeLat('lat', selectedLocation.lat);
+    }, [selectedLocation]);
 
   return (
     <ReactMapGL

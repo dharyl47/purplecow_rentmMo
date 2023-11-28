@@ -107,12 +107,7 @@ const MyListings = () => {
         className="w-full h-fit flex flex-col items-center justify-center p-0 gap-10"
       >
         <div className="flex w-full items-center">
-          <Image
-            className="h-8"
-            width={30}
-            src={iconsCar}
-            alt="logo"
-          />
+          <Image className="h-8" width={30} src={iconsCar} alt="logo" />
           <p className="block p-2 no-select w-full">
             {data.length + " Listing/s"}
           </p>
@@ -124,10 +119,17 @@ const MyListings = () => {
               key={index}
             >
               <div className="relative transition p-2">
-                <img
-                  src={item.vehiclePhotos[0].toString()}
+                <Image
+                  src={
+                    item?.vehiclePhotos?.[0]
+                      ? item.vehiclePhotos[0].toString()
+                      : imageUnavailable
+                  }
                   alt={`Image ${index}`}
-                  onError={(e: any) => (e.target.src = imageUnavailable)}
+                  onError={(e: any) => {
+                    e.target.src = imageUnavailable; // Set a default image when the original image fails to load
+                    e.target.onerror = null; // Prevent infinite loop in case the fallback image also fails
+                  }}
                   className="mx-auto w-full h-48 object-cover select-none object-center rounded-md"
                 />
               </div>

@@ -248,39 +248,28 @@ type Props = {
   handleChange: (e: any) => void;
   personalInfo: ICar;
 };
-type Location = {
-  lat: number | null;
-  lng: number | null;
-};
 
 const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<Location>({
-    lat: null,
-    lng: null,
+
+  const handleChangeLat = (name : any, value: any) => {
+  handleChange({
+   target: {
+     name: name,
+     value: value,
+   },
   });
-
-  const handleLocationSelect = (location: Location) => {
-    // Update the state with the selected location
-    console.log("Selected Location:", location);
-    setSelectedLocation(location);
-
-    // Update the form data with the selected location
+  };
+  const handleChangeLon = (name: any, value: any) => {
     handleChange({
       target: {
-        name: 'lat',
-        value: location.lat,
+        name: name,
+        value: value,
       },
     });
+  };
 
-    handleChange({
-      target: {
-        name: 'lon',
-        value: location.lng,
-      },
-    });
-    };
 
     const handleModalOpen = () => {
       setModalOpen(true);
@@ -302,11 +291,6 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
  const buttonBackgroundColor = isHovered
    ? theme.palette.secondary.main // Hover background color
    : theme.palette.primary.main;
-   
-    // Log coordinates when selectedLocation changes
-    React.useEffect(() => {
-      console.log("Coordinates: selectedLocation =", selectedLocation.lat, selectedLocation.lng);
-    }, [selectedLocation]);
 
   return (
     <>
@@ -371,28 +355,28 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
               />
             </div>
             <p>
-            <TextField
-              variant="outlined"
-              size="small"
-              onChange={handleChange}
-              name="lat"
-              id="lat"
-              value={personalInfo.lat}
-              type="number"
-              placeholder="Latitude"
-              required
-            />
-            <TextField
-              variant="outlined"
-              size="small"
-              onChange={handleChange}
-              name="lon"
-              id="lon"
-              value={personalInfo.lon}
-              type="number"
-              placeholder="Longitude"
-              required
-            />
+              <TextField
+                variant="outlined"
+                size="small"
+                onChange={handleChange}
+                name="lat"
+                id="lat"
+                value={personalInfo.lat}
+                type="number"
+                placeholder="Latitude"
+                required
+              />
+              <TextField
+                variant="outlined"
+                size="small"
+                onChange={handleChange}
+                name="lon"
+                id="lon"
+                value={personalInfo.lon}
+                type="number"
+                placeholder="Longitude"
+                required
+              />
             </p>
             <div className="flex flex-col lg:mt-0 mt-5 w-full">
               <label className="mb-3 text-sm leading-none text-dark900">
@@ -511,15 +495,17 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
                 >
                   X
                 </Button>
-                <MapComponent onLocationSelect={handleLocationSelect} />
+                <MapComponent
+                  handleChangeLat={handleChangeLat}
+                  handleChangeLon={handleChangeLon}
+                />
               </div>
             </div>
           </Modal>
         </div>
         {/* Display or use selectedLocation in your form */}
-      {/* <p>Selected Location: {`Lat: ${selectedLocation.lat}, Lng: ${selectedLocation.lng}`}</p> */}
+        {/* <p>Selected Location: {`Lat: ${selectedLocation.lat}, Lng: ${selectedLocation.lng}`}</p> */}
       </ThemeProvider>
-      
     </>
   );
 };
