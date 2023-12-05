@@ -232,7 +232,7 @@
 
 
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   TextField,
   ThemeProvider,
@@ -243,15 +243,30 @@ import {
 import { ICar } from "../types/types";
 import { theme } from "./themes/themes";
 import MapComponent from "../components/MapComponent"; // Import the MapComponent
+import AddressSearch from "../components/AddressSearch";
 
 type Props = {
   handleChange: (e: any) => void;
   personalInfo: ICar;
 };
 
+// Added by Leo
+const apiKey = process.env.APP_GMAP_API_KEY as string;
+const mapApiJs = 'https://maps.googleapis.com/maps/api/js';
+const geocodeJson = 'https://maps.googleapis.com/maps/api/geocode/json';
+interface Address {
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+  plain(): string;
+}
+// Added by Leo end here
+
 const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [googleMaps, setGoogleMaps] = useState<any>(null);
 
   const handleChangeLat = (name : any, value: any) => {
   handleChange({
@@ -291,6 +306,98 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
  const buttonBackgroundColor = isHovered
    ? theme.palette.secondary.main // Hover background color
    : theme.palette.primary.main;
+
+   //Code added by Leo
+   const searchInput = useRef<HTMLInputElement>(null);
+   const [address, setAddress] = useState<Address>({
+     city: '',
+     state: '',
+     zip: '',
+     country: '',
+     plain: () => '',
+   });
+ 
+   const initMapScript = () => {
+     if (window.google) {
+       return Promise.resolve();
+     }
+     const src = `${mapApiJs}?key=${apiKey}&libraries=places&v=weekly`;
+     return loadAsyncScript(src);
+   };
+ 
+   const onChangeAddress = (autocomplete: google.maps.places.Autocomplete) => {
+     const place = autocomplete.getPlace();
+     setAddress(extractAddress(place));
+   };
+ 
+   const initAutocomplete = () => {
+     if (!searchInput.current) return;
+ 
+     const autocomplete = new window.google.maps.places.Autocomplete(searchInput.current);
+     autocomplete.setFields(['address_component', 'geometry']);
+     autocomplete.addListener('place_changed', () => onChangeAddress(autocomplete));
+   };
+ 
+   useEffect(() => {
+     initMapScript().then(() => initAutocomplete());
+   }, []);
+
+   // Load Google Map API JS
+function loadAsyncScript(src: string): Promise<HTMLScriptElement> {
+  return new Promise(resolve => {
+    const script = document.createElement('script');
+    Object.assign(script, {
+      type: 'text/javascript',
+      async: true,
+      src,
+    });
+    script.addEventListener('load', () => resolve(script));
+    document.head.appendChild(script);
+  });
+}
+
+const extractAddress = (place: any): Address => {
+  const address: Address = {
+    city: '',
+    state: '',
+    zip: '',
+    country: '',
+    plain() {
+      const city = this.city ? this.city + ', ' : '';
+      const zip = this.zip ? this.zip + ', ' : '';
+      const state = this.state ? this.state + ', ' : '';
+      return city + zip + state + this.country;
+    },
+  };
+
+  if (!Array.isArray(place?.address_components)) {
+    return address;
+  }
+
+  place.address_components.forEach((component: { types: string[]; long_name: string }) => {
+    const types = component.types;
+    const value = component.long_name;
+
+    if (types.includes('locality')) {
+      address.city = value;
+    }
+
+    if (types.includes('administrative_area_level_2')) {
+      address.state = value;
+    }
+
+    if (types.includes('postal_code')) {
+      address.zip = value;
+    }
+
+    if (types.includes('country')) {
+      address.country = value;
+    }
+  });
+
+  return address;
+};
+    //Code added by Leo end here
 
   return (
     <>
@@ -388,7 +495,7 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
                 onChange={handleChange}
                 name="city"
                 id="city"
-                value={personalInfo.city}
+                value={address.city}
                 type="text"
                 placeholder="Enter City"
                 required
@@ -406,7 +513,7 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
                 onChange={handleChange}
                 name="state"
                 id="state"
-                value={personalInfo.state}
+                value={address.state}
                 type="text"
                 placeholder="Enter Province"
                 required
@@ -422,7 +529,7 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
                 onChange={handleChange}
                 name="country"
                 id="country"
-                value={personalInfo.country}
+                value={address.country}
                 type="text"
                 placeholder="Enter Country"
                 required
@@ -438,7 +545,7 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
                 onChange={handleChange}
                 name="zipCode"
                 id="zipCode"
-                value={personalInfo.zipCode}
+                value={address.zip}
                 type="number"
                 placeholder="Zip Code"
                 required
@@ -506,7 +613,27 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
         {/* Display or use selectedLocation in your form */}
         {/* <p>Selected Location: {`Lat: ${selectedLocation.lat}, Lng: ${selectedLocation.lng}`}</p> */}
       </ThemeProvider>
-    </>
+
+    {/* Added for AddressSearch */}
+    {/* <div>
+      <h1>Address Search Page</h1>
+      <AddressSearch/>
+    </div> */}
+    <div className="App">
+      <div>
+        <div className="search">
+          <span>
+            {/* <Search /> */} Street Address
+          </span>
+          <input ref={searchInput} type="text" placeholder="Search Street Address" />
+          {/* <button onClick={findMyLocation}>
+            <GpsFixed />
+          </button> */}
+        </div>
+      </div>
+    </div>
+
+    </>    
   );
 };
 
