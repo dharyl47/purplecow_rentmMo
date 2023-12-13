@@ -56,6 +56,23 @@ export default function ListingStepper() {
     }
   };
 
+
+
+const handleChangeUpdate = (x: any, y: any, c: any, s: any, ct: any) => {
+  setListingInfo({
+    ...listingInfo,
+    lat: x,
+    lon: y,
+    city: c,
+    state: s,
+    country: ct,
+  });
+};
+
+
+
+
+
 	const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     try {
@@ -91,26 +108,36 @@ export default function ListingStepper() {
 
 	const renderStepContent = () => {
 		return (
-			<>
-				<div className={`step-${activeStep}`}>
-					{activeStep === 0 && (
-						<div>
-							<PersonalInfoForm handleChange={handleChange} personalInfo={listingInfo} />
-						</div>
-					)}
-					{activeStep === 1 && (
-						<div>
-							<ListingInfoForm handleChange={handleChange} listingInfo={listingInfo} />
-						</div>
-					)}
-					{activeStep === 2 && (
-						<div>
-							<BillingInfoForm handleChange={handleChange} billingInfo={listingInfo} />
-						</div>
-					)}
-				</div>
-			</>
-		);
+      <>
+        <div className={`step-${activeStep}`}>
+          {activeStep === 0 && (
+            <div>
+              <PersonalInfoForm
+                handleChange={handleChange}
+                handleChangeUpdate={handleChangeUpdate}
+                personalInfo={listingInfo}
+              />
+            </div>
+          )}
+          {activeStep === 1 && (
+            <div>
+              <ListingInfoForm
+                handleChange={handleChange}
+                listingInfo={listingInfo}
+              />
+            </div>
+          )}
+          {activeStep === 2 && (
+            <div>
+              <BillingInfoForm
+                handleChange={handleChange}
+                billingInfo={listingInfo}
+              />
+            </div>
+          )}
+        </div>
+      </>
+    );
 	};
 
 	return (
