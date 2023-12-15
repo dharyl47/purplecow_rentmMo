@@ -241,7 +241,8 @@ import {
 import { ICar } from "../types/types";
 import { theme } from "./themes/themes";
 import MapComponent from "../components/MapComponent"; // Import the MapComponent
-import AddressSearch from "../components/AddressSearch";
+import { set } from "mongoose";
+
 
 type Props = {
   handleChange: (e: any) => void;
@@ -250,7 +251,10 @@ type Props = {
     y: string | undefined,
     c: string | undefined,
     s: string | undefined,
-    ct: string | undefined
+    ct: string | undefined,
+    s1: string | undefined,
+    s2: string | undefined,
+    zc: string | undefined,
   ) => void;
   personalInfo: ICar;
 };
@@ -258,11 +262,13 @@ type Props = {
 // Added by Leo
 const apiKey = process.env.APP_GMAP_API_KEY as string;
 const mapApiJs = "https://maps.googleapis.com/maps/api/js";
-const geocodeJson = "https://maps.googleapis.com/maps/api/geocode/json";
+// const geocodeJson = "https://maps.googleapis.com/maps/api/geocode/json";
 interface Address {
+  street1: string;
+  street2: string;
   city: string;
   state: string;
-  zip: string;
+  zipCode: string;
   lat: string;
   lon: string;
   country: string;
@@ -320,9 +326,11 @@ const PersonalInfoForm = ({
   //Code added by Leo
   const searchInput = useRef<HTMLInputElement>(null);
   const [address, setAddress] = useState<Address>({
+    street1: "",
+    street2: "",
     city: "",
     state: "",
-    zip: "",
+    zipCode: "",
     country: "",
     lat: "",
     lon: "",
@@ -330,14 +338,16 @@ const PersonalInfoForm = ({
   });
 
   const initMapScript = () => {
-    if (window.google) {
+    if ((window as any).google) {
       return Promise.resolve();
     }
     const src = `${mapApiJs}?key=${apiKey}&libraries=places&v=weekly`;
     return loadAsyncScript(src);
   };
+  const [street1, setStreet1] = useState<string | undefined>();
+  const [street2, setStreet2] = useState<string | undefined>();
   const [city, setCity] = useState<string | undefined>();
-  const [zip, setZip] = useState<string | undefined>();
+  const [zipCode, setZip] = useState<string | undefined>();
   const [country, setCountry] = useState<string | undefined>();
   const [latX, setLatX] = useState<number | undefined>();
   const [lonY, setLonY] = useState<number | undefined>();
@@ -349,19 +359,19 @@ const PersonalInfoForm = ({
     console.log("dataview", autocomplete.getPlace());
     const addressComponents = place.address_components;
     const formattedAddress = place.formatted_address;
-    const latitude = place.geometry.location.lat();
-    const longitude = place.geometry.location.lng();
+    const latitude = place.geometry?.location?.lat();
+    const longitude = place.geometry?.location?.lng();
     setLatX(latitude);
     setLonY(longitude);
 
-    let zipCode = "";
-    // Extracting the zip code from address components
-    for (const component of addressComponents) {
-      if (component.types.includes("postal_code")) {
-        zipCode = component.long_name;
-        break;
-      }
-    }
+    // let zipCode = "";
+    // // Extracting the zip code from address components
+    // for (const component of addressComponents) {
+    //   if (component.types.includes("postal_code")) {
+    //     zipCode = component.long_name;
+    //     break;
+    //   }
+    // }
 
     let isAutoFill = true; // Assuming this change is due to auto-fill
     setAddress(extractAddress(place));
@@ -369,21 +379,28 @@ const PersonalInfoForm = ({
   };
 
 
+// useEffect(() => {
+//   // Use the new handleUpdateState function to update the state immediately
+//   handleChangeUpdate(latX+"", lonY+"", city, state, country, street1, street2, zipCode);
+// }, [latX, lonY, city, country, state, street1, street2, zipCode, personalInfo]);
+
 useEffect(() => {
-  // Use the new handleUpdateState function to update the state immediately
-  handleChangeUpdate(latX+"", lonY+"", city, state, country);
-}, [latX, lonY, city, country, state, personalInfo]);
+  let isMounted = true;
 
+  const updateState = () => {
+    if (latX){
+      handleChangeUpdate(
+        latX?.toString(), lonY?.toString(), city, state, country, street1, street2, zipCode);}
+  };
 
+  if (isMounted) {
+    updateState();
+  }
 
-
-
-
-
-
-
-
-
+  return () => {
+    isMounted = false;
+  };
+}, [latX, lonY, city, state, country, state, street1, street2, zipCode, personalInfo]);
 
 
   const initAutocomplete = () => {
@@ -418,21 +435,26 @@ useEffect(() => {
 
   const extractAddress = (place: any): Address => {
     const address: Address = {
+      street1: "",
+      street2: "",
       city: "",
       state: "",
-      zip: "",
+      zipCode: "",
       lat: "",
       lon: "",
       country: "",
-      plain() {
-        const city = this.city ? this.city + ", " : "";
-        const zip = this.zip ? this.zip + ", " : "";
-        const state = this.state ? this.state + ", " : "";
-        const lat = this.lat ? "Lat: " + this.lat + ", " : "";
-        const lon = this.lon ? "Lon: " + this.lon + ", " : "";
-        const country = this.country ? this.country + ", " : "";
-        return city + zip + state + lat + lon + country;
-      },
+      plain: () => "",
+      // plain() {
+      //   const street1 = this.street1 ? this.street1 + ", " : "";
+      //   const street2 = this.street2 ? this.street2 + ", " : "";
+      //   const city = this.city ? this.city + ", " : "";
+      //   const zipCode = this.zipCode ? this.zipCode + ", " : "";
+      //   const state = this.state ? this.state + ", " : "";
+      //   const lat = this.lat ? "Lat: " + this.lat + ", " : "";
+      //   const lon = this.lon ? "Lon: " + this.lon + ", " : "";
+      //   const country = this.country ? this.country + ", " : "";
+      //   return street1 + street2 + city + zipCode + state + lat + lon + country;
+      // },
     };
 
     if (!Array.isArray(place?.address_components)) {
@@ -443,6 +465,16 @@ useEffect(() => {
       (component: { types: string[]; long_name: string }) => {
         const types = component.types;
         const value = component.long_name;
+
+        if (types.includes("route")) {
+          address.street1 = value;
+          setStreet1(value);
+        }
+
+        if (types.includes("neighborhood")) {
+          address.street2 = value;
+          setStreet2(value);
+        }
 
         if (types.includes("locality")) {
           address.city = value;
@@ -455,7 +487,8 @@ useEffect(() => {
         }
 
         if (types.includes("postal_code")) {
-          address.zip = value;
+          address.zipCode = value;
+          setZip(value);
         }
 
         if (types.includes("country")) {
@@ -466,10 +499,10 @@ useEffect(() => {
     );
 
     // Get latitude and longitude
-    if (place.geometry && place.geometry.location) {
-      address.lat = place.geometry.location.lat().toString();
-      address.lon = place.geometry.location.lng().toString();
-    }
+    // if (place.geometry && place.geometry.location) {
+    //   address.lat = place.geometry.location.lat().toString();
+    //   address.lon = place.geometry.location.lng().toString();
+    // }
 
     return address;
   };
@@ -531,9 +564,10 @@ useEffect(() => {
                 onChange={handleChange}
                 name="street"
                 id="street"
-                value={personalInfo.street}
+                //value={personalInfo.street1 || personalInfo.street2}
                 type="text"
                 placeholder="Unit#/Street/Barangay"
+                inputRef={searchInput}
                 required
               />
             </div>
@@ -690,26 +724,6 @@ useEffect(() => {
         {/* <p>Selected Location: {`Lat: ${selectedLocation.lat}, Lng: ${selectedLocation.lng}`}</p> */}
       </ThemeProvider>
 
-      {/* Added for AddressSearch */}
-      {/* <div>
-      <h1>Address Search Page</h1>
-      <AddressSearch/>
-    </div> */}
-      <div className="App">
-        <div>
-          <div className="search">
-            <span>{/* <Search /> */} Street Address</span>
-            <input
-              ref={searchInput}
-              type="text"
-              placeholder="Search Street Address"
-            />
-            {/* <button onClick={findMyLocation}>
-            <GpsFixed />
-          </button> */}
-          </div>
-        </div>
-      </div>
     </>
   );
 };

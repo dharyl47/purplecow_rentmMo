@@ -3,6 +3,8 @@ export interface ICar {
 	brand: string;
 	model: string;
 	street: string;
+	street1: string;
+	street2: string;
 	city: string;
 	email: string;
 	mobileNumber: string;

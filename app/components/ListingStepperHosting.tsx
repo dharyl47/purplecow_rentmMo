@@ -29,6 +29,8 @@ export const initialInfoState = {
   zipCode: "",
   lat: "",
   lon: "",
+  street1: "",
+  street2: "",
 };
 export default function ListingStepper() {
 	const [activeStep, setActiveStep] = React.useState(0);
@@ -58,7 +60,7 @@ export default function ListingStepper() {
 
 
 
-const handleChangeUpdate = (x: any, y: any, c: any, s: any, ct: any) => {
+const handleChangeUpdate = (x: any, y: any, c: any, s: any, ct: any, s1: any, s2: any, zc: any,) => {
   setListingInfo({
     ...listingInfo,
     lat: x,
@@ -66,6 +68,9 @@ const handleChangeUpdate = (x: any, y: any, c: any, s: any, ct: any) => {
     city: c,
     state: s,
     country: ct,
+    street1: s1,
+    street2: s2,
+    zipCode: zc,
   });
 };
 
