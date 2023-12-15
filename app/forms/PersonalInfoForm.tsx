@@ -301,6 +301,39 @@ const PersonalInfoForm = ({
       },
     });
   };
+  const handleChangeCity = (name: any, value: any) => {
+    handleChange({
+      target: {
+        name: name,
+        value: value,
+      },
+    });
+  };
+  const handleChangeCountry = (name: any, value: any) => {
+    handleChange({
+      target: {
+        name: name,
+        value: value,
+      },
+    });
+  };
+  const handleChangeZipCode = (name: any, value: any) => {
+    handleChange({
+      target: {
+        name: name,
+        value: value,
+      },
+    });
+  };
+  const handleChangeCounty = (name: any, value: any) => {
+    handleChange({
+      target: {
+        name: name,
+        value: value,
+      },
+    });
+  };
+  
 
   const handleModalOpen = () => {
     setModalOpen(true);
@@ -384,23 +417,20 @@ const PersonalInfoForm = ({
 //   handleChangeUpdate(latX+"", lonY+"", city, state, country, street1, street2, zipCode);
 // }, [latX, lonY, city, country, state, street1, street2, zipCode, personalInfo]);
 
-useEffect(() => {
-  let isMounted = true;
-
-  const updateState = () => {
-    if (latX){
-      handleChangeUpdate(
-        latX?.toString(), lonY?.toString(), city, state, country, street1, street2, zipCode);}
-  };
-
-  if (isMounted) {
-    updateState();
-  }
-
-  return () => {
-    isMounted = false;
-  };
-}, [latX, lonY, city, state, country, state, street1, street2, zipCode, personalInfo]);
+    useEffect(() => {
+      let isMounted = true;
+      const updateState = () => {
+        if (latX){
+          handleChangeUpdate(
+            latX?.toString(), lonY?.toString(), city, state, country, street1, street2, zipCode);}
+      };
+      if (isMounted) {
+        updateState();
+      }
+      return () => {
+        isMounted = false;
+      };
+    }, [latX, lonY, city, state, country, state, street1, street2, zipCode, personalInfo]);
 
 
   const initAutocomplete = () => {
@@ -715,6 +745,10 @@ useEffect(() => {
                 <MapComponent
                   handleChangeLat={handleChangeLat}
                   handleChangeLon={handleChangeLon}
+                  handleChangeCity={handleChangeCity}
+                  handleChangeCountry={handleChangeCountry}
+                  handleChangeZipCode={handleChangeZipCode}
+                  handleChangeCounty={handleChangeCounty}
                 />
               </div>
             </div>

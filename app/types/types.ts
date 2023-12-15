@@ -9,6 +9,7 @@ export interface ICar {
 	email: string;
 	mobileNumber: string;
 	state: string;
+	county: string;
 	country: string;
 	price: number | null;
 	zipCode: string;
