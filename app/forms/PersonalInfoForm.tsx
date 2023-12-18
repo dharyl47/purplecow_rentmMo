@@ -594,6 +594,7 @@ const PersonalInfoForm = ({
                 onChange={handleChange}
                 name="street"
                 id="street"
+                defaultValue={personalInfo.street1}
                 //value={personalInfo.street1 || personalInfo.street2}
                 type="text"
                 placeholder="Unit#/Street/Barangay"
@@ -749,6 +750,7 @@ const PersonalInfoForm = ({
                   handleChangeCountry={handleChangeCountry}
                   handleChangeZipCode={handleChangeZipCode}
                   handleChangeCounty={handleChangeCounty}
+                  handleChangeUpdate={handleChangeUpdate}
                 />
               </div>
             </div>

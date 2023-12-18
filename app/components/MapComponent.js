@@ -133,7 +133,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { RouteModule } from 'next/dist/server/future/route-modules/route-module';
 
 
-const MapComponent = ({ handleChangeLat, handleChangeLon, handleChangeCity, handleChangeCountry, handleChangeZipCode, handleChangeCounty, }) => {
+const MapComponent = ({ handleChangeUpdate, handleChangeLat, handleChangeLon, handleChangeCity, handleChangeCountry, handleChangeZipCode, handleChangeCounty, }) => {
+  
   const defaultLocation = { lat: 7.1907, lng: 125.4553 };
   // Local state for viewport
   const [viewPort, setViewport] = useState({
@@ -141,6 +142,12 @@ const MapComponent = ({ handleChangeLat, handleChangeLon, handleChangeCity, hand
     longitude: defaultLocation.lng,
     zoom: 12,
   });
+
+    const [cityState, setCityState] = useState();
+    const [zipCodeState, setZipState] = useState();
+    const [countryState, setCountryState] = useState();
+    const [countyState, setCountyState] = useState();
+    const [streetAddress, setStreetAddress] = useState();
   
   const [selectedLocation, setSelectedLocation] = useState(null);
   // const [selectedLocation, setSelectedLocation] = useState({
@@ -168,18 +175,16 @@ const MapComponent = ({ handleChangeLat, handleChangeLon, handleChangeCity, hand
 
       if (response.ok) {
         const data = await response.json();
-
-        // Extract city and country from API response
-        // const place = data.features[0];
-        // const city = place.context.find((item) => item.id.startsWith('place'))?.text;
-        // const country = place.context.find((item) => item.id.startsWith('country'))?.text;
         const place = data.features[0];
         const city = place.context.find((item) => item.id.startsWith('place'))?.text;
         const country = place.context.find((item) => item.id.startsWith('country'))?.text;
         const zipCode = place.context.find((item) => item.id.startsWith('postcode'))?.text;
         const county = place.context.find((item) => item.id.startsWith('region'))?.text;
-        // Log the extracted city and country for debugging
+        const streetAdd = place.text;
+        setStreetAddress(streetAdd)
+        
           console.log('LOCATION DETAILS');
+          console.log('Lplace234', streetAdd);
           console.log('Lat:', lat);
           console.log('Lon:', lng);
           console.log('City:', city);
@@ -196,12 +201,15 @@ const MapComponent = ({ handleChangeLat, handleChangeLon, handleChangeCity, hand
         // Update city and country in the form fields
         // if (city, country) {
           // Update your form fields (assuming you have functions like handleChangeCity and handleChangeCountry)
+
+          setCityState(city);
+          setCountryState(country);
+          setZipState(zipCode);
+          setCountyState(county);
+
           handleChangeLat('lat', lat);
           handleChangeLon('lon', lng);
-          handleChangeCity('city', city);
-          handleChangeCountry('country', country);
-          handleChangeZipCode('zipCode', zipCode);
-          handleChangeCounty('county', county);
+         
         // }
         // Update street information
       } else {
@@ -221,10 +229,13 @@ const MapComponent = ({ handleChangeLat, handleChangeLon, handleChangeCity, hand
       if (selectedLocation) {
         handleChangeLat('lat', selectedLocation.lat);
         handleChangeLon('lon', selectedLocation.lng);
+        handleChangeUpdate(
+            selectedLocation.lat?.toString(), selectedLocation.lng?.toString(), 
+            cityState, countyState, countryState, streetAddress, streetAddress, zipCodeState);
       }
     }, [selectedLocation]);
-    
-    
+
+
 
   return (
     <ReactMapGL
