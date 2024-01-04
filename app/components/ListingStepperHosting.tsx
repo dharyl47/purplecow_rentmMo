@@ -29,6 +29,8 @@ export const initialInfoState = {
   zipCode: "",
   lat: "",
   lon: "",
+  street1: "",
+  street2: "",
 };
 export default function ListingStepper() {
 	const [activeStep, setActiveStep] = React.useState(0);
@@ -55,6 +57,26 @@ export default function ListingStepper() {
       setListingInfo({ ...listingInfo, [e.target.name]: e.target.value });
     }
   };
+
+
+
+const handleChangeUpdate = (x: any, y: any, c: any, s: any, ct: any, s1: any, s2: any, zc: any,) => {
+  setListingInfo({
+    ...listingInfo,
+    lat: x,
+    lon: y,
+    city: c,
+    state: s,
+    country: ct,
+    street1: s1,
+    street2: s2,
+    zipCode: zc,
+  });
+};
+
+
+
+
 
 	const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
@@ -91,26 +113,36 @@ export default function ListingStepper() {
 
 	const renderStepContent = () => {
 		return (
-			<>
-				<div className={`step-${activeStep}`}>
-					{activeStep === 0 && (
-						<div>
-							<PersonalInfoForm handleChange={handleChange} personalInfo={listingInfo} />
-						</div>
-					)}
-					{activeStep === 1 && (
-						<div>
-							<ListingInfoForm handleChange={handleChange} listingInfo={listingInfo} />
-						</div>
-					)}
-					{activeStep === 2 && (
-						<div>
-							<BillingInfoForm handleChange={handleChange} billingInfo={listingInfo} />
-						</div>
-					)}
-				</div>
-			</>
-		);
+      <>
+        <div className={`step-${activeStep}`}>
+          {activeStep === 0 && (
+            <div>
+              <PersonalInfoForm
+                handleChange={handleChange}
+                handleChangeUpdate={handleChangeUpdate}
+                personalInfo={listingInfo}
+              />
+            </div>
+          )}
+          {activeStep === 1 && (
+            <div>
+              <ListingInfoForm
+                handleChange={handleChange}
+                listingInfo={listingInfo}
+              />
+            </div>
+          )}
+          {activeStep === 2 && (
+            <div>
+              <BillingInfoForm
+                handleChange={handleChange}
+                billingInfo={listingInfo}
+              />
+            </div>
+          )}
+        </div>
+      </>
+    );
 	};
 
 	return (

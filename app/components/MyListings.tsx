@@ -11,6 +11,8 @@ import { initialInfoState } from '../types/initialInfo';
 import iconsCar from '../assets/logo/icons8-car.png'
 import Image from "next/image";
 import 'react-responsive-modal/styles.css';
+import noImage from "../assets/images/noImage.png";
+
 
 const MyListings = () => {
 	const [update, setUpdate] = useState(false);
@@ -100,6 +102,8 @@ const MyListings = () => {
       console.error("Error fetching data:", error);
     }
   };
+
+  
 	return (
     <>
       <div
@@ -107,12 +111,7 @@ const MyListings = () => {
         className="w-full h-fit flex flex-col items-center justify-center p-0 gap-10"
       >
         <div className="flex w-full items-center">
-          <Image
-            className="h-8"
-            width={30}
-            src={iconsCar}
-            alt="logo"
-          />
+          <Image className="h-8" width={30} src={iconsCar} alt="logo" />
           <p className="block p-2 no-select w-full">
             {data.length + " Listing/s"}
           </p>
@@ -124,12 +123,29 @@ const MyListings = () => {
               key={index}
             >
               <div className="relative transition p-2">
-                <img
-                  src={item.vehiclePhotos[0].toString()}
-                  alt={`Image ${index}`}
-                  onError={(e: any) => (e.target.src = imageUnavailable)}
-                  className="mx-auto w-full h-48 object-cover select-none object-center rounded-md"
-                />
+                {item?.vehiclePhotos?.[0] &&
+                  (item.vehiclePhotos[0].startsWith("http://") ||
+                  item.vehiclePhotos[0].startsWith("https://") ? (
+                    <Image
+                      src={item.vehiclePhotos[0].toString()}
+                      width={200}
+                      height={200}
+                      alt={`Image ${index}`}
+                      onError={(e: any) => {
+                        e.target.src = imageUnavailable;
+                        e.target.onerror = null;
+                      }}
+                      className="mx-auto w-full h-48 object-cover select-none object-center rounded-md"
+                    />
+                  ) : (
+                    <Image
+                      src={imageUnavailable}
+                      width={200}
+                      height={200}
+                      alt={`Image ${index}`}
+                      className="mx-auto w-full h-48 object-cover select-none object-center rounded-md"
+                    />
+                  ))}
               </div>
 
               <CardContent className="flex flex-col w-full h-12 gap-0 justify-center text-center items-center">

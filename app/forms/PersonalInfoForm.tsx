@@ -1,23 +1,74 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   TextField,
   ThemeProvider,
   Modal,
   Button,
-  Backdrop
+  Backdrop,
 } from "@mui/material";
 import { ICar } from "../types/types";
 import { theme } from "./themes/themes";
 import MapComponent from "../components/MapComponent"; // Import the MapComponent
+import { set } from "mongoose";
+
 
 type Props = {
   handleChange: (e: any) => void;
+  handleChangeUpdate: (
+    x: string | undefined,
+    y: string | undefined,
+    c: string | undefined,
+    s: string | undefined,
+    ct: string | undefined,
+    s1: string | undefined,
+    s2: string | undefined,
+    zc: string | undefined,
+  ) => void;
   personalInfo: ICar;
 };
 
-const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
+// Added by Leo
+const apiKey = process.env.APP_GMAP_API_KEY as string;
+const mapApiJs = "https://maps.googleapis.com/maps/api/js";
+interface Address {
+  street1: string;
+  street2: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  lat: string;
+  lon: string;
+  country: string;
+  plain(): string;
+}
+// Added by Leo end here
+
+const PersonalInfoForm = ({
+  handleChange,
+  handleChangeUpdate,
+  personalInfo,
+}: Props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [googleMaps, setGoogleMaps] = useState<any>(null);
+
+  const handleChangeLat = (name: any, value: any) => {
+    handleChange({
+      target: {
+        name: name,
+        value: value,
+      },
+    });
+  };
+  const handleChangeLon = (name: any, value: any) => {
+    handleChange({
+      target: {
+        name: name,
+        value: value,
+      },
+    });
+  };
+  
   const handleModalOpen = () => {
     setModalOpen(true);
   };
@@ -25,20 +76,170 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
   const handleModalClose = () => {
     setModalOpen(false);
   };
+  const handleCloseButtonClick = () => {
+    setModalOpen(false);
+  };
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
 
-    const handleCloseButtonClick = () => {
-      setModalOpen(false);
-    };
-	  const handleMouseEnter = () => {
-      setIsHovered(true);
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+  const buttonBackgroundColor = isHovered
+    ? theme.palette.secondary.main // Hover background color
+    : theme.palette.primary.main;
+
+  //Code added by Leo
+  const searchInput = useRef<HTMLInputElement>(null);
+  const [address, setAddress] = useState<Address>({
+    street1: "",
+    street2: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "",
+    lat: "",
+    lon: "",
+    plain: () => "",
+  });
+
+  const initMapScript = () => {
+    if ((window as any).google) {
+      return Promise.resolve();
+    }
+    const src = `${mapApiJs}?key=${apiKey}&libraries=places&v=weekly`;
+    return loadAsyncScript(src);
+  };
+  const [street1, setStreet1] = useState<string | undefined>();
+  const [street2, setStreet2] = useState<string | undefined>();
+  const [city, setCity] = useState<string | undefined>();
+  const [zipCode, setZip] = useState<string | undefined>();
+  const [country, setCountry] = useState<string | undefined>();
+  const [latX, setLatX] = useState<number | undefined>();
+  const [lonY, setLonY] = useState<number | undefined>();
+  const [state, setState] = useState<string | undefined>();
+
+  const onChangeAddress = (autocomplete: google.maps.places.Autocomplete) => {
+    const place = autocomplete.getPlace();
+
+    console.log("dataview", autocomplete.getPlace());
+    const addressComponents = place.address_components;
+    const formattedAddress = place.formatted_address;
+    const latitude = place.geometry?.location?.lat();
+    const longitude = place.geometry?.location?.lng();
+    setLatX(latitude);
+    setLonY(longitude);
+
+    let isAutoFill = true; // Assuming this change is due to auto-fill
+    setAddress(extractAddress(place));
+    // Trigger changes only if the event is not due to auto-fill
+  };
+
+    useEffect(() => {
+      let isMounted = true;
+      const updateState = () => {
+        if (latX){
+          handleChangeUpdate(
+            latX?.toString(), lonY?.toString(), city, state, country, street1, street2, zipCode);}
+      };
+      if (isMounted) {
+        updateState();
+      }
+      return () => {
+        isMounted = false;
+      };
+    }, [latX, lonY, city, state, country, state, street1, street2, zipCode, personalInfo]);
+
+
+  const initAutocomplete = () => {
+    if (!searchInput.current) return;
+
+    const autocomplete = new window.google.maps.places.Autocomplete(
+      searchInput.current
+    );
+    autocomplete.setFields(["address_component", "geometry"]);
+    autocomplete.addListener("place_changed", () =>
+      onChangeAddress(autocomplete)
+    );
+  };
+
+  useEffect(() => {
+    initMapScript().then(() => initAutocomplete());
+  }, []);
+
+  // Load Google Map API JS
+  function loadAsyncScript(src: string): Promise<HTMLScriptElement> {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      Object.assign(script, {
+        type: "text/javascript",
+        async: true,
+        src,
+      });
+      script.addEventListener("load", () => resolve(script));
+      document.head.appendChild(script);
+    });
+  }
+
+  const extractAddress = (place: any): Address => {
+    const address: Address = {
+      street1: "",
+      street2: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      lat: "",
+      lon: "",
+      country: "",
+      plain: () => "",
     };
 
-    const handleMouseLeave = () => {
-      setIsHovered(false);
-    };
- const buttonBackgroundColor = isHovered
-   ? theme.palette.secondary.main // Hover background color
-   : theme.palette.primary.main; 
+    if (!Array.isArray(place?.address_components)) {
+      return address;
+    }
+
+    place.address_components.forEach(
+      (component: { types: string[]; long_name: string }) => {
+        const types = component.types;
+        const value = component.long_name;
+
+        if (types.includes("route")) {
+          address.street1 = value;
+          setStreet1(value);
+        }
+
+        if (types.includes("neighborhood")) {
+          address.street2 = value;
+          setStreet2(value);
+        }
+
+        if (types.includes("locality")) {
+          address.city = value;
+          setCity(value);
+        }
+
+        if (types.includes("administrative_area_level_2")) {
+          address.state = value;
+          setState(value);
+        }
+
+        if (types.includes("postal_code")) {
+          address.zipCode = value;
+          setZip(value);
+        }
+
+        if (types.includes("country")) {
+          address.country = value;
+          setCountry(value);
+        }
+      }
+    );
+
+    return address;
+  };
+  //Code added by Leo end here
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -95,12 +296,38 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
                 onChange={handleChange}
                 name="street"
                 id="street"
-                value={personalInfo.street}
+                defaultValue={personalInfo.street1}
+                // value={personalInfo.street1 || personalInfo.street2}
                 type="text"
                 placeholder="Unit#/Street/Barangay"
+                inputRef={searchInput}
                 required
               />
             </div>
+            <p>
+              <TextField
+                variant="outlined"
+                size="small"
+                onChange={handleChange}
+                name="lat"
+                id="lat"
+                value={personalInfo.lat}
+                type="number"
+                placeholder="Latitude"
+                required
+              />
+              <TextField
+                variant="outlined"
+                size="small"
+                onChange={handleChange}
+                name="lon"
+                id="lon"
+                value={personalInfo.lon}
+                type="number"
+                placeholder="Longitude"
+                required
+              />
+            </p>
             <div className="flex flex-col lg:mt-0 mt-5 w-full">
               <label className="mb-3 text-sm leading-none text-dark900">
                 City
@@ -218,12 +445,17 @@ const PersonalInfoForm = ({ handleChange, personalInfo }: Props) => {
                 >
                   X
                 </Button>
-                <MapComponent />
+                <MapComponent
+                  handleChangeLat={handleChangeLat}
+                  handleChangeLon={handleChangeLon}
+                  handleChangeUpdate={handleChangeUpdate}
+                />
               </div>
             </div>
           </Modal>
         </div>
       </ThemeProvider>
+
     </>
   );
 };
