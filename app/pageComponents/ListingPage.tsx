@@ -247,11 +247,11 @@ export const ListingByLocation = () => {
 								{item.brand}
 							</h4>
 							<Image
-								src={item.vehiclePhotos}
-								alt={`Image ${index}`}
-								onError={(e: any) => (e.target.src = imageUnavailable)}
-								className='mx-auto 3xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[16rem] h-[16rem] 3xl:h-72 object-cover select-none object-center'
-							/>
+ 								 src={item.vehiclePhotos[0] || imageUnavailable}
+ 								 alt={`Image ${index}`}
+ 								 onError={(e: any) => (e.target.src = imageUnavailable)}
+ 								 className='mx-auto 3xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[16rem] h-[16rem] 3xl:h-72 object-cover select-none object-center'
+								/>
 						</div>
 					</Card>
 				))}
