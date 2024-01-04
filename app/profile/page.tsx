@@ -7,10 +7,20 @@ import MyListings from '../components/MyListings';
 import { useUser } from '../hooks/useUser';
 
 const Profile = () => {
-	const store = useUser();
-	const { user }: any = store?.user;
-	const userName = `${user.firstName + ' ' + user.lastName}`;
-	const yearJoined = `${user.createdAt.split('-')[0]}`;
+	// const store = useUser();
+	// const { user }: any = store?.user;
+	// const userName = `${user.firstName + ' ' + user.lastName}`;
+	// const yearJoined = `${user.createdAt.split('-')[0]}`;
+	// const aboutMe = `${user.aboutMe}`;
+
+  const store = useUser();
+  if (!store || !store.user) {
+    // Handle the case where store or user is null
+    return <div>Loading...</div>; // You can replace this with your loading indicator or error message
+  }
+	const { user }: any = store;
+	const userName = `${user.firstName} ${user.lastName}`;
+	const yearJoined = `${user.createdAt?.split('-')[0]}`;
 	const aboutMe = `${user.aboutMe}`;
 
 	return (
