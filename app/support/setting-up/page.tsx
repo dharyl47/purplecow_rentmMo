@@ -40,23 +40,23 @@ const SettingUp = () => {
           </p>
           <ol className="list-decimal pl-6">
             <li>Visit our website at RentMo.com.</li>
-            <li>Click on the "Sign Up" or "Register" button.</li>
+            <li>Click on the &quot;Sign Up&quot; or &quot;Register&quot; button.</li>
             <li>
               Fill in the required information, including your name, email
               address, and password.
             </li>
             <li>Accept our terms of use and privacy policy.</li>
-            <li>Click "Sign Up" to complete the process.</li>
+            <li>Click &quot;Sign Up&quot; to complete the process.</li>
           </ol>
 
           <h2 className="font-bold text-2xl mt-8 mb-4">Verifying Your Email</h2>
           <p className="lg:text-base text-sm">
-            After signing up, you'll receive a verification email at the address
+            After signing up, you&quot;ll receive a verification email at the address
             you provided. Follow these steps to verify your email:
           </p>
           <ol className="list-decimal pl-6">
             <li>Open the email from RentMo.</li>
-            <li>Click the "Verify Email".</li>
+            <li>Click the &quot;Verify Email&quot;.</li>
           </ol>
           <p className="lg:text-base text-sm">
             This step is crucial to ensure the security of your account and to
@@ -71,12 +71,12 @@ const SettingUp = () => {
           </p>
           <ol className="list-decimal pl-6">
             <li>Log in to your account.</li>
-            <li>Navigate to the "Profile" or "Account Settings" section.</li>
+            <li>Navigate to the &quot;Profile&quot; or &quot;Account Settings&quot; section.</li>
             <li>
               Update your profile picture, contact information, and any other
               relevant details.
             </li>
-            <li>Click "Save" to apply your changes.</li>
+            <li>Click &quot;Save&quot; to apply your changes.</li>
           </ol>
 
           <h2 className="font-bold text-2xl mt-8 mb-4">
@@ -101,7 +101,7 @@ const SettingUp = () => {
           </h2>
           <p className="lg:text-base text-sm">
             We take your account security seriously. Follow these steps to
-            enhance your account's safety:
+            enhance your account&quot;s safety:
           </p>
           <ol className="list-decimal pl-6">
             <li>
@@ -122,18 +122,18 @@ const SettingUp = () => {
             Forgot your password? No worries, you can reset it:
           </p>
           <ol className="list-decimal pl-6">
-            <li>On the login page, click "Forgot Password".</li>
+            <li>On the login page, click &quot;Forgot Password&quot;.</li>
             <li>
               Enter your email address and follow the instructions sent to your
               inbox.
             </li>
-            <li>Create a new password and ensure it's secure.</li>
+            <li>Create a new password and ensure it&quot;s secure.</li>
           </ol>
 
           <p className="lg:text-base text-sm">
             Remember, if you encounter any difficulties during the account setup
             process or have any questions, feel free to reach out to our support
-            team. We're here to assist you every step of the way.
+            team. We&quot;re here to assist you every step of the way.
           </p>
           <div className="mt-8">
             <hr className="w-full border-gray-500 mx-auto" />{" "}
@@ -143,7 +143,7 @@ const SettingUp = () => {
             <u>Getting Started</u>
           </a>
           <p className="lg:text-base text-sm">
-            Just joined us? We're excited to have you on board! Discover how to
+            Just joined us? We&quot;re excited to have you on board! Discover how to
             set up your account, personalize your profile, and manage your
             notification preferences to make the most of your experience.
           </p>

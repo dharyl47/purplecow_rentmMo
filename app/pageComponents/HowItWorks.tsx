@@ -28,7 +28,7 @@ const HowItWorks = () => {
 						</h1>
 						<h2 className='md:text-xl text-base font-bold text-black dark:text-black'>1. Sign Up and Apply</h2>
 						<p className='mb-2 md:text-base text-sm'>
-							All you need to do is fill up the necessary information, provide a valid driver's license, and be approved
+							All you need to do is fill up the necessary information, provide a valid driver&rsquo;s license, and be approved.
 							in a matter of minutes!
 						</p>
 						<h2 className='md:text-xl text-base font-bold text-black dark:text-black'>2. Drive on Demand</h2>
@@ -37,11 +37,11 @@ const HowItWorks = () => {
 							whole day, or for a whole month!
 						</p>
 						<h2 className='md:text-xl text-base font-bold text-black dark:text-black'>
-							3. Hop On The Driver's Seat and Cruise
+							3. Hop On The Driver&rsquo;s Seat and Cruise
 						</h2>
 						<p className='mb-2 md:text-base text-sm'>
-							Whether you're picking up the car or need it delivered, all you need to do is coordinate with the host and
-							you're good to go!
+							Whether you&rsquo;re picking up the car or need it delivered, all you need to do is coordinate with the host and
+							you&rsquo;re good to go!
 						</p>
 						<a
 							href='/support'
@@ -88,7 +88,7 @@ const HowItWorks = () => {
 								</h2>
 								<p className='md:text-base text-sm'>
 									Whenever your adventure takes you to the mountains, the beach, or the city. RentMo has got you
-									covered. Find vehicles for each destination you're going to.
+									covered. Find vehicles for each destination you&rsquo;re going to.
 								</p>
 							</div>
 						</div>
