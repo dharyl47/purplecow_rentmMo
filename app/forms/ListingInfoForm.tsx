@@ -11,7 +11,7 @@ type Props = {
 	listingInfo: ICar;
 };
 
-const listingInfoForm = ({ handleChange, listingInfo }: Props) => {
+const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
 	const [checked, setChecked] = useState(false);
 
 	//handle date change
@@ -163,4 +163,4 @@ const listingInfoForm = ({ handleChange, listingInfo }: Props) => {
   );
 };
 
-export default listingInfoForm;
+export default ListingInfoForm;
