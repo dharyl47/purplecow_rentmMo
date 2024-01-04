@@ -31,15 +31,15 @@ const TwoVerification = () => {
           </p>
           <p className="lg:text-base text-sm">
             Two-factor verification adds an extra layer of protection to your
-            account. Here's how to set it up:
+            account. Here&quot;s how to set it up:
           </p>
           <ol className="list-decimal pl-10 lg:text-base text-sm">
             <li>
-              Log in to your account and navigate to the "Security" or "Account
-              Settings" section.
+              Log in to your account and navigate to the &quot;Security&quot; or &quot;Account
+              Settings&quot; section.
             </li>
             <li>
-              Locate the two-factor verification option and select "Enable 2FA"
+              Locate the two-factor verification option and select &quot;Enable 2FA&quot;
               or similar.
             </li>
             <li>Choose your preferred method of verification:</li>
@@ -62,7 +62,7 @@ const TwoVerification = () => {
               complete the setup.
             </li>
             <li>
-              Once set up, you'll be prompted to enter a verification code
+              Once set up, you&quot;ll be prompted to enter a verification code
               whenever you log in from an unrecognized device or after a certain
               time period.
             </li>
@@ -71,7 +71,7 @@ const TwoVerification = () => {
           <p className="lg:text-base text-sm">
             Two-factor verification significantly enhances the security of your
             account by ensuring that only you can access it, even if someone
-            knows your password. Don't forget to securely store backup codes in
+            knows your password. Don&quot;t forget to securely store backup codes in
             case you lose access to your primary verification method.
           </p>
           <div className="mt-8">

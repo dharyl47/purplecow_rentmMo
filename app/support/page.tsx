@@ -61,7 +61,7 @@ const HelpPage = () => {
         <div className=" rounded-md border border-gray-800 flex lg:flex-row flex-col justify-between items-center w-full p-4 gap-4">
           <div className="flex lg:flex-row flex-col lg:items-end items-center justify-center gap-2 w-full">
             <h2 className="text-xl font-semibold text-gray-800">
-              Don't&#160;fret,&#160;we&#160;got&#160;you!
+              Don&quot;t&#160;fret,&#160;we&#160;got&#160;you!
             </h2>
             <p className="text-center">
               Get&#160;help&#160;with&#160;you&#160;reservations, account,and

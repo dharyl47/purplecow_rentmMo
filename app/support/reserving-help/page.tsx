@@ -29,8 +29,8 @@ const ReservingHelp = () => {
             vehicles.
           </p>
           <ol className="list-decimal pl-10 lg:text-base text-sm">
-            <li>Log in to your account or sign up if you're new.</li>
-            <li>Navigate to the "Vehicle Rentals" or "Fleet" section.</li>
+            <li>Log in to your account or sign up if you&quot;re new.</li>
+            <li>Navigate to the &quot;Vehicle Rentals&quot; or &quot;Fleet&quot; section.</li>
             <li>
               Use search filters to find the perfect vehicle for your needs.
             </li>
@@ -52,7 +52,7 @@ const ReservingHelp = () => {
               date.
             </li>
             <li>
-              Enjoy your ride and take advantage of the vehicle's features.
+              Enjoy your ride and take advantage of the vehicle&quot;s features.
             </li>
             <li>
               Return the vehicle at the end of the rental period in good

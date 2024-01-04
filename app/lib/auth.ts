@@ -4,6 +4,7 @@ import { redirect, useRouter } from "next/navigation";
 import GoogleProvider from "next-auth/providers/google";
 import connectMongoDB from "./mongodb";
 import UserSchema from "./../models/userProfile";
+import { useEffect } from 'react';
 
 export const authConfig: NextAuthOptions = {
   providers: [
@@ -51,10 +52,10 @@ export async function loginIsRequiredServer() {
   if (!session) return redirect("/");
 }
 
-export function loginIsRequiredClient() {
-  if (typeof window !== "undefined") {
-    const session = useSession();
-    const router = useRouter();
-    if (!session) router.push("/");
-  }
+export function LoginIsRequiredClient() {
+  const session = useSession();
+  const router = useRouter();
+    if (typeof window !== "undefined" && !session) {
+      router.push("/");
+    }
 }

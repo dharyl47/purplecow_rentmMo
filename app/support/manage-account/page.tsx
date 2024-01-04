@@ -36,14 +36,14 @@ const ManageAccount = () => {
           </h2>
           <p className="lg:text-base text-sm">
             Begin by logging in to your user account using your provided
-            credentials. If you've forgotten your password, you can request a
+            credentials. If you&rsquo;ve forgotten your password, you can request a
             password reset via email.
           </p>
           <h2 className="font-bold lg:text-2xl text-lg mt-2">
             2. Navigate to Account Settings
           </h2>
           <p className="lg:text-base text-sm">
-            Once logged in, locate the "Account Settings" or "Profile" section.
+            Once logged in, locate the &quot;Account Settings&quot; or &quot;Profile&quot; section.
             This is accessible through the menu in the navigation bar.
           </p>
           <h2 className="font-bold lg:text-2xl text-lg mt-2">
@@ -58,7 +58,7 @@ const ManageAccount = () => {
             4. Update Personal Details
           </h2>
           <p className="lg:text-base text-sm">
-            If you've moved, changed your email address, or updated your phone
+            If you&rsquo;ve moved, changed your email address, or updated your phone
             number, this is the place to make those changes. Update any outdated
             or incorrect information to ensure that you can be reached when
             needed.
@@ -91,12 +91,12 @@ const ManageAccount = () => {
             8. Save Your Changes
           </h2>
           <p className="lg:text-base text-sm">
-            After making any desired updates, be sure to click the "Save" or
+            After making any desired updates, be sure to click the &quot;Save&quot; or
             button to confirm your changes. This ensures that your preferences
             are reflected across the platform.
           </p>
           <h2 className="font-bold lg:text-2xl text-lg mt-2">
-            Enhancing Your Account's Security
+            Enhancing Your Account&rsquo;s Security
           </h2>
           <p className="lg:text-base text-sm">
             Maintaining the security of your account is crucial. Follow these
@@ -117,21 +117,21 @@ const ManageAccount = () => {
           </p>
           <ol className="list-decimal pl-10">
             <li>Log in to your account</li>
-            <li>Navigate to the "Password" section</li>
+            <li>Navigate to the &quot;Password&quot; section</li>
             <li>
               Follow the prompts to enter your current password and your new,
               strong password
             </li>
             <li>
-              Click "Change Password" or a similar option to finalize the update
+              Click &quot;Change Password&quot; or a similar option to finalize the update
             </li>
           </ol>
           <br />
           <p className="lg:text-base text-sm">
             Remember, managing your user account ensures a personalized and
             secure experience on the platform. If you encounter any difficulties
-            or have questions, don't hesitate to reach out to the platform's
-            support team—they're there to assist you every step of the way.
+            or have questions, don&quot;t hesitate to reach out to the platform&quot;s
+            support team—they&quot;re there to assist you every step of the way.
           </p>
           <div className="mt-8">
             <hr className="w-full border-gray-500 mx-auto" />{" "}
@@ -144,7 +144,7 @@ const ManageAccount = () => {
             <u>Getting Started</u>
           </a>
           <p className="lg:text-base text-sm">
-            Just joined us? We're excited to have you on board! Discover how to
+            Just joined us? We&quot;re excited to have you on board! Discover how to
             set up your account, personalize your profile, and manage your
             notification preferences to make the most of your experience.
           </p>
@@ -155,8 +155,8 @@ const ManageAccount = () => {
             <u>Setting up your account</u>
           </a>
           <p className="lg:text-base text-sm">
-            You’ve logged in, but you need to edit your account. Where do you
-            go? Here’s how to update your profile, manage notification settings,
+            You&quot;ve logged in, but you need to edit your account. Where do you
+            go? Here&quot;s how to update your profile, manage notification settings,
             and more.
           </p>
           {/* Add more content here */}
