@@ -10,6 +10,7 @@ import { ICar } from '../types/types.js';
 
 type Props = {
 	itemData: any;
+	handleChangeUpdate?: (x: any, y: any, c: any, s: any, ct: any, s1: any, s2: any, zc: any) => void;
 };
 
 export default function ListingStepper({ itemData }: Props) {
@@ -67,14 +68,16 @@ export default function ListingStepper({ itemData }: Props) {
 			console.log(error);
 		}
 	};
-
+const handleChangeUpdate = (x: any, y: any, c: any, s: any, ct: any, s1: any, s2: any, zc: any) => {
+    // Define the functionality for handleChangeUpdate if required
+  };
 	const renderStepContent = () => {
 		return (
 			<>
 				<div className={`step-${activeStep}`}>
 					{activeStep === 0 && (
 						<div>
-							<PersonalInfoForm handleChange={handleChange} personalInfo={listingInfo} />
+							<PersonalInfoForm handleChange={handleChange} handleChangeUpdate={handleChangeUpdate} personalInfo={listingInfo} />
 						</div>
 					)}
 					{activeStep === 1 && (
