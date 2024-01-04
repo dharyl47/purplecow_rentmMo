@@ -1,13 +1,13 @@
 export default async function handler(req, res) {
   console.log("E-wallet Payment Chargeable");
   if (req.method === "POST") {
-    console.log("===Webhook triggered===")
-    const data = req.body.data
-    console.log(data)
-    console.log("===webhook end===")
+    console.log("===Webhook triggered===");
+    const data = req.body.data;
+    console.log(data);
+    console.log("===webhook end===");
     if (data.attributes.type === "source.chargeable") {
       // Gcash and Grab Pay
-      console.log("E-wallet Payment Chargeable")
+      console.log("E-wallet Payment Chargeable");
 
       // Create a payment resource
       const options = {
@@ -36,26 +36,24 @@ export default async function handler(req, res) {
         }),
       };
 
-      fetch('https://api.paymongo.com/v1/payments', options)
-        .then(response => response.json())
-        .then(response => console.log(response))
-        .catch(err => console.error(err));
-
+      fetch("https://api.paymongo.com/v1/payments", options)
+        .then((response) => response.json())
+        .then((response) => console.log(response))
+        .catch((err) => console.error(err));
     }
     if (data.attributes.type === "payment.paid") {
       // All Payment Types
       // Add next steps for you
-      console.log("Payment Paid")
+      console.log("Payment Paid");
     }
     if (data.attributes.type === "payment.failed") {
       // Failed Payments - Cards Paymaya
       // Add next steps for you
-      console.log("Payment Failed")
+      console.log("Payment Failed");
     }
-    res.status(200).send("Webhook Received")
-  }
-  else {
+    res.status(200).send("Webhook Received");
+  } else {
     res.setHeader("Allow", "POST");
     res.status(405).send("Method Not Allowed");
   }
-};
+}
