@@ -31,6 +31,7 @@ export const initialInfoState = {
   lon: "",
   street1: "",
   street2: "",
+  county: "",
 };
 export default function ListingStepper() {
 	const [activeStep, setActiveStep] = React.useState(0);
