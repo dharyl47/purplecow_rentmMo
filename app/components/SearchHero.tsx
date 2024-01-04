@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { ButtonFillRounded } from './Buttons';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { FormControl, InputLabel, InputAdornment, IconButton, OutlinedInput } from '@mui/material';
