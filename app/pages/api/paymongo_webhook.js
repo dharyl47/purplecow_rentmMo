@@ -1,5 +1,6 @@
-export default async function handler(req, res) {
-  console.log("E-wallet Payment Chargeable");
+// Webhook for paymongo payments
+
+const handler = async (req, res) => {
   if (req.method === "POST") {
     console.log("===Webhook triggered===");
     const data = req.body.data;
@@ -56,4 +57,6 @@ export default async function handler(req, res) {
     res.setHeader("Allow", "POST");
     res.status(405).send("Method Not Allowed");
   }
-}
+};
+
+export default handler;

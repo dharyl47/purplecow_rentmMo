@@ -12,19 +12,26 @@ import iconsCar from '../assets/logo/icons8-car.png'
 import Image from "next/image";
 import 'react-responsive-modal/styles.css';
 import noImage from "../assets/images/noImage.png";
+import { useServiceCarContext } from '../context/ServiceCarContext';
+
 
 
 const MyListings = () => {
+
+
 	const [update, setUpdate] = useState(false);
 	const [updateData, setUpdateData] = useState(initialInfoState);
 	const [itemsPerPage, setItemsPerPage] = useState(4); // Number of items to display per page
-	const [data, setData] = useState<ICar[]>([]);
+	//const [data, setData] = useState<ICar[]>([]);
 	const [deleteItem, setDeleteItem] = useState<ICar>();
 	const [currentItems, setCurrentItems] = useState<ICar[]>([]); 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const [modalIsOpen, setIsOpen] = React.useState(false);
 	const updateRef = useRef<HTMLDivElement | null>(null);
+
+  const { data, fetchData } = useServiceCarContext();
+  console.log("My data:", data);
 
 	const handleUpdate = (item: any) => {
 		setUpdate(!update);
@@ -87,21 +94,21 @@ const MyListings = () => {
 		setCurrentItems(toDisplay);
 	}, [currentPage, data]);
 
-	useEffect(() => {
-		fetchData();
-	}, [itemsPerPage]);
+	// useEffect(() => {
+	// 	fetchData1();
+	// }, [itemsPerPage]);
 
 	const handlePageChange = (newPage: any) => {
 		setCurrentPage(newPage);
 	};
-	const fetchData = async () => {
-    try {
-      const response = await axios.get("/api/listing");
-      setData(response.data.listings); // Assuming the returned object has a key 'listings'
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+	// const fetchData1 = async () => {
+  //   try {
+  //     const response = await axios.get("/api/listing");
+  //     setData(response.data.listings); // Assuming the returned object has a key 'listings'
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
   
 	return (
