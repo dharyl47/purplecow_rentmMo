@@ -1,71 +1,36 @@
-import axios from "axios";
+import fetch from "node-fetch";
 
-export default async function handler(req, res) {
-  console.log("E-wallet Payment Chargeable");
-  if (req.method === "POST") {
-    console.log("===Webhook triggered===");
-    const data = req.body.data;
-    console.log(data);
-    console.log("===webhook end===");
+export async function POST(request, res) {
+  console.log("Accessed the POST route 11", res.length + " " + request.length); // Added console log here
 
-    //if (data.attributes.type === "source.chargeable") {
-    // Gcash and Grab Pay
-    console.log("E-wallet Payment Chargeable");
+  const optionsIntent = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Basic ${Buffer.from(
+        "sk_test_ijkQphjvMWN5iCXaixJzNzT1"
+      ).toString("base64")}`,
+    },
+    body: JSON.stringify(request.body), // Use request.body instead of req.body
+  };
 
-    try {
-      // Create a payment resource
-      const requestBody = {
-        data: {
-          attributes: {
-            amount: data.attributes.data.attributes.amount,
-            source: {
-              id: `${data.attributes.data.id}`,
-              type: `${data.attributes.data.type}`,
-            },
-            description: data.attributes.data.attributes.description,
-            currency: "PHP",
-            statement_descriptor:
-              data.attributes.data.attributes.statement_descriptor,
-          },
-        },
-      };
-
-      const axiosConfig = {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Basic ${Buffer.from(
-            process.env.PAYMONGO_SECRET
-          ).toString("base64")}`,
-        },
-      };
-
-      const response = await axios.post(
-        "https://api.paymongo.com/v1/payments",
-        requestBody,
-        axiosConfig
-      );
-      console.log(response.data);
-    } catch (err) {
-      console.error(err);
+  try {
+    const response = await fetch(
+      "https://api.paymongo.com/v1/payment_intents",
+      optionsIntent
+    );
+    console.log("Accessed the POST route 22");
+    const responseData = await response.json();
+ console.log("Accessed the POST route 33", responseData);
+    if (responseData.errors) {
+      console.log(JSON.stringify(responseData.errors));
+      res.status(400).json({ error: responseData.errors }); // Sending error response
+    } else {
+      res.status(200).json({ body: responseData }); // Sending success response
     }
-    // }
-
-    if (data.attributes.type === "payment.paid") {
-      // All Payment Types
-      // Add next steps for you
-      console.log("Payment Paid");
-    }
-
-    if (data.attributes.type === "payment.failed") {
-      // Failed Payments - Cards Paymaya
-      // Add next steps for you
-      console.log("Payment Failed");
-    }
-
-    res.status(200).send("Webhook Received");
-  } else {
-    res.setHeader("Allow", "POST");
-    res.status(405).send("Method Not Allowed");
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" }); // Sending error response for server errors
   }
 }

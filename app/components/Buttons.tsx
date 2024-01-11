@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-
+import { useRouter } from "next/navigation";
 // ... (interface definitions and other components remain unchanged)
 
 interface ButtonProps {
@@ -12,6 +12,25 @@ interface ButtonLinkProps {
   text: string;
   to: string;
 }
+
+	
+ 
+
+
+export const ButtonFillRoundedSearch = ({ text }: any) => {
+  const router = useRouter();
+  const handleFindRide = () => {
+    router.push("/search");
+  }; 
+  return (
+    <button
+      className="text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition"
+      onClick={handleFindRide}
+    >
+      {text}
+    </button>
+  );
+};
 
 export const ButtonFillRounded = ({ text }: ButtonProps) => {
   return (

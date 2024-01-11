@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 import styles from "../styles/Payment.module.css";
 
 const CreditCard = ({ amount, description }) => {
@@ -61,47 +61,50 @@ const CreditCard = ({ amount, description }) => {
 
   // Function to Create a Payment Intent by calling the site's api
   const createPaymentIntent = async () => {
+     console.log("createPaymentIntent", amount + " " + description);
     setPaymentStatus("Creating Payment Intent");
-    try {
-      const paymentIntent = await fetch("/pages/api/createPaymentIntent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: {
-            attributes: {
-              amount: amount * 100,
-              payment_method_allowed: ["card"],
-              payment_method_options: {
-                card: { request_three_d_secure: "any" },
+    const paymentIntent = await fetch("/api/paymongoCreatePaymentIntent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        data: {
+          attributes: {
+            amount: 200000,
+            payment_method_allowed: [
+              "atome",
+              "card",
+              "dob",
+              "paymaya",
+              "billease",
+              "gcash",
+              "grab_pay",
+            ],
+            payment_method_options: {
+              card: {
+                request_three_d_secure: "any",
               },
-              currency: "PHP",
-              description: description,
-              statement_descriptor: "descriptor business name",
             },
+            currency: "PHP",
+            capture_type: "automatic",
           },
-        }),
+        },
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        return response.body.data;
       });
-      if (!response.ok) {
-      throw new Error('Network response was not ok.');
-    }
 
-    const responseData = await response.json();
-
-    // Further handling based on responseData
-    return responseData?.body?.data;
-
-      
-    } catch (error) {
-      console.error("Error creating payment intent:", error);
-      setPaymentStatus("Error creating payment intent. Please try again.");
-      return null; // or handle error scenario appropriately
-    }
+    return paymentIntent;
   };
 
   // Function to Create a Payment Method by calling the PayMongo API
   const createPaymentMethod = async () => {
+    console.log("createPaymentMethod");
     setPaymentStatus("Creating Payment Method");
     const paymentMethod = fetch("https://api.paymongo.com/v1/payment_methods", {
       method: "POST",
@@ -142,15 +145,16 @@ const CreditCard = ({ amount, description }) => {
         setPaymentStatus(err);
         return err;
       });
-
+   
+    
     return paymentMethod;
   };
 
   // Function to Attach a Payment Method to the Intent by calling the PayMongo API
   const attachIntentMethod = async (intent, method) => {
-    if (!intent || !intent.id) {
+    console.log("attachIntentMethod ", intent);
     setPaymentStatus("Attaching Intent to Method");
-    fetch(`https://api.paymongo.com/v1/payment_intents/${intent?.id}/attach`, {
+    fetch(`https://api.paymongo.com/v1/payment_intents/${intent.id}/attach`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -162,8 +166,8 @@ const CreditCard = ({ amount, description }) => {
       body: JSON.stringify({
         data: {
           attributes: {
-            payment_method: `${method?.id}`,
-            client_key: `${intent?.attributes?.client_key}`,
+            payment_method: `${method.id}`,
+            client_key: `${intent.attributes.client_key}`,
           },
         },
       }),
@@ -180,7 +184,7 @@ const CreditCard = ({ amount, description }) => {
             paymentIntent.attributes.next_action.redirect.url,
             "_blank"
           );
-          listenToPayment(paymentIntent.attributes?.client_key);
+          listenToPayment(paymentIntent.attributes.client_key);
         } else {
           setPaymentStatus(paymentIntentStatus);
         }
@@ -189,7 +193,6 @@ const CreditCard = ({ amount, description }) => {
         console.log(err);
         setPaymentStatus(JSON.stringify(err));
       });
-    }
   };
 
   const onSubmit = async (event) => {

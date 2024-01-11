@@ -17,6 +17,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+   console.log("Children:", children);
   return (
     <html lang="en">
       <body className={inter.className}>

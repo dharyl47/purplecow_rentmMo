@@ -237,39 +237,44 @@ export const ListingByLocation = () => {
 	// };
 
 	return (
-		<div className='w-full min-h-fit flex flex-col items-center justify-center p-2 2xl:pt-10 gap-4'>
-			<h4 className='md:pl-20 font-bold md:text-2xl text-xl self-start'>Browse by Location</h4>
-			<div className='w-full items-center justify-center flex flex-wrap gap-2'>
-				{currentItems.map((item, index) => (
-					<Card className='drop-shadow-lg hover:scale-[102%] hover:transition-transform h-fit w-fit' key={index}>
-						<div className='items-center justify-center'>
-							<h4 className='w-full h-full absolute z-10 flex text-lg font-bold justify-center items-center text-[rgba(0,0,0,0)] hover:text-[rgba(0,0,0,1)] hover:bg-[rgba(255,246,81,0.8)] transition-all duration-300 ease-in-out'>
-								{item.brand}
-							</h4>
-							<Image
- 								 src={item.vehiclePhotos[0] || imageUnavailable}
- 								 alt={`Image ${index}`}
- 								 onError={(e: any) => (e.target.src = imageUnavailable)}
- 								 className='mx-auto 3xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[16rem] h-[16rem] 3xl:h-72 object-cover select-none object-center'
-								/>
-						</div>
-					</Card>
-				))}
-				<div className='2xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[12rem] 2xl:absolute'></div>
-				<div className='2xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[12rem]  2xl:absolute'></div>
-				<div className='2xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[12rem]  2xl:absolute'></div>
-				<div className='2xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[12rem] 2xl:absolute '></div>
-			</div>
-			<Pagination
-				className=' self-center'
-				count={count}
-				color='standard'
-				shape='rounded'
-				page={currentPage}
-				onChange={(event, newPage) => handlePageChange(newPage)}
-			/>
-		</div>
-	);
+    <div className="w-full min-h-fit flex flex-col items-center justify-center p-2 2xl:pt-10 gap-4">
+      <h4 className="md:pl-20 font-bold md:text-2xl text-xl self-start">
+        Browse by Location
+      </h4>
+      <div className="w-full items-center justify-center flex flex-wrap gap-2">
+        {currentItems.map((item, index) => (
+          <Card
+            className="drop-shadow-lg hover:scale-[102%] hover:transition-transform h-fit w-fit"
+            key={index}
+          >
+            <div className="items-center justify-center">
+              <h4 className="w-full h-full absolute z-10 flex text-lg font-bold justify-center items-center text-[rgba(0,0,0,0)] hover:text-[rgba(0,0,0,1)] hover:bg-[rgba(255,246,81,0.8)] transition-all duration-300 ease-in-out">
+                {item.brand}
+              </h4>
+              <Image
+                src={item.vehiclePhotos} // Access the image path associated with the location
+                alt={`Image ${index}`}
+                onError={(e: any) => (e.target.src = imageUnavailable)}
+                className="mx-auto 3xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[16rem] h-[16rem] 3xl:h-72 object-cover select-none object-center"
+              />
+            </div>
+          </Card>
+        ))}
+        <div className="2xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[12rem] 2xl:absolute"></div>
+        <div className="2xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[12rem]  2xl:absolute"></div>
+        <div className="2xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[12rem]  2xl:absolute"></div>
+        <div className="2xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[12rem] 2xl:absolute "></div>
+      </div>
+      <Pagination
+        className=" self-center"
+        count={count}
+        color="standard"
+        shape="rounded"
+        page={currentPage}
+        onChange={(event, newPage) => handlePageChange(newPage)}
+      />
+    </div>
+  );
 };
 
 export default { Listing2Wheel, Listing4Wheel, ListingByLocation };
