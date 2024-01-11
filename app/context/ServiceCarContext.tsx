@@ -1,5 +1,5 @@
-   'use client';
-   import React, { createContext, useState, useEffect, useContext } from 'react';
+'use client';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { ICar } from '../types/types';
 

@@ -9,24 +9,28 @@ import Image from "next/image";
 import avatar from '../assets/logo/avatar-logo.png';
 import badge from '../assets/logo/icons8-verified-badge.png'
 import 'react-responsive-modal/styles.css';
+import { useUserContext } from '../context/UserContext';
 
 const ProfileCard = () => {
 	const [open, setOpen] = useState(false);
-	const [data, setData] = useState(initialUserProfile);
+	// const [data, setData] = useState(initialUserProfile);
 	const onOpenModal = () => setOpen(true);
 	const onCloseModal = () => setOpen(false);
 
-	useEffect(() => {
-		fetchData();
-	}, []);
-	const fetchData = async () => {
-		try {
-			const response = await axios.get('/api/v1/user/my-info'); // Replace with your API endpoint
-			setData(response.data.user);
-		} catch (error) {
-			console.error('Error fetching data:', error);
-		}
-	};
+  const { data, fetchData } = useUserContext();
+  console.log("My data:", data);
+
+	// useEffect(() => {
+	// 	fetchData();
+	// }, []);
+	// const fetchData = async () => {
+	// 	try {
+	// 		const response = await axios.get('/api/v1/user/my-info'); // Replace with your API endpoint
+	// 		setData(response.data.user);
+	// 	} catch (error) {
+	// 		console.error('Error fetching data:', error);
+	// 	}
+	// };
 
 	const reviews = '0 reviews';
 	const userName = `${data.firstName + ' ' + data.lastName}`;
