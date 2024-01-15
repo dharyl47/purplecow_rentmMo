@@ -9,7 +9,7 @@ import {
 import { ICar } from "../types/types";
 import { theme } from "./themes/themes";
 import MapComponent from "../components/MapComponent"; // Import the MapComponent
-import { set } from "mongoose";
+// import { set } from "mongoose";
 
 
 type Props = {

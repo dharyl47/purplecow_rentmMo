@@ -6,7 +6,7 @@ import { CardContent, Card, Pagination } from '@mui/material';
 import { BsFillStarFill, BsMapFill, BsTelephoneFill, BsCashCoin } from 'react-icons/bs';
 import axios from 'axios';
 import Modal from 'react-responsive-modal';
-import ListingStepper from './ListingStepperUpdate';
+import ListingStepper from './ListingStepperUpdates';
 import { initialInfoState } from '../types/initialInfo';
 import iconsCar from '../assets/logo/icons8-car.png'
 import Image from "next/image";
@@ -30,8 +30,8 @@ const MyListings = () => {
 	const [modalIsOpen, setIsOpen] = React.useState(false);
 	const updateRef = useRef<HTMLDivElement | null>(null);
 
-  const { data, fetchData } = useServiceCarContext();
-  console.log("My data:", data);
+  const { data, fetchData, updateListing  } = useServiceCarContext();
+  // console.log("My data:", data);
 
 	const handleUpdate = (item: any) => {
 		setUpdate(!update);
@@ -59,6 +59,17 @@ const MyListings = () => {
 			console.log(error);
 		}
 	};
+  // Add this function to handle the update
+  const handleSubmit = async (updatedData: Partial<ICar>) => {
+    try {
+      await updateListing(updateData, updatedData);
+      setUpdate(false);
+      fetchData(); // Refresh the data after the update
+    } catch (error) {
+      console.error("Error updating listing:", error);
+      // Handle specific error types here if needed
+    }
+  };
 
 	useEffect(() => {
 		const updateItemsPerPage = () => {
@@ -101,6 +112,23 @@ const MyListings = () => {
 	const handlePageChange = (newPage: any) => {
 		setCurrentPage(newPage);
 	};
+  
+  // function handleChangeUpdates(b: any, m: any, lp: any, cr: any): void {
+  //   throw new Error('Function not implemented.');
+  // }
+
+  const handleChangeUpdates = (name: string, value: any) => {
+    // Create a new object with updated values
+    // const updatedListingInfo = { ...listingInfo, [name]: value };
+    // Call the parent handleChange function to update the state
+    handlePageChange({
+      target: {
+        name,
+        value,
+      },
+    });
+  };
+
 	// const fetchData1 = async () => {
   //   try {
   //     const response = await axios.get("/api/listing");
@@ -214,7 +242,7 @@ const MyListings = () => {
           update ? "scale-y-100 h-fit" : "scale-y-0 h-0"
         }`}
       >
-        <ListingStepper itemData={updateData} />
+    <ListingStepper itemData={updateData} onSubmit={handleSubmit} handleChangeUpdates={handleChangeUpdates}/>
       </div>
     </>
   );

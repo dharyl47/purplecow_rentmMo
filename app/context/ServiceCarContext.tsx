@@ -21,12 +21,32 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }
   };
 
+  const updateListing = async (id: number, updatedData: Partial<ICar>) => {
+    try {
+      await axios.put(`/api/updatelisting/${id}`, updatedData);
+      fetchData(); // Refresh the data after the update
+    } catch (error) {
+      console.error("Error updating listing:", error);
+      // Handle specific error types here if needed
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
+  //hydration error fix
+	const [hydrated, setHydrated] = useState(false);
+	useEffect(() => {
+		setHydrated(true);
+	}, []);
+	if (!hydrated) {
+		// Returns null on first render, so the client and server match
+		return null;
+	}
+  
   return (
-    <ServiceCarContext.Provider value={{ data, fetchData }}>
+    <ServiceCarContext.Provider value={{ data, fetchData, updateListing }}>
       {children}
     </ServiceCarContext.Provider>
   );
