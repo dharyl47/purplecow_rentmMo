@@ -1,5 +1,5 @@
 'use client';
-import React from "react";
+import React, { useState } from "react";
 import CarListing from "../pageComponents/CarListingCard";
 import Map from "../pageComponents/MapListing";
 import HeroPageSearch from "../pageComponents/HeroPageSearch";
@@ -59,6 +59,13 @@ const cars = [
 
 const CarListingPage = () => {
   const { data, fetchData } = useServiceCarContext();
+const [selectedVehicle, setSelectedVehicle] = useState(null);
+const handleCardClick = (car: any) => {
+  // Call the handleMarkerClick function from MapListing.js
+  console.log("dataSERVE ",car)
+  setSelectedVehicle(car);
+};
+
   return (
     <div>
       <HeroPageSearch />
@@ -68,13 +75,13 @@ const CarListingPage = () => {
           style={{ height: "600px" }}
         >
           {data.map((car: any) => (
-            <CarListing key={car.id} car={car} />
+            <CarListing key={car.id} car={car} onCardClick={handleCardClick} />
           ))}
         </div>
         <div className="w-1/2 p-4 relative">
-          <Map />
+          <Map carList={data} cardSelected={selectedVehicle} />
           <button
-            className="absolute bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 text-black flex items-center rounded-full bg-yellow-300"
+            className="absolute bottom-4 left-1/2 transform mt-2 -translate-x-1/2 px-4 py-2 text-black flex items-center rounded-full bg-yellow-300"
             style={{ marginBottom: "30px" }}
           >
             <BiSearch className="h-6 w-6 mr-2" />

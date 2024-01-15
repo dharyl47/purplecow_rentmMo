@@ -19,7 +19,10 @@ interface Car {
   lon: string;
 }
 
-const CarListingCard: React.FC<{ car: Car }> = ({ car }) => {
+const CarListingCard: React.FC<{
+  car: Car;
+  onCardClick: (car: Car) => void;
+}> = ({ car, onCardClick }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const handleFavoriteClick = () => {
@@ -33,7 +36,10 @@ const CarListingCard: React.FC<{ car: Car }> = ({ car }) => {
   };
 
   return (
-    <div className="border p-4 mb-4 flex bg-white rounded-md shadow-md hover:shadow-lg relative">
+    <div
+      className="border p-4 mb-4 flex bg-white rounded-md shadow-md hover:shadow-lg relative"
+      onClick={() => onCardClick(car)}
+    >
       <div className="absolute top-2 right-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -61,9 +67,7 @@ const CarListingCard: React.FC<{ car: Car }> = ({ car }) => {
         <div className="flex items-center mb-2">
           <span className="text-yellow-500 mr-1">&#9733;</span>
           <span className="text-s font-semibold">{4.5}</span>
-          <span className="text-gray-600 ml-1">
-            ({99} reviews)
-          </span>
+          <span className="text-gray-600 ml-1">({99} reviews)</span>
         </div>
         <p className="text-gray-600 text-s font-semibold mb-2">
           Php {car.price}/day

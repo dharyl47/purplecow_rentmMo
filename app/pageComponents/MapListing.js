@@ -1,128 +1,100 @@
-"use client";
-
+'use client';
 import React, { useState, useEffect } from "react";
-import ReactMapGL, { Marker } from "react-map-gl";
+import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { RouteModule } from "next/dist/server/future/route-modules/route-module";
+import Image from "next/image";
+const MapComponent = ({ carList, cardSelected }) => {
+  const defaultLocation = { lat: 7.069139, lng: 125.601695 };
+  const [defaultLat, setDefaultLat] = useState(7.069139);
+  const [defaultLon, setDefaultLon] = useState(125.601695);
 
-const MapComponent = ({
-}) => {
-  const defaultLocation = { lat: 7.1907, lng: 125.4553 };
   // Local state for viewport
   const [viewPort, setViewport] = useState({
-    latitude: defaultLocation.lat,
-    longitude: defaultLocation.lng,
-    zoom: 12,
+    latitude: defaultLat,
+    longitude: defaultLon,
+    zoom: 11,
   });
 
-  const [cityState, setCityState] = useState();
-  const [zipCodeState, setZipState] = useState();
-  const [countryState, setCountryState] = useState();
-  const [countyState, setCountyState] = useState();
-  const [streetAddress, setStreetAddress] = useState();
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedCar, setSelectedCar] = useState(null);
 
-  const handleMapClick = async (event) => {
-    if (event.lngLat) {
-      const { lng, lat } = event.lngLat;
-
-      try {
-        // Fetch city and country information using Mapbox Geocoding API
-        const response = await fetch(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=pk.eyJ1IjoiZGhhcnlsOTciLCJhIjoiY2w5NTluMDh2MXQ3YTNucW16cG9tbGU3dyJ9.z96hyUi9vkmIJDdBB6WjxA`
-        );
-
-        if (response.ok) {
-          const data = await response.json();
-          const place = data.features[0];
-          const city = place.context.find((item) =>
-            item.id.startsWith("place")
-          )?.text;
-          const country = place.context.find((item) =>
-            item.id.startsWith("country")
-          )?.text;
-          const zipCode = place.context.find((item) =>
-            item.id.startsWith("postcode")
-          )?.text;
-          const county = place.context.find((item) =>
-            item.id.startsWith("region")
-          )?.text;
-          const streetAdd = place.text;
-          setStreetAddress(streetAdd);
-
-          console.log("LOCATION DETAILS");
-          console.log("Street:", streetAdd);
-          console.log("Lat:", lat);
-          console.log("Lon:", lng);
-          console.log("City:", city);
-          console.log("Country:", country);
-          console.log("County:", county);
-          console.log("Zip Code:", zipCode);
-
-          setSelectedLocation({ lat, lng });
-          setViewport({
-            // ...viewPort,
-            latitude: lat,
-            longitude: lng,
-          });
-          // Update your form fields (assuming you have functions like handleChangeCity and handleChangeCountry)
-
-          setCityState(city);
-          setCountryState(country);
-          setZipState(zipCode);
-          setCountyState(county);
-
-          handleChangeLat("lat", lat);
-          handleChangeLon("lon", lng);
-
-          // Update street information
-        } else {
-          console.error("Failed to fetch data from Mapbox Geocoding API");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    } else {
-      console.error("Invalid event object or lngLat format:", event);
-    }
+  const handleMarkerClick = (car) => {
+    console.log("click", car);
+    setDefaultLat(car.lat);
+    setDefaultLon(car.lon);
+    setSelectedCar(car);
   };
-  // Log coordinates when selectedLocation changes
+
   useEffect(() => {
-    if (selectedLocation) {
-      handleChangeLat("lat", selectedLocation.lat);
-      handleChangeLon("lon", selectedLocation.lng);
-      handleChangeUpdate(
-        selectedLocation.lat?.toString(),
-        selectedLocation.lng?.toString(),
-        cityState,
-        countyState,
-        countryState,
-        streetAddress,
-        streetAddress,
-        zipCodeState
-      );
-    }
-  }, [selectedLocation]);
+    setSelectedCar(cardSelected);
+  }, [cardSelected]);
 
   return (
     <ReactMapGL
-      // {...viewPort}
+      {...viewPort}
       mapboxAccessToken="pk.eyJ1IjoiZGhhcnlsOTciLCJhIjoiY2w5NTluMDh2MXQ3YTNucW16cG9tbGU3dyJ9.z96hyUi9vkmIJDdBB6WjxA"
       mapStyle="mapbox://styles/mapbox/streets-v11"
       width="100%"
       height="100%"
       onViewportChange={(viewPort) => setViewport(viewPort)}
-      onClick={handleMapClick}
       transitionDuration="100"
     >
-      {selectedLocation ? (
-        <>
-          <Marker
-            latitude={selectedLocation.lat}
-            longitude={selectedLocation.lng}
-          ></Marker>
-        </>
-      ) : null}
+      {carList.map((car) => (
+        <Marker
+          key={car.id}
+          latitude={car.lat}
+          longitude={car.lon}
+          onClick={() => handleMarkerClick(car)}
+        >
+          {/* You can customize the Marker content here if needed */}
+        </Marker>
+      ))}
+
+      {/* Popup box */}
+      {selectedCar && (
+        <div
+          style={{
+            height: "600px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Popup
+            latitude={selectedCar.lat}
+            longitude={selectedCar.lon}
+            onClose={() => setSelectedCar(null)}
+          >
+            <div>
+              <Image
+                src="/assets/images/testImages/toyotaVios.jpg"
+                alt="Car Image"
+                width={150}
+                height={150}
+              />
+              <div className="flex flex-col justify-center text-center">
+                <h3
+                  className="text-s font-bold mb-2"
+                  style={{ fontWeight: 1100 }}
+                >
+                  {selectedCar.brand}
+                </h3>
+                <div className="flex items-center -mt-3 justify-center text-center">
+                  <span className="text-yellow-500">&#9733;</span>
+                  <span className="text-s font-semibold">{4.5}</span>
+                  <span className="text-gray-600 ml-1">({99} reviews)</span>
+                </div>
+                <p
+                  className="text-gray-900 text-s font-bold mt-3 mb-1"
+                  style={{ fontWeight: 800 }}
+                >
+                  Php {selectedCar.price}/day
+                </p>
+              </div>
+            </div>
+          </Popup>
+        </div>
+      )}
     </ReactMapGL>
   );
 };
