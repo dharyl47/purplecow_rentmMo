@@ -18,7 +18,7 @@ const ProfileCard = () => {
 	const onCloseModal = () => setOpen(false);
 
   const { data, fetchData } = useUserContext();
-  console.log("My data:", data);
+  // console.log("My data:", data);
 
 	// useEffect(() => {
 	// 	fetchData();
