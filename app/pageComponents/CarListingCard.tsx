@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-
+import { useRouter } from "next/navigation";
 interface Car {
   brand: string;
   carRegistrationNumber: string;
@@ -34,6 +34,17 @@ const CarListingCard: React.FC<{
     stroke: isFavorite ? "white" : "black",
     strokeWidth: "1",
   };
+  const router = useRouter();
+
+
+  const viewDetailsHandler = (car: any) => {
+    // Use encodeURIComponent to safely serialize the object as a query parameter
+    const carObject = encodeURIComponent(JSON.stringify(car));
+
+    // Navigate to the carDetails page with the car object as a query parameter
+    router.push(`/carDetail?car=${carObject}`);
+  };
+
 
   return (
     <div
@@ -71,6 +82,14 @@ const CarListingCard: React.FC<{
         </div>
         <p className="text-gray-600 text-s font-semibold mb-2">
           Php {car.price}/day
+        </p>
+      </div>
+      <div className="absolute bottom-2 right-2">
+        <p
+          className="text-black-500 underline self-end cursor-pointer"
+          onClick={() => viewDetailsHandler(car)}
+        >
+          View more details
         </p>
       </div>
     </div>
