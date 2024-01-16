@@ -3,10 +3,20 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { ICar } from '../types/types';
 
-export const ServiceCarContext = createContext<any>(null);
+interface ServiceCarContextType {
+  data: ICar[];
+  fetchData: () => Promise<void>;
+  updateListing: (id: number, updatedData: Partial<ICar>) => Promise<void>;
+}
 
-export const useServiceCarContext = () => {
-  return useContext(ServiceCarContext);
+export const ServiceCarContext = createContext<ServiceCarContextType | null>(null);
+
+export const useServiceCarContext = (): ServiceCarContextType => {
+  const context = useContext(ServiceCarContext);
+  if (!context) {
+    throw new Error('useServiceCarContext must be used within a ServiceCarProvider');
+  }
+  return context;
 };
 
 export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -18,13 +28,14 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       setData(response.data.listings);
     } catch (error) {
       console.error("Error fetching data:", error);
+      // Handle specific error types here if needed
     }
   };
-
+  // added by John Rey Update Car Details
   const updateListing = async (id: number, updatedData: Partial<ICar>) => {
     try {
-      await axios.put(`/api/updatelisting/${id}`, updatedData);
-      fetchData(); // Refresh the data after the update
+      await axios.put("/api/updatelisting", updatedData);
+      await fetchData(); // Refresh the data after the update
     } catch (error) {
       console.error("Error updating listing:", error);
       // Handle specific error types here if needed
@@ -35,16 +46,17 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     fetchData();
   }, []);
 
-  //hydration error fix
-	const [hydrated, setHydrated] = useState(false);
-	useEffect(() => {
-		setHydrated(true);
-	}, []);
-	if (!hydrated) {
-		// Returns null on first render, so the client and server match
-		return null;
-	}
-  
+  // Hydration error fix
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) {
+    // Returns null on first render, so the client and server match
+    return null;
+  }
+
   return (
     <ServiceCarContext.Provider value={{ data, fetchData, updateListing }}>
       {children}

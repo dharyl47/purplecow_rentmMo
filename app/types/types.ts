@@ -19,6 +19,13 @@ export interface ICar {
 	carRegistrationNumber: string;
 	carAvailability: ICarAvailability;
 	vehiclePhotos: string[];
+	[key: string]:
+    | string
+    | number
+    | null
+    | string[]
+    | ICarAvailability
+    | undefined; // Extend to allow ICarAvailability
 }
 
 interface ICarAvailability {

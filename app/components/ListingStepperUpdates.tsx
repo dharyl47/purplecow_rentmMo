@@ -59,13 +59,7 @@ export default function ListingStepper({ itemData, onSubmit, handleChangeUpdates
 				...listingInfo, // Include the existing listingInfo data
 				// You may want to add additional fields or modify the data as needed
 			  });
-		
-			// const response = await axios.patch(`/api/listings/${itemData._id}`, formData, {
-			// 	headers: {
-			// 		'Content-Type': 'multipart/form-data', // Set proper content type
-			// 	},
-			// });
-			// console.log(response);
+
 			window.location.href = 'profile';
 		} catch (error) {
 			setIsComplete(false);
@@ -107,30 +101,30 @@ export default function ListingStepper({ itemData, onSubmit, handleChangeUpdates
 					<p role='contentinfo' className=' focus:outline-none text-sm font-light leading-tight text-gray-600 mt-4'>
 						Update the data for the listing. It will take a couple of minutes. <br />
 					</p>
-					{/* <div className='w-full px-2 pt-5 flex flex-col '>
+					 <div className='w-full px-2 pt-5 flex flex-col '>
 						<Stepper
 							activeStep={activeStep}
 							isLastStep={(value) => setIsLastStep(value)}
 							isFirstStep={(value) => setIsFirstStep(value)}
 						>
-							<Step onClick={() => setActiveStep(0)} className=' cursor-pointer'>
+							{/* <Step onClick={() => setActiveStep(0)} className=' cursor-pointer'>
 								<BsPersonFill className='h-5 w-5 rounded-full' />
-							</Step>
-							<Step onClick={() => setActiveStep(1)} className=' cursor-pointer'>
+							</Step> */}
+							<Step onClick={() => setActiveStep(0)} className=' cursor-pointer'>
 								<BsCarFrontFill className='h-5 w-5' />
 							</Step>
-							<Step onClick={() => setActiveStep(2)} className=' cursor-pointer'>
+							{/* <Step onClick={() => setActiveStep(2)} className=' cursor-pointer'>
 								<BsCreditCardFill className='h-5 w-5' />
-							</Step>
+							</Step> */}
 						</Stepper>
 						<div className='mt-5 w-max text-center'>
 							<Typography className='font-semibold font-Messina-Sans text-center'>
-								{activeStep == 0 ? 'Personal Information' : ''}
-								{activeStep == 1 ? 'Listing Information' : ''}
-								{activeStep == 2 ? 'Billing Information' : ''}
+								{/* {activeStep == 0 ? 'Personal Information' : ''} */}
+								{activeStep == 0 ? 'Listing Information' : ''}
+								{/* {activeStep == 2 ? 'Billing Information' : ''} */}
 							</Typography>
 						</div>
-					</div> */}
+					</div>
 				</div>
 				{renderStepContent()}
 				{/* <div className={`w-fill transition-transform ${isComplete ? 'scale-y-0 fixed' : 'scale-y-100 relative '}`}>

@@ -39,23 +39,21 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
 		});
 	};
 
-	const handleCheckboxChange = (event: any) => {
-		setChecked(event.target.checked);
-		if (!checked) {
-			handleEndDateChange(null);
-			handleStartDateChange(new Date(Date.now()));
-		} else {
-			handleEndDateChange(new Date(Date.now()));
-			handleStartDateChange(new Date(Date.now()));
-		}
-	};
-  
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = event.target.checked;
+    setChecked(isChecked);
 
+    if (!isChecked) {
+      handleEndDateChange(null);
+      handleStartDateChange(new Date(Date.now()));
+    } else {
+      handleEndDateChange(new Date(Date.now()));
+      handleStartDateChange(new Date(Date.now()));
+    }
+  };
   
   // handleChangeUpdate add by John Rey
   const handleChangeUpdates = (name: string, value: any) => {
-    // Create a new object with updated values
-    const updatedListingInfo = { ...listingInfo };
     // Call the parent handleChange function to update the state
     handleChange({
       target: {
@@ -64,20 +62,16 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
       },
     });
   };
+    // useEffect add by John Rey
   useEffect(() => {
-    // Assuming you want to perform some action when listingInfo changes
-    // You can add your logic here
-    // console.log('ListingInfo has changed:', listingInfo);
-
-    // For example, you may want to update the details when listingInfo changes
-    handleChangeUpdates('brand', listingInfo.brand);
-    handleChangeUpdates('model', listingInfo.model);
-    handleChangeUpdates('licensePlateNumber', listingInfo.licensePlateNumber);
-    handleChangeUpdates('carRegistrationNumber', listingInfo.carRegistrationNumber);
-
+    // List of car details to update
+    const carDetailsToUpdate = ['brand', 'model', 'licensePlateNumber', 'carRegistrationNumber'];
+  
+    // Update only the necessary car details
+    carDetailsToUpdate.forEach((detail) => handleChangeUpdates(detail, listingInfo[detail]));
+  
     // Note: Uncomment and modify the above lines based on your actual requirements
   }, [listingInfo, handleChange]);
-
 
 
 	return (
@@ -90,9 +84,7 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
               </label>
               <TextField
                 size="small"
-                onChange={(e) => handleChangeUpdates('brand', e.target.value)} // updated this line
-                // onChange={(e) => {handleChangeUpdate}}
-                // onChange={handleChange}
+                onChange={handleChange}
                 value={listingInfo.brand}
                 name="brand"
                 id="brand"
@@ -107,8 +99,7 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
               </label>
               <TextField
                 size="small"
-                onChange={(e) => handleChangeUpdates('model', e.target.value)} // updated this line
-                // onChange={handleChange}
+                onChange={handleChange}
                 value={listingInfo.model}
                 name="model"
                 id="model"
@@ -125,8 +116,7 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
               </label>
               <TextField
                 size="small"
-                onChange={(e) => handleChangeUpdates('licensePlateNumber', e.target.value)} // updated this line
-                // onChange={handleChange}
+                onChange={handleChange}
                 value={listingInfo.licensePlateNumber}
                 name="licensePlateNumber"
                 id="licensePlateNumber"
@@ -141,8 +131,7 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
               </label>
               <TextField
                 size="small"
-                onChange={(e) => handleChangeUpdates('carRegistrationNumber', e.target.value)} // updated this line
-                // onChange={handleChange}
+                onChange={handleChange}
                 value={listingInfo.carRegistrationNumber}
                 name="carRegistrationNumber"
                 id="carRegistrationNumber"
@@ -161,9 +150,6 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
                     disabled={checked}
                     onChange={(date) => handleStartDateChange(date ? new Date(date) : null)}
 
-                    // onChange={(date) =>
-                    //   handleStartDateChange(date ? new Date(date) : null)
-                    // }
                     value={
                       listingInfo.carAvailability.startDate
                         ? new Date(listingInfo.carAvailability.startDate)
@@ -179,9 +165,6 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
                     disabled={checked}
                     onChange={(date) => handleEndDateChange(date ? new Date(date) : null)}
 
-                    // onChange={(date) =>
-                    //   handleEndDateChange(date ? new Date(date) : null)
-                    // }
                     value={
                       listingInfo.carAvailability.endDate
                         ? new Date(listingInfo.carAvailability.endDate)
@@ -218,14 +201,6 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
             Upload photo of your vehicle
           </p>
           <ImageUploader handleChange={handleChange} imageFile={listingInfo} />
-          {/* Add the "Update Details" button */}
-          {/* <Button
-            variant="contained"
-            color="primary"
-            onClick={handleChangeUpdate}
-          >
-            Update Details
-          </Button> */}
         </>
       );
     };
