@@ -18,7 +18,7 @@ type Props = {
 	listingInfo: ICar;
 };
 
-const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
+const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
 	const [checked, setChecked] = useState(false);
 
 	//handle date change
@@ -26,7 +26,7 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
 		handleChange({
 			target: {
 				name: 'startDate',
-				value: date ? date.toISOString() : null, // Save date as ISO string or null
+				value: date,
 			},
 		});
 	};
@@ -34,21 +34,19 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
 		handleChange({
 			target: {
 				name: 'endDate',
-				value: date ? date.toISOString() : null, // Save date as ISO string or null
+				value: date,
 			},
 		});
 	};
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = event.target.checked;
-    setChecked(isChecked);
-
-    if (!isChecked) {
+    setChecked(event.target.checked);
+    if (!event.target.checked) {
       handleEndDateChange(null);
-      handleStartDateChange(new Date(Date.now()));
+      handleStartDateChange(listingInfo.carAvailability.startDate);
     } else {
-      handleEndDateChange(new Date(Date.now()));
-      handleStartDateChange(new Date(Date.now()));
+      handleEndDateChange(listingInfo.carAvailability.endDate);
+      handleStartDateChange(listingInfo.carAvailability.startDate);
     }
   };
   

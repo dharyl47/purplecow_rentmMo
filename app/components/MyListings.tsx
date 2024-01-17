@@ -6,7 +6,7 @@ import { CardContent, Card, Pagination } from '@mui/material';
 import { BsFillStarFill, BsMapFill, BsTelephoneFill, BsCashCoin } from 'react-icons/bs';
 import axios from 'axios';
 import Modal from 'react-responsive-modal';
-import ListingStepper from './ListingStepperUpdates';
+import ListingStepper from './ListingStepperUpdate';
 import { initialInfoState } from '../types/initialInfo';
 import iconsCar from '../assets/logo/icons8-car.png'
 import Image from "next/image";
@@ -17,8 +17,6 @@ import { useServiceCarContext } from '../context/ServiceCarContext';
 
 
 const MyListings = () => {
-
-
 	const [update, setUpdate] = useState(false);
 	const [updateData, setUpdateData] = useState(initialInfoState);
 	const [itemsPerPage, setItemsPerPage] = useState(4); // Number of items to display per page
@@ -30,7 +28,7 @@ const MyListings = () => {
 	const [modalIsOpen, setIsOpen] = React.useState(false);
 	const updateRef = useRef<HTMLDivElement | null>(null);
 
-  const { data, fetchData, updateListing  } = useServiceCarContext();
+  const { data, fetchData, updateListing } = useServiceCarContext();
   // console.log("My data:", data);
 
 	const handleUpdate = (item: any) => {
@@ -59,10 +57,11 @@ const MyListings = () => {
 			console.log(error);
 		}
 	};
+
   // Add this function to handle the update
   const handleSubmit = async (updatedData: Partial<ICar>) => {
     try {
-      await updateListing(updateData, updatedData);
+      await updateListing (updateData, updatedData);
       setUpdate(false);
       fetchData(); // Refresh the data after the update
     } catch (error) {
@@ -105,21 +104,11 @@ const MyListings = () => {
 		setCurrentItems(toDisplay);
 	}, [currentPage, data]);
 
-	// useEffect(() => {
-	// 	fetchData1();
-	// }, [itemsPerPage]);
-
 	const handlePageChange = (newPage: any) => {
 		setCurrentPage(newPage);
 	};
-  
-  // function handleChangeUpdates(b: any, m: any, lp: any, cr: any): void {
-  //   throw new Error('Function not implemented.');
-  // }
 
   const handleChangeUpdates = (name: string, value: any) => {
-    // Create a new object with updated values
-    // const updatedListingInfo = { ...listingInfo, [name]: value };
     // Call the parent handleChange function to update the state
     handlePageChange({
       target: {
@@ -128,15 +117,6 @@ const MyListings = () => {
       },
     });
   };
-
-	// const fetchData1 = async () => {
-  //   try {
-  //     const response = await axios.get("/api/listing");
-  //     setData(response.data.listings); // Assuming the returned object has a key 'listings'
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
 
   
 	return (
