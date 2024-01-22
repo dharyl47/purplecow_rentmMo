@@ -65,7 +65,20 @@ const handleCardClick = (car: any) => {
   console.log("dataSERVE ",car)
   setSelectedVehicle(car);
 };
+  interface ICar {
+    id: number;
+    title: string;
+    price: number;
+    image: string;
+    rating: number;
+    totalReviews: number;
+    carAvailability: {
+      startDate: Date;
+      endDate: Date;
+    };
+  } 
 
+  if (data && data.length && data[0].carAvailability && data[0].carAvailability.startDate && data[0].carAvailability.endDate && data[0].city) {
   return (
     <div>
       <HeroPageSearch />
@@ -91,6 +104,9 @@ const handleCardClick = (car: any) => {
       </div>
     </div>
   );
+} else {
+  return <div>Loading...</div>;
+}
 };
 
 export default CarListingPage;

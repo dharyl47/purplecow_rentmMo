@@ -13,10 +13,6 @@ interface ButtonLinkProps {
   to: string;
 }
 
-	
- 
-
-
 export const ButtonFillRoundedSearch = ({ text }: any) => {
   const router = useRouter();
   const handleFindRide = () => {

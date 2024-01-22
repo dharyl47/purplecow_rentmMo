@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ButtonFillRoundedSearch, ButtonFillRounded } from "./Buttons";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -22,7 +22,59 @@ const theme = createTheme({
 	},
 });
 
-const SearchHero = () => {
+export interface SearchHeroProps {
+  carAvailability: {
+    startDate: Date;
+    endDate: Date;
+  };
+  city: string;
+  onFindRide: (formData: FormData) => void;
+};
+
+export interface FormData {
+  location: string;
+  startDate: Date | null;
+  startTime: string;
+  endDate: Date | null;
+  endTime: string;
+}
+
+const SearchHero: React.FC<SearchHeroProps> = ({
+  carAvailability,
+  city,
+  onFindRide,
+}) => {
+  const [formData, setFormData] = useState<FormData>({
+    location: '',
+    startDate: carAvailability?.startDate || null,
+    startTime: '',
+    endDate: carAvailability?.endDate || null,
+    endTime: '',
+  });
+  // const router = useRouter();
+
+  useEffect(() => {
+    setFormData({
+      location: city,
+      startDate: carAvailability?.startDate || null,
+      startTime: '',
+      endDate: carAvailability?.endDate || null,
+      endTime: '',
+    });
+  }, [carAvailability, city]);
+
+  const handleFindRide = () => {
+    // Use the captured values from formData as needed
+    console.log("Location:", formData.location);
+    console.log("Start Date:", formData.startDate);
+    console.log("Start Time:", formData.startTime);
+    console.log("End Date:", formData.endDate);
+    console.log("End Time:", formData.endTime);
+
+    // Pass the form data to the parent component or any other callback
+    onFindRide(formData);
+  };
+// const SearchHero = () => {
 
 	return (
     <ThemeProvider theme={theme}>
@@ -37,6 +89,10 @@ const SearchHero = () => {
                   label="Location"
                   id="location"
                   type="text"
+                  value={formData.location}
+                  onChange={(e) =>
+                    setFormData({ ...formData, location: e.target.value })
+                  }
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton>
@@ -54,6 +110,10 @@ const SearchHero = () => {
                 <DateTimePicker
                   label="Start Trip"
                   slotProps={{ textField: { variant: "outlined" } }}
+                  value={formData.startDate}
+                  onChange={(date) =>
+                    setFormData({ ...formData, startDate: date })
+                  }
                 />
               </div>
             </div>
@@ -63,10 +123,14 @@ const SearchHero = () => {
               <DateTimePicker
                 label="End Trip"
                 slotProps={{ textField: { variant: "outlined" } }}
+                value={formData.endDate}
+                  onChange={(date) =>
+                    setFormData({ ...formData, endDate: date })
+                  }
               />
             </div>
             <div className="flex self-end ml-4">
-              <ButtonFillRoundedSearch text="Find a ride" />
+              <ButtonFillRoundedSearch text="Find a ride" onClick={handleFindRide} />
             </div>
           </div>
           <div className="flex-col xl:hidden w-full min-w-fit max-w-sm h-fit bg-white mx-6 md:p-10 p-6 rounded-lg shadow-searchbox ">
@@ -109,6 +173,9 @@ const SearchHero = () => {
                   id="input-start-trip-time"
                   type="time"
                   className="text-black bg-transparent focus:outline-none lg:w-5/6 w-full md:text-lg text-base"
+                  onChange={(e) =>
+                    setFormData({ ...formData, startTime: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -131,11 +198,14 @@ const SearchHero = () => {
                   id="input-end-trip-time"
                   type="time"
                   className="text-black bg-transparent focus:outline-none lg:w-5/6 w-full md:text-lg text-base"
+                  onChange={(e) =>
+                    setFormData({ ...formData, endTime: e.target.value })
+                  }
                 />
               </div>
             </div>
             <div className="flex justify-center w-full md:mt-10 mt-6">
-              <ButtonFillRoundedSearch text="Find a ride" />
+              <ButtonFillRoundedSearch text="Find a ride" onClick={handleFindRide} />
             </div>
           </div>
         </div>

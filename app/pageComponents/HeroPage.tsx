@@ -1,9 +1,36 @@
+'use client';
 import BgHomepage from '../assets/images/Rent-mo-hero-bg.png';
 import Navbar from '../components/NavBar';
-import SearchHero from '../components/SearchHero';
+import React, { useState, useEffect } from 'react';
+import SearchHero, {FormData as SearchHeroProps } from '../components/SearchHero';
 //import '../layout.css';
 
-const HeroPage = () => {
+// const HeroPage = () => {
+	const HeroPage: React.FC = () => {
+		const [formData, setFormData] = useState<SearchHeroProps | null>(null);
+
+		const handleFindRide = (formData: SearchHeroProps) => {
+			// Implement the logic for finding a ride based on the form data
+			setFormData(formData);
+			console.log('Finding a ride with form data:', formData);
+		  };
+		const carAvailability = {
+		  startDate: new Date(),
+		  endDate: new Date(),
+		};
+	  
+		const city = 'Davao city';
+		
+		useEffect(() => {
+			// Execute the handleFindRide function with initial data when the component mounts
+			setFormData({
+			  location: city, // Assuming you want to use the city as the location
+			  startDate: carAvailability.startDate,
+			  startTime: '', // You may need to provide a default value
+			  endDate: carAvailability.endDate,
+			  endTime: '', // You may need to provide a default value
+			});
+		  }, []);
 	return (
 		
 		<div className=' bg-cover pb-12 min-h-screen font-Messina-Sans' style={{  backgroundImage: `url(${BgHomepage.src})`, width: '100%', height: '100%' }}>
@@ -25,7 +52,7 @@ const HeroPage = () => {
 						<div className='flex justify-center items-center'></div>
 					</div>
 				</div>
-				<SearchHero />
+				<SearchHero carAvailability={carAvailability} city={city} onFindRide={handleFindRide} />
 			</>
 
 			{/* Code block ends */}
