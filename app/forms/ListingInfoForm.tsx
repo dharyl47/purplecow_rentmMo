@@ -13,13 +13,23 @@ type Props = {
      b: string | undefined,
      m: string | undefined,
      lp: string | undefined,
-     cr: string | undefined,
+     cr: string | undefined
   ) => void;
 	listingInfo: ICar;
 };
 
 const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
-	const [checked, setChecked] = useState(false);
+	// const [checked, setChecked] = useState(false);
+  // const [checked, setChecked] = useState(listingInfo.carAvailability.checked || false);
+  // const [checked, setChecked] = useState(
+  //   localStorage.getItem('isAlwaysChecked') === 'true'
+  // );
+  const [checked, setChecked] = useState(() => {
+    const storedValue = localStorage.getItem(`isAlwaysChecked_${listingInfo._id}`);
+    return storedValue ? JSON.parse(storedValue) : false;
+
+  });
+  
 
 	//handle date change
 	const handleStartDateChange = (date: Date | null) => {
@@ -39,8 +49,22 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
 		});
 	};
 
+  // const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setChecked(event.target.checked);
+  //   if (!event.target.checked) {
+  //     handleEndDateChange(null);
+  //     handleStartDateChange(listingInfo.carAvailability.startDate);
+  //   } else {
+  //     handleEndDateChange(listingInfo.carAvailability.endDate);
+  //     handleStartDateChange(listingInfo.carAvailability.startDate);
+  //   }
+  // };
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
+    // localStorage.setItem('isAlwaysChecked', String(event.target.checked));
+    localStorage.setItem(`isAlwaysChecked_${listingInfo._id}`, JSON.stringify(event.target.checked));
+
+    // Rest of the logic remains the same
     if (!event.target.checked) {
       handleEndDateChange(null);
       handleStartDateChange(listingInfo.carAvailability.startDate);
@@ -187,7 +211,7 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                           inputProps={{ "aria-label": "controlled" }}
                         />
                       }
-                      label="Always Available"
+                      label={checked ? "Checked" : "Unchecked"}
                       labelPlacement="end"
                     />
                   </FormGroup>

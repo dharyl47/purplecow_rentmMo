@@ -34,7 +34,7 @@ const MyListings = () => {
 	const handleUpdate = (item: any) => {
 		setUpdate(!update);
 		setUpdateData(item);
-		if (updateRef.current) {
+		if (update && updateRef.current) {
 			updateRef.current.scrollIntoView({ behavior: 'smooth' });
 		}
 	};

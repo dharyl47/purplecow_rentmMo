@@ -19,18 +19,46 @@ export interface ICar {
 	carRegistrationNumber: string;
 	carAvailability: ICarAvailability;
 	vehiclePhotos: string[];
+	descriptions: string;
+	reviews: ICarreviews;
+	features: ICarfeatures;
 	[key: string]:
     | string
     | number
     | null
     | string[]
     | ICarAvailability
+	| ICarreviews
+	| ICarfeatures
     | undefined; // Extend to allow ICarAvailability
 }
 
 interface ICarAvailability {
 	startDate: Date;
 	endDate: Date;
+	checked: boolean;
+}
+
+interface ICarreviews {
+	name: string;
+	date: Date;
+	starRating: string;
+	feedback: string;
+}
+
+interface ICarfeatures {
+	automaticTransmission: boolean;
+	allWheelDrive: boolean;
+	androidAuto: boolean;
+	appleCarPlay: boolean;
+	auxInput: boolean;
+	backUpCamera: boolean;
+	bikeRack: boolean;
+	converTible: boolean;
+	gps: boolean;
+	petFriendly: boolean;
+	tollPass: boolean;
+	usbCharger: boolean;
 }
 
 export interface UserUpdate {
@@ -42,3 +70,4 @@ export interface UserUpdate {
 	language: string;
 	aboutMe: string;
 }
+

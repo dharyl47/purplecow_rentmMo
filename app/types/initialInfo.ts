@@ -13,8 +13,29 @@ export const initialInfoState = {
 	lon: '',
 	licensePlateNumber: '',
 	carRegistrationNumber: '',
-	carAvailability: { startDate: new Date(), endDate: new Date() },
+	carAvailability: { startDate: new Date(), endDate: new Date(), checked: false },
 	vehiclePhotos: [],
+	descriptions: '',
+	reviews:{
+		name: '',
+		date: new Date(),
+		starRating: "",
+		feedback: ''
+	},
+	features: {
+		automaticTransmission: false,
+		allWheelDrive: false,
+		androidAuto: false,
+		appleCarPlay: false,
+		auxInput: false,
+		backUpCamera: false,
+		bikeRack: false,
+		converTible: false,
+		gps: false,
+		petFriendly: false,
+		tollPass: false,
+		usbCharger: false
+	}
 };
 
 export const initialUserUpdate = {

@@ -14,6 +14,7 @@ export const initialInfoState = {
   carAvailability: {
     startDate: new Date(),
     endDate: new Date(),
+    checked: false
   },
   carRegistrationNumber: "",
   city: "",
@@ -32,6 +33,27 @@ export const initialInfoState = {
   street1: "",
   street2: "",
   county: "",
+  descriptions: "",
+  reviews: {
+		name: "",
+		date: new Date(),
+		starRating: "",
+		feedback: ""
+	},
+  features: {
+		automaticTransmission: false,
+		allWheelDrive: false,
+		androidAuto: false,
+		appleCarPlay: false,
+		auxInput: false,
+		backUpCamera: false,
+		bikeRack: false,
+		converTible: false,
+		gps: false,
+		petFriendly: false,
+		tollPass: false,
+		usbCharger: false
+	}
 };
 export default function ListingStepper() {
 	const [activeStep, setActiveStep] = React.useState(0);
@@ -45,15 +67,36 @@ export default function ListingStepper() {
 
 	const [listingInfo, setListingInfo] = useState(initialInfoState);
 
-	const handleChange = (e: any) => {
+	// const handleChange = (e: any) => {
+  //   if (e.target.name === "startDate" || e.target.name === "endDate") {
+  //    setListingInfo({
+  //      ...listingInfo,
+  //      carAvailability: {
+  //        ...listingInfo.carAvailability,
+  //        [e.target.name]: new Date(e.target.value), // Convert the string to a Date object
+  //      },
+  //    });
+  //   } else {
+  //     setListingInfo({ ...listingInfo, [e.target.name]: e.target.value });
+  //   }
+  // };
+  const handleChange = (e: any) => {
     if (e.target.name === "startDate" || e.target.name === "endDate") {
-     setListingInfo({
-       ...listingInfo,
-       carAvailability: {
-         ...listingInfo.carAvailability,
-         [e.target.name]: new Date(e.target.value), // Convert the string to a Date object
-       },
-     });
+      setListingInfo({
+        ...listingInfo,
+        carAvailability: {
+          ...listingInfo.carAvailability,
+          [e.target.name]: new Date(e.target.value), // Convert the string to a Date object
+        },
+      });
+    } else if (e.target.name === "checked") {
+      setListingInfo({
+        ...listingInfo,
+        carAvailability: {
+          ...listingInfo.carAvailability,
+          checked: e.target.checked,
+        },
+      });
     } else {
       setListingInfo({ ...listingInfo, [e.target.name]: e.target.value });
     }
