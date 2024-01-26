@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 interface Car {
   brand: string;
   carRegistrationNumber: string;
+  description: string;
   city: string;
   country: string;
   email: string;

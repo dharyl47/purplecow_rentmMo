@@ -29,13 +29,30 @@ import GcashLogo from "../assets/images/gcash.png"; // Import the Gcash logo ima
 interface CarAvailability {
   startDate: string;
   endDate: string;
+  checked: boolean;
+}
+interface features {
+  automaticTransmission: boolean,
+  allWheelDrive: boolean,
+  androidAuto: boolean,
+  appleCarPlay: boolean,
+  auxInput: boolean,
+  backUpCamera: boolean,
+  bikeRack: boolean,
+  converTible: boolean,
+  gps: boolean,
+  petFriendly: boolean,
+  tollPass: boolean,
+  usbCharger: boolean,
 }
 
 interface CarDetails {
   _id: string;
   brand: string;
   carAvailability: CarAvailability;
+  features: features;
   carRegistrationNumber: string;
+  description: string;
   city: string;
   country: string;
   email: string;

@@ -19,7 +19,7 @@ export interface ICar {
 	carRegistrationNumber: string;
 	carAvailability: ICarAvailability;
 	vehiclePhotos: string[];
-	descriptions: string;
+	description: string;
 	reviews: ICarreviews;
 	features: ICarfeatures;
 	[key: string]:
@@ -30,6 +30,7 @@ export interface ICar {
     | ICarAvailability
 	| ICarreviews
 	| ICarfeatures
+	| boolean
     | undefined; // Extend to allow ICarAvailability
 }
 

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup, TextField, TextareaAutosize } from '@mui/material';
 import ImageUploader from '../components/ImageUploader';
 import { ICar } from '../types/types';
 
@@ -13,7 +13,8 @@ type Props = {
      b: string | undefined,
      m: string | undefined,
      lp: string | undefined,
-     cr: string | undefined
+     cr: string | undefined,
+     dc: string | undefined
   ) => void;
 	listingInfo: ICar;
 };
@@ -49,19 +50,35 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
 		});
 	};
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
-    // localStorage.setItem('isAlwaysChecked', String(event.target.checked));
-    localStorage.setItem(`isAlwaysChecked_${listingInfo._id}`, JSON.stringify(event.target.checked));
+  // const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setChecked(event.target.checked);
+  //   // localStorage.setItem('isAlwaysChecked', String(event.target.checked));
+  //   localStorage.setItem(`isAlwaysChecked_${listingInfo._id}`, JSON.stringify(event.target.checked));
 
-    // Rest of the logic remains the same
-    if (!event.target.checked) {
-      handleEndDateChange(null);
-      handleStartDateChange(listingInfo.carAvailability.startDate);
-    } else {
-      handleEndDateChange(listingInfo.carAvailability.endDate);
+  //   // Rest of the logic remains the same
+  //   if (!event.target.checked) {
+  //     handleEndDateChange(null);
+  //     handleStartDateChange(listingInfo.carAvailability.startDate);
+  //   } else {
+  //     handleEndDateChange(listingInfo.carAvailability.endDate);
+  //     handleStartDateChange(listingInfo.carAvailability.startDate);
+  //   }
+  // };
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = event.target.checked;
+    setChecked(isChecked);
+    
+    if (listingInfo && listingInfo.carAvailability) {
+      if (!isChecked) {
+        handleEndDateChange(null);
+      } else {
+        handleEndDateChange(listingInfo.carAvailability.endDate);
+      }
+  
       handleStartDateChange(listingInfo.carAvailability.startDate);
     }
+  
+    localStorage.setItem(`isAlwaysChecked_${listingInfo._id}`, JSON.stringify(isChecked));
   };
   
   // handleChangeUpdate add by John Rey
@@ -77,7 +94,7 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
     // useEffect add by John Rey
   useEffect(() => {
     // List of car details to update
-    const carDetailsToUpdate = ['brand', 'model', 'licensePlateNumber', 'carRegistrationNumber'];
+    const carDetailsToUpdate = ['brand', 'model', 'licensePlateNumber', 'carRegistrationNumber', 'description'];
   
     // Update only the necessary car details
     carDetailsToUpdate.forEach((detail) => handleChangeUpdates(detail, listingInfo[detail]));
@@ -196,6 +213,22 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
               />
             </div>
           </div>
+          <div className="flex flex-col w-full mt-3 gap-2">
+            <label className="mb-2 text-sm leading-none text-dark900">
+              Descriptions
+            </label>
+            <TextareaAutosize
+              minRows={2}
+              maxRows={5}
+              onChange={handleChange}
+              value={listingInfo.description}
+              name="description"
+              id="description"
+              placeholder="Enter Your Car Details"
+              className="border border-gray-300 p-2 rounded-md"
+              required
+            />
+          </div>
           <p className="mt-3 text-sm leading-none text-dark900">Car Availability</p>
           <div className="mt-4 flex items-center gap-8">
             <div className="flex flex-col w-full">
@@ -238,13 +271,14 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                         <Checkbox
                           checked={checked}
                           onChange={handleCheckboxChange}
+                          // onChange={()=>handleCheckboxChange(checked)}
                           name="isAlways"
                           id="isAlways"
                           value={checked}
                           inputProps={{ "aria-label": "controlled" }}
                         />
                       }
-                      label={checked ? "Checked" : "Unchecked"}
+                      label={checked ? "Always Available" : "Always Available"}
                       labelPlacement="end"
                     />
                   </FormGroup>

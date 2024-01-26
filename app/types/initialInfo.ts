@@ -15,7 +15,7 @@ export const initialInfoState = {
 	carRegistrationNumber: '',
 	carAvailability: { startDate: new Date(), endDate: new Date(), checked: false },
 	vehiclePhotos: [],
-	descriptions: '',
+	description: '',
 	reviews:{
 		name: '',
 		date: new Date(),

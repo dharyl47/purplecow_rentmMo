@@ -33,7 +33,7 @@ export const initialInfoState = {
   street1: "",
   street2: "",
   county: "",
-  descriptions: "",
+  description: "",
   reviews: {
 		name: "",
 		date: new Date(),
@@ -117,13 +117,14 @@ const handleChangeUpdate = (x: any, y: any, c: any, s: any, ct: any, s1: any, s2
     zipCode: zc,
   });
 };
-const handleChangeUpdates = (b: any, m: any, lp: any, cr: any) => {
+const handleChangeUpdates = (b: any, m: any, lp: any, cr: any, dc: any) => {
     setListingInfo({
       ...listingInfo,
       brand: b,
       model: m,
       licensePlateNumber: lp,
       carRegistrationNumber: cr,
+      description: dc,
     });
   };
   

@@ -11,7 +11,7 @@ import { ICar } from '../types/types.js';
 type Props = {
 	itemData: any;
 	handleChangeUpdate?: (x: any, y: any, c: any, s: any, ct: any, s1: any, s2: any, zc: any) => void;
-    handleChangeUpdates: (b: any, m: any, lp: any, cr: any) => void;
+    handleChangeUpdates: (b: any, m: any, lp: any, cr: any, dc: any) => void;
     onSubmit: (updatedData: Partial<ICar>) => void; // Prop to handle the form submission and update
 };
 
