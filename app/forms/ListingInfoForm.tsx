@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Checkbox, FormControlLabel, FormGroup, TextField, TextareaAutosize } from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
 import ImageUploader from '../components/ImageUploader';
 import { ICar } from '../types/types';
 
@@ -14,18 +14,12 @@ type Props = {
      m: string | undefined,
      lp: string | undefined,
      cr: string | undefined,
-     dc: string | undefined
   ) => void;
 	listingInfo: ICar;
 };
 
 const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
-  const [checked, setChecked] = useState(() => {
-    const storedValue = localStorage.getItem(`isAlwaysChecked_${listingInfo._id}`);
-    return storedValue ? JSON.parse(storedValue) : false;
-
-  });
-  
+	const [checked, setChecked] = useState(false);
 
 	//handle date change
 	const handleStartDateChange = (date: Date | null) => {
@@ -46,20 +40,14 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
 	};
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = event.target.checked;
-    setChecked(isChecked);
-    
-    if (listingInfo && listingInfo.carAvailability) {
-      if (!isChecked) {
-        handleEndDateChange(null);
-      } else {
-        handleEndDateChange(listingInfo.carAvailability.endDate);
-      }
-  
+    setChecked(event.target.checked);
+    if (!event.target.checked) {
+      handleEndDateChange(null);
+      handleStartDateChange(listingInfo.carAvailability.startDate);
+    } else {
+      handleEndDateChange(listingInfo.carAvailability.endDate);
       handleStartDateChange(listingInfo.carAvailability.startDate);
     }
-  
-    localStorage.setItem(`isAlwaysChecked_${listingInfo._id}`, JSON.stringify(isChecked));
   };
   
   // handleChangeUpdate add by John Rey
@@ -75,7 +63,7 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
     // useEffect add by John Rey
   useEffect(() => {
     // List of car details to update
-    const carDetailsToUpdate = ['brand', 'model', 'licensePlateNumber', 'carRegistrationNumber', 'description'];
+    const carDetailsToUpdate = ['brand', 'model', 'licensePlateNumber', 'carRegistrationNumber'];
   
     // Update only the necessary car details
     carDetailsToUpdate.forEach((detail) => handleChangeUpdates(detail, listingInfo[detail]));
@@ -86,19 +74,6 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
   const [addFeatsChecked, setAddFeatsChecked] = useState(false);
   const handleAddFeatsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAddFeatsChecked(event.target.checked);
-  };
-  
-  const handleCheckChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = event.target.checked;
-    const { name, checked } = event.target;
-  
-    // Update the listingInfo state if needed
-    handleChange({
-      target: {
-        name: name,
-        value: isChecked,
-      },
-    });
   };
 
 	return (
@@ -168,22 +143,6 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
               />
             </div>
           </div>
-          <div className="flex flex-col w-full mt-3 gap-2">
-            <label className="mb-2 text-sm leading-none text-dark900">
-              Descriptions
-            </label>
-            <TextareaAutosize
-              minRows={2}
-              maxRows={5}
-              onChange={handleChange}
-              value={listingInfo.description}
-              name="description"
-              id="description"
-              placeholder="Enter Your Car Details"
-              className="border border-gray-300 p-2 rounded-md"
-              required
-            />
-          </div>
           <p className="mt-3 text-sm leading-none text-dark900">Car Availability</p>
           <div className="mt-4 flex items-center gap-8">
             <div className="flex flex-col w-full">
@@ -226,14 +185,13 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                         <Checkbox
                           checked={checked}
                           onChange={handleCheckboxChange}
-                          // onChange={()=>handleCheckboxChange(checked)}
                           name="isAlways"
                           id="isAlways"
                           value={checked}
                           inputProps={{ "aria-label": "controlled" }}
                         />
                       }
-                      label={checked ? "Always Available" : "Always Available"}
+                      label="Always Available"
                       labelPlacement="end"
                     />
                   </FormGroup>
@@ -241,10 +199,10 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
               </LocalizationProvider>
             </div>
           </div>
-
+          
           <div className="flex md:flex-row flex-col md:mt-0 mt-40 items-center md:gap-8 gap-5 add-features">
             <div className="flex flex-col w-full">
-            <FormGroup className="w-1/2">
+              <FormGroup className="w-1/2">
                 <FormControlLabel className="flex-row-reverse justify-end add-features-label"
                   control={
                     <Checkbox
@@ -258,14 +216,14 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                 />
               </FormGroup>
               <div className="flex">
-                {addFeatsChecked && (
+                {addFeatsChecked && (                  
                   <div className="features-boxes w-1/2">
                     <FormGroup className="features-checkboxes">
                       <FormControlLabel className=""
                         control={
                           <Checkbox                          
                             checked={!!listingInfo.automaticTransmission}
-                            onChange={handleCheckChange}
+                            onChange={handleChange}
                             name="automaticTransmission"
                             id="automaticTransmission"
                           />
@@ -276,7 +234,7 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                         control={
                           <Checkbox
                             checked={!!listingInfo.allWheelDrive}
-                            onChange={handleCheckChange}
+                            onChange={handleChange}
                             name="allWheelDrive"
                             id="allWheelDrive"
                           />
@@ -287,7 +245,7 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                         control={
                           <Checkbox
                             checked={!!listingInfo.androidAuto}
-                            onChange={handleCheckChange}
+                            onChange={handleChange}
                             name="androidAuto"
                             id="androidAuto"
                           />
@@ -298,7 +256,7 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                         control={
                           <Checkbox
                             checked={!!listingInfo.appleCarPlay}
-                            onChange={handleCheckChange}
+                            onChange={handleChange}
                             name="appleCarPlay"
                             id="appleCarPlay"
                           />
@@ -309,7 +267,7 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                         control={
                           <Checkbox
                             checked={!!listingInfo.auxInput}
-                            onChange={handleCheckChange}
+                            onChange={handleChange}
                             name="auxInput"
                             id="auxInput"
                           />
@@ -320,14 +278,14 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                         control={
                           <Checkbox
                             checked={!!listingInfo.backUpCamera}
-                            onChange={handleCheckChange}
+                            onChange={handleChange}
                             name="backUpCamera"
                             id="backUpCamera"
                           />
                         }
                         label="Backup Camera"
                       />
-                    </FormGroup>  
+                    </FormGroup>                  
                   </div>             
                 )}
                 {addFeatsChecked && (
@@ -337,7 +295,7 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                         control={
                           <Checkbox
                             checked={!!listingInfo.bikeRack}
-                            onChange={handleCheckChange}
+                            onChange={handleChange}
                             name="bikeRack"
                             id="bikeRack"
                           />
@@ -348,7 +306,7 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                         control={
                           <Checkbox
                             checked={!!listingInfo.converTible}
-                            onChange={handleCheckChange}
+                            onChange={handleChange}
                             name="converTible"
                             id="converTible"
                           />
@@ -359,7 +317,7 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                         control={
                           <Checkbox
                             checked={!!listingInfo.gps}
-                            onChange={handleCheckChange}
+                            onChange={handleChange}
                             name="gps"
                             id="gps"
                           />
@@ -370,7 +328,7 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                         control={
                           <Checkbox
                             checked={!!listingInfo.petFriendly}
-                            onChange={handleCheckChange}
+                            onChange={handleChange}
                             name="petFriendly"
                             id="petFriendly"
                           />
@@ -381,7 +339,7 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                         control={
                           <Checkbox
                             checked={!!listingInfo.tollPass}
-                            onChange={handleCheckChange}
+                            onChange={handleChange}
                             name="tollPass"
                             id="tollPass"
                           />
@@ -392,7 +350,7 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
                         control={
                           <Checkbox
                             checked={!!listingInfo.usbCharger}
-                            onChange={handleCheckChange}
+                            onChange={handleChange}
                             name="usbCharger"
                             id="usbCharger"
                           />
@@ -405,7 +363,7 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
               </div>
             </div>
           </div>
-
+          
           <p className="mt-2 mb-4 text-sm font-semibold leading-none text-dark900">
             Upload photo of your vehicle
           </p>
