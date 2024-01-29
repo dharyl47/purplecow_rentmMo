@@ -20,11 +20,6 @@ type Props = {
 };
 
 const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
-	// const [checked, setChecked] = useState(false);
-  // const [checked, setChecked] = useState(listingInfo.carAvailability.checked || false);
-  // const [checked, setChecked] = useState(
-  //   localStorage.getItem('isAlwaysChecked') === 'true'
-  // );
   const [checked, setChecked] = useState(() => {
     const storedValue = localStorage.getItem(`isAlwaysChecked_${listingInfo._id}`);
     return storedValue ? JSON.parse(storedValue) : false;
@@ -50,20 +45,6 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
 		});
 	};
 
-  // const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setChecked(event.target.checked);
-  //   // localStorage.setItem('isAlwaysChecked', String(event.target.checked));
-  //   localStorage.setItem(`isAlwaysChecked_${listingInfo._id}`, JSON.stringify(event.target.checked));
-
-  //   // Rest of the logic remains the same
-  //   if (!event.target.checked) {
-  //     handleEndDateChange(null);
-  //     handleStartDateChange(listingInfo.carAvailability.startDate);
-  //   } else {
-  //     handleEndDateChange(listingInfo.carAvailability.endDate);
-  //     handleStartDateChange(listingInfo.carAvailability.startDate);
-  //   }
-  // };
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
     setChecked(isChecked);
@@ -108,42 +89,16 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
   };
   
   const handleCheckChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //const isChecked = event.target.checked;
+    const isChecked = event.target.checked;
     const { name, checked } = event.target;
   
+    // Update the listingInfo state if needed
     handleChange({
       target: {
-        name,
-        value: checked,
+        name: name,
+        value: isChecked,
       },
     });
-  
-    // Clear all feature checkboxes if additionalFeatures is unchecked
-    if (name === "additionalFeatures" && !checked) {
-      const features = [
-        "automaticTransmission",
-        "allWheelDrive",
-        "androidAuto",
-        "appleCarPlay",
-        "auxInput",
-        "backUpCamera",
-        "bikeRack",
-        "converTible",
-        "gps",
-        "petFriendly",
-        "tollPass",
-        "usbCharger",
-      ];
-  
-      features.forEach((feature) => {
-        handleChange({
-          target: {
-            name: feature,
-            value: false,
-          },
-        });
-      });
-    }
   };
 
 	return (
@@ -289,167 +244,162 @@ const ListingInfoForm = ({ handleChange,  listingInfo }: Props) => {
 
           <div className="flex md:flex-row flex-col md:mt-0 mt-40 items-center md:gap-8 gap-5 add-features">
             <div className="flex flex-col w-full">
-              <label htmlFor="additionalFeatures max-w-max">
-                Features&nbsp;
-                <input
-                  type="checkbox"
-                  id="additionalFeatures"
-                  name="additionalFeatures"
-                  checked={addFeatsChecked}
-                  onChange={handleAddFeatsChange}
+            <FormGroup className="w-1/2">
+                <FormControlLabel className="flex-row-reverse justify-end add-features-label"
+                  control={
+                    <Checkbox
+                      checked={addFeatsChecked}
+                      onChange={handleAddFeatsChange}
+                      name="additionalFeatures"
+                      id="additionalFeatures"
+                    />
+                  }
+                  label="Features"
                 />
-              </label>
+              </FormGroup>
               <div className="flex">
                 {addFeatsChecked && (
-                  <div className="features-boxes w-2/5">
-                    <div>
-                      <label htmlFor="automaticTransmission">
-                        <input
-                          type="checkbox"
-                          id="automaticTransmission"
-                          name="automaticTransmission"
-                          checked={!!listingInfo.automaticTransmission}
-                          onChange={handleCheckChange}
-                        />
-                        &nbsp;Automatic Transmission
-                      </label>
-                    </div>
-                  <div>
-                    <label htmlFor="allWheelDrive">
-                      <input
-                        type="checkbox"
-                        id="allWheelDrive"
-                        name="allWheelDrive"
-                        checked={!!listingInfo.allWheelDrive}
-                        onChange={handleCheckChange}
+                  <div className="features-boxes w-1/2">
+                    <FormGroup className="features-checkboxes">
+                      <FormControlLabel className=""
+                        control={
+                          <Checkbox                          
+                            checked={!!listingInfo.automaticTransmission}
+                            onChange={handleCheckChange}
+                            name="automaticTransmission"
+                            id="automaticTransmission"
+                          />
+                        }
+                        label="Automatic Transmission"
                       />
-                      &nbsp;All-Wheel Drive
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="androidAuto">
-                      <input
-                        type="checkbox"
-                        id="androidAuto"
-                        name="androidAuto"
-                        checked={!!listingInfo.androidAuto}
-                        onChange={handleCheckChange}
+                      <FormControlLabel className=""
+                        control={
+                          <Checkbox
+                            checked={!!listingInfo.allWheelDrive}
+                            onChange={handleCheckChange}
+                            name="allWheelDrive"
+                            id="allWheelDrive"
+                          />
+                        }
+                        label="All-Wheel Drive"
                       />
-                      &nbsp;Android Auto
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="appleCarPlay">
-                      <input
-                        type="checkbox"
-                        id="appleCarPlay"
-                        name="appleCarPlay"
-                        checked={!!listingInfo.appleCarPlay}
-                        onChange={handleCheckChange}
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={!!listingInfo.androidAuto}
+                            onChange={handleCheckChange}
+                            name="androidAuto"
+                            id="androidAuto"
+                          />
+                        }
+                        label="Android Auto"
                       />
-                      &nbsp;Apple Car Play
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="auxInput">
-                      <input
-                        type="checkbox"
-                        id="auxInput"
-                        name="auxInput"
-                        checked={!!listingInfo.auxInput}
-                        onChange={handleCheckChange}
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={!!listingInfo.appleCarPlay}
+                            onChange={handleCheckChange}
+                            name="appleCarPlay"
+                            id="appleCarPlay"
+                          />
+                        }
+                        label="Apple Car Play"
                       />
-                      &nbsp;Auxiliary Input
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="backUpCamera">
-                      <input
-                        type="checkbox"
-                        id="backUpCamera"
-                        name="backUpCamera"
-                        checked={!!listingInfo.backUpCamera}
-                        onChange={handleCheckChange}
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={!!listingInfo.auxInput}
+                            onChange={handleCheckChange}
+                            name="auxInput"
+                            id="auxInput"
+                          />
+                        }
+                        label="Auxiliary Input"
                       />
-                      &nbsp;Backup Camera
-                    </label>
-                  </div>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={!!listingInfo.backUpCamera}
+                            onChange={handleCheckChange}
+                            name="backUpCamera"
+                            id="backUpCamera"
+                          />
+                        }
+                        label="Backup Camera"
+                      />
+                    </FormGroup>  
                   </div>             
                 )}
                 {addFeatsChecked && (
                   <div className="features-boxes w-2/5">
-                    <div>
-                      <label htmlFor="bikeRack">
-                        <input
-                          type="checkbox"
-                          id="bikeRack"
-                          name="bikeRack"
-                          checked={!!listingInfo.bikeRack}
-                          onChange={handleCheckChange}
-                        />
-                        &nbsp;Bike Rack
-                      </label>
-                    </div>
-                  <div>
-                    <label htmlFor="converTible">
-                      <input
-                        type="checkbox"
-                        id="converTible"
-                        name="converTible"
-                        checked={!!listingInfo.converTible}
-                        onChange={handleCheckChange}
+                    <FormGroup className="features-checkboxes" >
+                      <FormControlLabel 
+                        control={
+                          <Checkbox
+                            checked={!!listingInfo.bikeRack}
+                            onChange={handleCheckChange}
+                            name="bikeRack"
+                            id="bikeRack"
+                          />
+                        }
+                        label="Bike Rack"
                       />
-                      &nbsp;Convertible
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="gps">
-                      <input
-                        type="checkbox"
-                        id="gps"
-                        name="gps"
-                        checked={!!listingInfo.gps}
-                        onChange={handleCheckChange}
+                      <FormControlLabel 
+                        control={
+                          <Checkbox
+                            checked={!!listingInfo.converTible}
+                            onChange={handleCheckChange}
+                            name="converTible"
+                            id="converTible"
+                          />
+                        }
+                        label="Convertible"
                       />
-                      &nbsp;GPS
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="petFriendly">
-                      <input
-                        type="checkbox"
-                        id="petFriendly"
-                        name="petFriendly"
-                        checked={!!listingInfo.petFriendly}
-                        onChange={handleCheckChange}
+                      <FormControlLabel 
+                        control={
+                          <Checkbox
+                            checked={!!listingInfo.gps}
+                            onChange={handleCheckChange}
+                            name="gps"
+                            id="gps"
+                          />
+                        }
+                        label="GPS"
                       />
-                      &nbsp;Pet Friendly
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="tollPass">
-                      <input
-                        type="checkbox"
-                        id="tollPass"
-                        name="tollPass"
-                        checked={!!listingInfo.tollPass}
-                        onChange={handleCheckChange}
+                      <FormControlLabel 
+                        control={
+                          <Checkbox
+                            checked={!!listingInfo.petFriendly}
+                            onChange={handleCheckChange}
+                            name="petFriendly"
+                            id="petFriendly"
+                          />
+                        }
+                        label="Pet Friendly"
                       />
-                      &nbsp;Toll Pass
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="usbCharger">
-                      <input
-                        type="checkbox"
-                        id="usbCharger"
-                        name="usbCharger"
-                        checked={!!listingInfo.usbCharger}
-                        onChange={handleCheckChange}
+                      <FormControlLabel 
+                        control={
+                          <Checkbox
+                            checked={!!listingInfo.tollPass}
+                            onChange={handleCheckChange}
+                            name="tollPass"
+                            id="tollPass"
+                          />
+                        }
+                        label="Toll Pass"
                       />
-                      &nbsp;USB Charger
-                    </label>
-                  </div>
+                      <FormControlLabel 
+                        control={
+                          <Checkbox
+                            checked={!!listingInfo.usbCharger}
+                            onChange={handleCheckChange}
+                            name="usbCharger"
+                            id="usbCharger"
+                          />
+                        }
+                        label="USB Charger"
+                      />
+                    </FormGroup>
                   </div>             
                 )}
               </div>
