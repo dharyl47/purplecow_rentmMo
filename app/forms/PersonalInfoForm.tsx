@@ -280,23 +280,26 @@ const PersonalInfoForm = ({
           </div>
           <div className="lg:mt-5 mt-0 flex lg:flex-row items-center lg:gap-8 flex-col gap-0">
             <div className="flex flex-col lg:mt-0 mt-5 w-full">
-              <label className="mb-3 text-sm leading-none text-dark900">
-                Street Address
-              </label>
-              <p
-                className="mb-3 text-sm leading-none text-dark900"
-                style={{ color: "blue", cursor: "pointer" }}
-                onClick={handleModalOpen}
-              >
-                Pin on Location
-              </p>
+              <div className="flex flex-row">
+                <label className="mb-3 mr-2 text-sm leading-none text-dark900">
+                  Street Address
+                </label>
+                <p
+                  className="mb-3 text-sm leading-none text-dark900"
+                  style={{ color: "blue", cursor: "pointer" }}
+                  onClick={handleModalOpen}
+                >
+                  (Pin on Location)
+                </p>
+              </div>
+             
               <TextField
                 variant="outlined"
                 size="small"
                 onChange={handleChange}
                 name="street"
                 id="street"
-                defaultValue={personalInfo.street1}
+                defaultValue={personalInfo.street}
                 // value={personalInfo.street1 || personalInfo.street2}
                 type="text"
                 placeholder="Unit#/Street/Barangay"
@@ -304,7 +307,7 @@ const PersonalInfoForm = ({
                 required
               />
             </div>
-            <p>
+            <p className="hidden">
               <TextField
                 variant="outlined"
                 size="small"

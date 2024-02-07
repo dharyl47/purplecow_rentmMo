@@ -47,7 +47,7 @@ const Navbar = () => {
     <>
       <nav className="w-full border-b 2xl:px-36 px-4 border-none bg-black bg-opacity-0">
         <div className="py-5 lg:py-0 container mx-auto xl:px-2 px-0 flex w-full items-center justify-between">
-          <a aria-label="Home. logo" role="img" href="/landing">
+          <a aria-label="Home. logo" role="img" href="/">
             <Image
               className="w-24 lg:w-36 sm:w-32 xl:w-48  hover:scale-105 hover:drop-shadow-md transition-all"
               src={logo}

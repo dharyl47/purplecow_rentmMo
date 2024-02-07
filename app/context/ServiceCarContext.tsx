@@ -34,7 +34,8 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   // added by John Rey Update Car Details
   const updateListing = async (id: number, updatedData: Partial<ICar>) => {
     try {
-      await axios.put("/api/updatelisting", updatedData);
+      // await axios.put("/api/updatelisting", updatedData);
+      await axios.put("/api/listing", updatedData);
       await fetchData(); // Refresh the data after the update
     } catch (error) {
       console.error("Error updating listing:", error);

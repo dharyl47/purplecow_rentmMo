@@ -18,7 +18,7 @@ const Reviews = () => {
 					<Image className='object-cover select-none w-20' src={avatar} alt='logo' />
 				</div>
 				<div className='flex flex-col gap-1 w-full h-full text-gray-900'>
-					<Rating ratedColor='amber' value={reviewRating} readonly />
+					<Rating className="flex flex-row" ratedColor='amber' value={reviewRating}  />
 					<p className='font-semibold text-base'>{reviewName}</p>
 					<p className='text-xs text-gray-700'>{reviewDate}</p>
 					<p className='text-sm text-justify'>{reviewComment}</p>

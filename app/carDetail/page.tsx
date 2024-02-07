@@ -164,7 +164,7 @@ const CarDetailPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4">
               <div className="grid mt-12 grid-row-2 gap-1">
                 <div
                   className="box-with-shadow w-full bg-white shadow-md mt-2 relative pl-6"
@@ -192,20 +192,12 @@ const CarDetailPage: React.FC = () => {
                   <div className="flex items-center mt-3 ml-2 mb-10">
                     <div className="ml-2">
                       <p className="text-xs text-gray-500">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit
-                        anim id est laborum.
+                        {carDetails.description || "No Description Provided"}
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="flex mt-2">
+                <div className="flex sm:col w-full mt-2">
                   {/* First Column */}
                   <div className="box-with-shadow w-1/2 bg-white shadow-md pr-6 p-4">
                     <p className="text-xs text-gray-500 mt-5 ml-2 mb-4">
@@ -213,24 +205,30 @@ const CarDetailPage: React.FC = () => {
                     </p>
                     <ul className="ml-2 mb-10">
                       <li className="flex items-center">
-                        <span className="mr-2 checkmark">✔</span> Automatic
+                        <span className={`${carDetails?.features?.automaticTransmission && "invisible"} mr-2 checkmark`}>✔</span> 
+                        
+                        Automatic
                         Transmission
                       </li>
                       <li className="flex items-center">
-                        <span className="mr-2 checkmark">✔</span> All-wheel
+                        <span className={`${carDetails?.features?.allWheelDrive && "invisible"} mr-2 checkmark`}>✔</span> All-wheel
                         drive
                       </li>
                       <li className="flex items-center">
-                        <span className="mr-2 checkmark">✔</span> Android Auto
+                        <span className={`${carDetails?.features?.androidAuto && "invisible"} mr-2 checkmark`}>✔</span> 
+                        Android Auto
                       </li>
                       <li className="flex items-center">
-                        <span className="mr-2 checkmark">✔</span> Apple CarPlay
+                        <span className={`${carDetails?.features?.appleCarPlay && "invisible"} mr-2 checkmark`}>✔</span>
+                         Apple CarPlay
                       </li>
                       <li className="flex items-center">
-                        <span className="mr-2 checkmark">✔</span> AUX input
+                        <span className={`${carDetails?.features?.auxInput && "invisible"} mr-2 checkmark`}>✔</span> 
+                        AUX input
                       </li>
                       <li className="flex items-center">
-                        <span className="mr-2 checkmark">✔</span> Backup camera
+                        <span className={`${carDetails?.features?.backUpCamera && "invisible"} mr-2 checkmark`}>✔</span> 
+                        Backup camera
                       </li>
                     </ul>
                   </div>
@@ -242,22 +240,22 @@ const CarDetailPage: React.FC = () => {
                     </p>
                     <ul className="ml-2 mb-10">
                       <li className="flex items-center">
-                        <span className="mr-2 checkmark">✔</span> Bike rack
+                        <span className={`${carDetails?.features?.bikeRack && "invisible"} mr-2 checkmark`}>✔</span> Bike rack
                       </li>
                       <li className="flex items-center">
-                        <span className="mr-2 checkmark">✔</span> Convertible
+                        <span className={`${carDetails?.features?.converTible && "invisible"} mr-2 checkmark`}>✔</span> Convertible
                       </li>
                       <li className="flex items-center">
-                        <span className="mr-2 checkmark">✔</span> GPS
+                        <span className={`${carDetails?.features?.gps && "invisible"} mr-2 checkmark`}>✔</span> GPS
                       </li>
                       <li className="flex items-center">
-                        <span className="mr-2 checkmark">✔</span> Pet Friendly
+                        <span className={`${carDetails?.features?.petFriendly && "invisible"} mr-2 checkmark`}>✔</span> Pet Friendly
                       </li>
                       <li className="flex items-center">
-                        <span className="mr-2 checkmark">✔</span> Toll pass
+                        <span className={`${carDetails?.features?.tollPass && "invisible"} mr-2 checkmark`}>✔</span> Toll pass
                       </li>
                       <li className="flex items-center">
-                        <span className="mr-2 checkmark">✔</span> USB charger
+                        <span className={`${carDetails?.features?.usbCharger && "invisible"} mr-2 checkmark`}>✔</span> USB charger
                       </li>
                     </ul>
                   </div>

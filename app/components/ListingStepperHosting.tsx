@@ -34,6 +34,9 @@ export const initialInfoState = {
   street2: "",
   county: "",
   description: "",
+  cardNumber: "",
+  cardExpiration: "",
+  securityCode: "",
   reviews: {
 		name: "",
 		date: new Date(),
@@ -80,7 +83,25 @@ export default function ListingStepper() {
   //     setListingInfo({ ...listingInfo, [e.target.name]: e.target.value });
   //   }
   // };
+
+  const featureChecker = [
+    "automaticTransmission",
+    "allWheelDrive",
+    "androidAuto",
+    "appleCarPlay",
+    "auxInput",
+    "backUpCamera",
+    'bikeRack',
+    "converTible",
+    "gps",
+    "petFriendly",
+    "tollPass",
+    "usbCharger"
+  ]
+
   const handleChange = (e: any) => {
+      console.log(e.target.name);
+      
     if (e.target.name === "startDate" || e.target.name === "endDate") {
       setListingInfo({
         ...listingInfo,
@@ -89,7 +110,7 @@ export default function ListingStepper() {
           [e.target.name]: new Date(e.target.value), // Convert the string to a Date object
         },
       });
-    } else if (e.target.name === "checked") {
+    } else if (e.target.name === "isAlways") {
       setListingInfo({
         ...listingInfo,
         carAvailability: {
@@ -97,7 +118,15 @@ export default function ListingStepper() {
           checked: e.target.checked,
         },
       });
-    } else {
+    } else if (featureChecker.includes(e.target.name)) {
+      setListingInfo({
+        ...listingInfo,
+        features: {
+          ...listingInfo.features,
+          [e.target.name]: e.target.checked,
+        },
+      });
+    }  else {
       setListingInfo({ ...listingInfo, [e.target.name]: e.target.value });
     }
   };
@@ -129,10 +158,9 @@ const handleChangeUpdates = (b: any, m: any, lp: any, cr: any, dc: any) => {
   };
   
 
-
-
 	const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
+
     try {
       setIsLoading(true);
 
@@ -143,8 +171,6 @@ const handleChangeUpdates = (b: any, m: any, lp: any, cr: any, dc: any) => {
           typeof photo === "string" ? photo : photo.name
         ),
       };
-
-      console.log(formattedListingInfo);
 
       const response = await axios.post("/api/listing", formattedListingInfo, {
         headers: {
@@ -247,7 +273,7 @@ const handleChangeUpdates = (b: any, m: any, lp: any, cr: any, dc: any) => {
                 <BsCreditCardFill className="h-5 w-5" />
               </Step>
             </Stepper>
-            <div className="mt-5 w-max text-center">
+            <div className="my-10 w-full text-center">
               <Typography className="font-semibold font-Messina-Sans text-center">
                 {activeStep == 0 ? "Personal Information" : ""}
                 {activeStep == 1 ? "Listing Information" : ""}

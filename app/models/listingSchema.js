@@ -69,7 +69,9 @@ const listingSchema = new Schema(
     zipCode: String,
     lat: String,
     lon: String,
-    
+    cardNumber: String,
+    cardExpiration: String,
+    securityCode: Date,
   },
   {
     timestamps: true,

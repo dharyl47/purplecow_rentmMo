@@ -37,7 +37,7 @@ const BillingInfoForm = ({ handleChange, billingInfo }: Props) => {
             </label>
             <TextField
               size="small"
-              //onChange={}
+              onChange={handleChange}
               defaultValue={""}
               name="cardNumber"
               id="cardNumber"
@@ -53,7 +53,7 @@ const BillingInfoForm = ({ handleChange, billingInfo }: Props) => {
             </label>
             <TextField
               size="small"
-              //onChange={}
+              onChange={handleChange}
               defaultValue=""
               name="cardExpiration"
               id="cardExpiration"
@@ -68,7 +68,7 @@ const BillingInfoForm = ({ handleChange, billingInfo }: Props) => {
             </label>
             <TextField
               size="small"
-              //onChange={}
+              onChange={handleChange}
               defaultValue={""}
               name="securityCode"
               id="securityCode"

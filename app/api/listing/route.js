@@ -12,6 +12,9 @@ export async function POST(request) {
       features,
       carRegistrationNumber,
       description,
+      cardNumber,
+      cardExpiration,
+      securityCode,
       city,
       country,
       email,
@@ -37,24 +40,27 @@ export async function POST(request) {
       carAvailability: {
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
-        checked: false,
+        checked: carAvailability.checked,
       },
       features: {
-        automaticTransmission: false,
-        allWheelDrive: false,
-        androidAuto: false,
-        appleCarPlay: false,
-        auxInput: false,
-        backUpCamera: false,
-        bikeRack: false,
-        converTible: false,
-        gps: false,
-        petFriendly: false,
-        tollPass: false,
-        usbCharger: false,
+        automaticTransmission: features.automaticTransmission,
+        allWheelDrive: features.allWheelDrive,
+        androidAuto: features.androidAuto,
+        appleCarPlay: features.appleCarPlay,
+        auxInput: features.auxInput,
+        backUpCamera: features.backUpCamera,
+        bikeRack: features.bikeRack,
+        converTible: features.converTible,
+        gps: features.gps,
+        petFriendly: features.petFriendly,
+        tollPass: features.tollPass,
+        usbCharger: features.usbCharger,
       },
       carRegistrationNumber,
       description,
+      cardNumber,
+      cardExpiration,
+      securityCode,
       city,
       country,
       email,
@@ -76,6 +82,33 @@ export async function POST(request) {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
+
+export async function PUT(request) {
+  try {
+    const requestData = await request.json();
+
+    console.log(requestData._id)
+
+    const { _id, ...updateData } = requestData;
+
+    await connectMongoDB();
+
+    if (updateData.carAvailability) {
+      const { startDate, endDate } = updateData.carAvailability;
+      updateData.carAvailability.startDate = new Date(startDate).toISOString();
+      updateData.carAvailability.endDate = new Date(endDate).toISOString();
+    }
+
+    await ListingModel.findByIdAndUpdate(_id, updateData);
+
+    return NextResponse.json({ message: "Listing Updated" }, { status: 200 });
+  } catch (error) {
+    console.error("Error updating listing:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+
+
 export async function GET() {
   try {
     await connectMongoDB();

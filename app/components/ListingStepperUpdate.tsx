@@ -27,16 +27,50 @@ export default function ListingStepper({ itemData, onSubmit, handleChangeUpdates
 	const [listingInfo, setListingInfo] = useState(itemData);
 
 	useEffect(() => {
+		console.log(itemData)
 		setListingInfo(itemData);
 	}, [itemData]);
 
+	const featureChecker = [
+		"automaticTransmission",
+		"allWheelDrive",
+		"androidAuto",
+		"appleCarPlay",
+		"auxInput",
+		"backUpCamera",
+		'bikeRack',
+		"converTible",
+		"gps",
+		"petFriendly",
+		"tollPass",
+		"usbCharger"
+	  ]
+	
 	const handleChange = (e: any) => {
+		console.log(e.target.name)
+
 		if (e.target.name == 'startDate' || e.target.name == 'endDate') {
 			setListingInfo({
 				...listingInfo,
 				carAvailability: { ...listingInfo.carAvailability, [e.target.name]: e.target.value },
 			});
-		} else setListingInfo({ ...listingInfo, [e.target.name]: e.target.value });
+		} else if (e.target.name === "isAlways") {
+			setListingInfo({
+			  ...listingInfo,
+			  carAvailability: {
+				...listingInfo.carAvailability,
+				checked: e.target.checked,
+			  },
+			});
+		} else if (featureChecker.includes(e.target.name)) {
+			setListingInfo({
+				...listingInfo,
+				features: {
+				...listingInfo.features,
+				[e.target.name]: e.target.checked,
+				},
+			});
+		}  else setListingInfo({ ...listingInfo, [e.target.name]: e.target.value });
 	};
 
 	const handleSubmit = async (e: React.FormEvent): Promise<void> => {
@@ -57,12 +91,13 @@ export default function ListingStepper({ itemData, onSubmit, handleChangeUpdates
 					formData.append(key, listingInfo[key]);
 				}
 			}
+
 			onSubmit({
 				...listingInfo, // Include the existing listingInfo data
 				// You may want to add additional fields or modify the data as needed
 			  });
 
-			window.location.href = 'profile';
+			// window.location.href = 'profile';
 		} catch (error) {
 			setIsComplete(false);
 			console.log(error);
@@ -130,7 +165,7 @@ const handleChangeUpdate = (x: any, y: any, c: any, s: any, ct: any, s1: any, s2
 								<BsCreditCardFill className='h-5 w-5' />
 							</Step>
 						</Stepper>
-						<div className='mt-5 w-max text-center'>
+						<div className="my-10 w-full text-center">
 							<Typography className='font-semibold font-Messina-Sans text-center'>
 								{activeStep == 0 ? 'Personal Information' : ''}
 								{activeStep == 1 ? 'Listing Information' : ''}
@@ -150,7 +185,7 @@ const handleChangeUpdate = (x: any, y: any, c: any, s: any, ct: any, s1: any, s2
 						<button
 							type='button'
 							onClick={handlePrev}
-							className='rounded-full px-4 py-2 bg-dark200 ring-dark400 disabled:hidden hover:shadow-md transition-shadow'
+							className='rounded-full bg-gray-200 px-4 py-2 bg-dark200 ring-dark400 disabled:hidden hover:shadow-md transition-shadow'
 							disabled={isFirstStep}
 						>
 							{'Back'}
@@ -160,14 +195,14 @@ const handleChangeUpdate = (x: any, y: any, c: any, s: any, ct: any, s1: any, s2
 							hidden={activeStep == 2}
 							type='button'
 							onClick={handleNext}
-							className='rounded-full px-4 py-2 bg-yellow hover:shadow-md transition-shadow'
+							className='rounded-full bg-yellow-500 px-4 py-2 bg-yellow hover:shadow-md transition-shadow'
 						>
 							Next
 						</button>
 						<button
 							hidden={activeStep < 2}
 							type='submit'
-							className='rounded-full px-4 py-2 bg-yellow hover:shadow-md transition-shadow'
+							className='rounded-full  bg-yellow-500 px-4 py-2 bg-yellow hover:shadow-md transition-shadow'
 						>
 							Finish
 						</button>

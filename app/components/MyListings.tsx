@@ -61,7 +61,8 @@ const MyListings = () => {
   // Add this function to handle the update
   const handleSubmit = async (updatedData: Partial<ICar>) => {
     try {
-      await updateListing (updateData, updatedData);
+      // await updateListing(updatedData);
+      await axios.put("/api/listing", updatedData);
       setUpdate(false);
       fetchData(); // Refresh the data after the update
     } catch (error) {
