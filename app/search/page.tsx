@@ -7,57 +7,57 @@ import { BiSearch } from "react-icons/bi";
 import { useServiceCarContext } from "../context/ServiceCarContext";
 import { TbListTree } from "react-icons/tb";
 import { FaMapMarkedAlt } from "react-icons/fa";
-const cars = [
-  {
-    id: 1,
-    title: "Car 1",
-    price: 20000,
-    image: "/assets/images/testImages/toyotaVios.jpg",
-    rating: 4.5,
-    totalReviews: 100,
-  },
-  {
-    id: 2,
-    title: "Car 2",
-    price: 25000,
-    image: "/assets/images/testImages/toyotaVios.jpg",
-    rating: 4.8,
-    totalReviews: 200,
-  },
-  {
-    id: 3,
-    title: "Car 2",
-    price: 25000,
-    image: "/assets/images/testImages/toyotaVios.jpg",
-    rating: 4.8,
-    totalReviews: 200,
-  },
-  {
-    id: 4,
-    title: "Car 2",
-    price: 25000,
-    image: "/assets/images/testImages/toyotaVios.jpg",
-    rating: 4.8,
-    totalReviews: 200,
-  },
-  {
-    id: 5,
-    title: "Car 2",
-    price: 25000,
-    image: "/assets/images/testImages/toyotaVios.jpg",
-    rating: 4.8,
-    totalReviews: 200,
-  },
-  {
-    id: 6,
-    title: "Car 2",
-    price: 25000,
-    image: "/assets/images/testImages/toyotaVios.jpg",
-    rating: 4.8,
-    totalReviews: 200,
-  },
-  // Add more cars as needed
-];
+// const cars = [
+//   {
+//     id: 1,
+//     title: "Car 1",
+//     price: 20000,
+//     image: "/assets/images/testImages/toyotaVios.jpg",
+//     rating: 4.5,
+//     totalReviews: 100,
+//   },
+//   {
+//     id: 2,
+//     title: "Car 2",
+//     price: 25000,
+//     image: "/assets/images/testImages/toyotaVios.jpg",
+//     rating: 4.8,
+//     totalReviews: 200,
+//   },
+//   {
+//     id: 3,
+//     title: "Car 2",
+//     price: 25000,
+//     image: "/assets/images/testImages/toyotaVios.jpg",
+//     rating: 4.8,
+//     totalReviews: 200,
+//   },
+//   {
+//     id: 4,
+//     title: "Car 2",
+//     price: 25000,
+//     image: "/assets/images/testImages/toyotaVios.jpg",
+//     rating: 4.8,
+//     totalReviews: 200,
+//   },
+//   {
+//     id: 5,
+//     title: "Car 2",
+//     price: 25000,
+//     image: "/assets/images/testImages/toyotaVios.jpg",
+//     rating: 4.8,
+//     totalReviews: 200,
+//   },
+//   {
+//     id: 6,
+//     title: "Car 2",
+//     price: 25000,
+//     image: "/assets/images/testImages/toyotaVios.jpg",
+//     rating: 4.8,
+//     totalReviews: 200,
+//   },
+//   // Add more cars as needed
+// ];
 
 const CarListingPage = () => {
   const { data, fetchData } = useServiceCarContext();

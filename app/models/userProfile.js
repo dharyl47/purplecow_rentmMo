@@ -6,6 +6,11 @@ const userSchema = new Schema(
     lastName: String,
     email: String,
     password: String,
+    phoneNumber: String,
+    aboutMe: String,
+    language: String,
+    profession: String,
+    profilePicture: String,
     authProvider: String,
   },
   {

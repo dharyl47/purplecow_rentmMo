@@ -1,63 +1,68 @@
-'use client';
-import React, { useState, useEffect, useRef } from 'react';
-import { ICar } from '../types/types';
-import imageUnavailable from '../assets/logo/image_not_available.png';
-import { CardContent, Card, Pagination } from '@mui/material';
-import { BsFillStarFill, BsMapFill, BsTelephoneFill, BsCashCoin } from 'react-icons/bs';
-import axios from 'axios';
-import Modal from 'react-responsive-modal';
-import ListingStepper from './ListingStepperUpdate';
-import { initialInfoState } from '../types/initialInfo';
-import iconsCar from '../assets/logo/icons8-car.png'
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import { ICar } from "../types/types";
+import imageUnavailable from "../assets/logo/image_not_available.png";
+import { CardContent, Card, Pagination } from "@mui/material";
+import {
+  BsFillStarFill,
+  BsMapFill,
+  BsTelephoneFill,
+  BsCashCoin,
+} from "react-icons/bs";
+import axios from "axios";
+import Modal from "react-responsive-modal";
+import ListingStepper from "./ListingStepperUpdate";
+import { initialInfoState } from "../types/initialInfo";
+import iconsCar from "../assets/logo/icons8-car.png";
 import Image from "next/image";
-import 'react-responsive-modal/styles.css';
+import "react-responsive-modal/styles.css";
 import noImage from "../assets/images/noImage.png";
-import { useServiceCarContext } from '../context/ServiceCarContext';
-
-
+import { useServiceCarContext } from "../context/ServiceCarContext";
 
 const MyListings = () => {
-	const [update, setUpdate] = useState(false);
-	const [updateData, setUpdateData] = useState(initialInfoState);
-	const [itemsPerPage, setItemsPerPage] = useState(4); // Number of items to display per page
-	//const [data, setData] = useState<ICar[]>([]);
-	const [deleteItem, setDeleteItem] = useState<ICar>();
-	const [currentItems, setCurrentItems] = useState<ICar[]>([]); 
-	const [currentPage, setCurrentPage] = useState(1);
-	const [count, setCount] = useState(0);
-	const [modalIsOpen, setIsOpen] = React.useState(false);
-	const updateRef = useRef<HTMLDivElement | null>(null);
+  const [update, setUpdate] = useState(false);
+  const [updateData, setUpdateData] = useState(initialInfoState);
+  const [itemsPerPage, setItemsPerPage] = useState(4); // Number of items to display per page
+  //const [data, setData] = useState<ICar[]>([]);
+  const [deleteItem, setDeleteItem] = useState<ICar>();
+  const [currentItems, setCurrentItems] = useState<ICar[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [count, setCount] = useState(0);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const updateRef = useRef<HTMLDivElement | null>(null);
 
   const { data, fetchData, updateListing } = useServiceCarContext();
   // console.log("My data:", data);
 
-	const handleUpdate = (item: any) => {
-		setUpdate(!update);
-		setUpdateData(item);
-		if (update && updateRef.current) {
-			updateRef.current.scrollIntoView({ behavior: 'smooth' });
-		}
-	};
+  const handleUpdate = (item: any) => {
+    setUpdate(!update);
+    setUpdateData(item);
+    if (update && updateRef.current) {
+      updateRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
-	function openModal(item: ICar) {
-		setIsOpen(true);
-		setDeleteItem(item);
-	}
+  function openModal(item: ICar) {
+    setIsOpen(true);
+    setDeleteItem(item);
+  }
 
-	function closeModal() {
-		setIsOpen(false);
-	}
+  function closeModal() {
+    setIsOpen(false);
+  }
 
-	const handleDelete = async () => {
-		const deleteItemID = deleteItem?._id;
-		try {
-			const response = await axios.delete(`/api/listing/${deleteItemID}`);
-			window.location.reload();
-		} catch (error) {
-			console.log(error);
-		}
-	};
+  const handleDelete = async () => {
+    const deleteItemID = deleteItem?._id;
 
+    try {
+      const response = await axios.delete(`/api/listing`, {
+        data: { _id: deleteItemID },
+      });
+      window.location.reload(); // Reload the page after successful deletion
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // Add this function to handle the update
   const handleSubmit = async (updatedData: Partial<ICar>) => {
     try {
@@ -71,43 +76,45 @@ const MyListings = () => {
     }
   };
 
-	useEffect(() => {
-		const updateItemsPerPage = () => {
-			if (window.innerWidth < 600) {
-				setItemsPerPage(1);
-			} else if (window.innerWidth < 1630) {
-				setItemsPerPage(2);
-			} else if (window.innerWidth < 1900) {
-				setItemsPerPage(3);
-			} else {
-				setItemsPerPage(4);
-			}
-		};
+  useEffect(() => {
+    const updateItemsPerPage = () => {
+      if (window.innerWidth < 600) {
+        setItemsPerPage(1);
+      } else if (window.innerWidth < 1630) {
+        setItemsPerPage(2);
+      } else if (window.innerWidth < 1900) {
+        setItemsPerPage(3);
+      } else {
+        setItemsPerPage(4);
+      }
+    };
 
-		// Initial update
-		updateItemsPerPage();
+    // Initial update
+    updateItemsPerPage();
 
-		// Event listener for window resize
-		window.addEventListener('resize', updateItemsPerPage);
+    // Event listener for window resize
+    window.addEventListener("resize", updateItemsPerPage);
 
-		// Clean up the event listener when component unmounts
-		return () => {
-			window.removeEventListener('resize', updateItemsPerPage);
-		};
-	}, []);
+    // Clean up the event listener when component unmounts
+    return () => {
+      window.removeEventListener("resize", updateItemsPerPage);
+    };
+  }, []);
 
-	useEffect(() => {
-		const indexOfLastItem = currentPage * itemsPerPage;
-		const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-		const toDisplay = Array.isArray(data) ? data.slice(indexOfFirstItem, indexOfLastItem) : [];
-		const displayCount = Math.ceil(data.length / itemsPerPage);
-		setCount(displayCount);
-		setCurrentItems(toDisplay);
-	}, [currentPage, data]);
+  useEffect(() => {
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const toDisplay = Array.isArray(data)
+      ? data.slice(indexOfFirstItem, indexOfLastItem)
+      : [];
+    const displayCount = Math.ceil(data.length / itemsPerPage);
+    setCount(displayCount);
+    setCurrentItems(toDisplay);
+  }, [currentPage, data]);
 
-	const handlePageChange = (newPage: any) => {
-		setCurrentPage(newPage);
-	};
+  const handlePageChange = (newPage: any) => {
+    setCurrentPage(newPage);
+  };
 
   const handleChangeUpdates = (name: string, value: any) => {
     // Call the parent handleChange function to update the state
@@ -119,8 +126,7 @@ const MyListings = () => {
     });
   };
 
-  
-	return (
+  return (
     <>
       <div
         ref={update ? updateRef : null}
@@ -132,7 +138,7 @@ const MyListings = () => {
             {data.length + " Listing/s"}
           </p>
         </div>
-        <div className="w-full items-center justify-center flex flex-wrap gap-4 mx-auto">
+        <div className="w-full items-center justify-start flex flex-wrap gap-4 mx-auto">
           {currentItems.map((item, index) => (
             <Card
               className="drop-shadow-lg 2xl:hover:-translate-y-2 hover:transition-transform sm:w-64 w-full"
@@ -223,7 +229,11 @@ const MyListings = () => {
           update ? "scale-y-100 h-fit" : "scale-y-0 h-0"
         }`}
       >
-    <ListingStepper itemData={updateData} onSubmit={handleSubmit} handleChangeUpdates={handleChangeUpdates}/>
+        <ListingStepper
+          itemData={updateData}
+          onSubmit={handleSubmit}
+          handleChangeUpdates={handleChangeUpdates}
+        />
       </div>
     </>
   );

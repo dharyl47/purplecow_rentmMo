@@ -87,8 +87,6 @@ export async function PUT(request) {
   try {
     const requestData = await request.json();
 
-    console.log(requestData._id)
-
     const { _id, ...updateData } = requestData;
 
     await connectMongoDB();
@@ -119,6 +117,25 @@ export async function GET() {
     return NextResponse.json({ listings }, { status: 200 });
   } catch (error) {
     console.error("Error fetching listings:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+
+export async function DELETE(request) {
+  try {
+    const { _id } = await request.json();
+
+    await connectMongoDB();
+
+    const deletedListing = await ListingModel.findByIdAndDelete(_id);
+
+    if (!deletedListing) {
+      return NextResponse.json({ message: "Listing not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: "Listing deleted" }, { status: 200 });
+  } catch (error) {
+    console.error("Error deleting listing:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

@@ -1,11 +1,9 @@
-'use client';
+"use client";
+
 import React, { useState } from "react";
 import axios from "axios";
-import {
-  ButtonLinkFill,
-  ButtonFill,
-  GoogleButton,
-} from "../../components/Buttons";
+
+import { GoogleButton } from "../../components/Buttons";
 import { TextField, Button } from "@mui/material";
 
 interface UserSignUp {
@@ -13,6 +11,12 @@ interface UserSignUp {
   lastName: string;
   email: string;
   password: string;
+  confirmPassword: string;
+  phoneNumber: String;
+  aboutMe: String;
+  language: String;
+  profession: String;
+  profilePicture: String;
   authProvider: string;
 }
 const initialUserState: UserSignUp = {
@@ -20,32 +24,45 @@ const initialUserState: UserSignUp = {
   lastName: "",
   email: "",
   password: "",
+  confirmPassword: "",
+  phoneNumber: "",
+  aboutMe: "",
+  language: "",
+  profession: "",
+  profilePicture: "",
   authProvider: "form",
 };
 
 const GButton = () => {
   const [user, setUser] = useState(initialUserState);
 
- const handleSubmit = async (e: any) => {
-   e.preventDefault();
-   try {
-     // Check if the email exists before proceeding with registration
-     const emailCheckResponse = await axios.get(
-       `/api/users?email=${user.email}`
-     );
-     alert("Email already exists");
-   } catch (error) {
-     console.error("Catch error: "+error);
-     try {
-     const registrationResponse = await axios.post("/api/users", user);
-      console.log(registrationResponse.data);
-       } catch (error) {}
-   }
- };
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
 
- const handleChange = (e: any) => {
-   setUser({ ...user, [e.target.name]: e.target.value });
- };
+    const { confirmPassword, ...userData } = user;
+
+    if (user.password !== user.confirmPassword) {
+      alert("Password must be match.");
+
+      return;
+    }
+
+    try {
+      await axios.post("/api/users", userData);
+
+      window.location.href = "/login";
+    } catch (error) {
+      // Display an error message if there's an error
+      const errorMessage =
+        error?.response?.data?.message ||
+        "Something went wrong. Please try again.";
+      alert(errorMessage);
+    }
+  };
+
+  const handleChange = (e: any) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="flex flex-col items-center -mt-14 justify-center w-full min-h-screen px-0 font-Messina-Sans overflow-x-hidden">
@@ -72,6 +89,7 @@ const GButton = () => {
         <div className="flex flex-col gap-5 sm:flex-row">
           <div className="flex flex-col w-full">
             <TextField
+              required
               size="small"
               variant="outlined"
               label="First Name"
@@ -87,6 +105,7 @@ const GButton = () => {
           </div>
           <div className="flex flex-col w-full">
             <TextField
+              required
               size="small"
               variant="outlined"
               label="Last Name"
@@ -103,6 +122,7 @@ const GButton = () => {
         </div>
         <div className="mt-6  w-full">
           <TextField
+            required
             size="small"
             variant="outlined"
             label="Email"
@@ -116,20 +136,102 @@ const GButton = () => {
             placeholder="e.g: john@gmail.com"
           />
         </div>
+
         <div className="mt-6  w-full">
           <TextField
             size="small"
             variant="outlined"
-            label="Password"
+            label="Phone Number"
             sx={{ width: "100%", mt: 1 }}
             onChange={handleChange}
-            value={user.password}
-            defaultValue={""}
-            id="password"
-            name="password"
-            type="password"
-            placeholder=""
+            value={user.phoneNumber}
+            defaultValue={" "}
+            id="phoneNumber"
+            name="phoneNumber"
+            type="text"
+            placeholder="e.g: +63 02 XXXX XXXX"
           />
+        </div>
+
+        <div className="mt-6  w-full">
+          <TextField
+            size="small"
+            variant="outlined"
+            label="Profession"
+            sx={{ width: "100%", mt: 1 }}
+            onChange={handleChange}
+            value={user.profession}
+            defaultValue={" "}
+            id="profession"
+            name="profession"
+            type="text"
+            placeholder="e.g: Web Developer, Designer"
+          />
+        </div>
+
+        <div className="mt-6  w-full">
+          <TextField
+            size="small"
+            variant="outlined"
+            label="Language"
+            sx={{ width: "100%", mt: 1 }}
+            onChange={handleChange}
+            value={user.language}
+            defaultValue={" "}
+            id="language"
+            name="language"
+            type="text"
+            placeholder="e.g: English, Filipino"
+          />
+        </div>
+
+        <div className="flex flex-col gap-5 sm:flex-row">
+          <div className="mt-6  w-full">
+            <TextField
+              required
+              size="small"
+              variant="outlined"
+              label="Password"
+              sx={{ width: "100%", mt: 1 }}
+              onChange={handleChange}
+              value={user.password}
+              defaultValue={""}
+              id="password"
+              name="password"
+              type="password"
+              placeholder=""
+            />
+          </div>
+
+          <div className="mt-6  w-full">
+            <TextField
+              required
+              size="small"
+              variant="outlined"
+              label="Confirm Password"
+              sx={{ width: "100%", mt: 1 }}
+              onChange={handleChange}
+              value={user.confirmPassword}
+              defaultValue={""}
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              placeholder=""
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-row text-sm mt-4 font-medium leading-none text-gray-500">
+          <p className="mr-1">Already have an account? </p>
+          <a
+            tabIndex={0}
+            role="link"
+            href="/login"
+            aria-label="Sign up here"
+            className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer"
+          >
+            login in here
+          </a>
         </div>
 
         <div className="mt-8 flex xl:flex-row flex-col gap-5">
@@ -137,7 +239,8 @@ const GButton = () => {
             className="focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 text-sm font-semibold leading-none text-black focus:outline-none bg-yellow-300 rounded hover:opacity-70 py-4 w-full transition"
             variant="contained"
             color="primary"
-            onClick={handleSubmit} // Automatically check email and proceed with registration
+            type="submit"
+            // onClick={handleSubmit} // Automatically check email and proceed with registration
           >
             Create my account
           </Button>

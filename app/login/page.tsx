@@ -15,7 +15,7 @@ function Login() {
           className="h-20 inline self-center no-select"
           src={RentMoLOGO}
           alt="logo"
-        ></Image>
+        />
         <GButton />
       </div>
     </div>

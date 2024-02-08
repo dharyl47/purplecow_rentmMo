@@ -1,14 +1,10 @@
-'use client';
+"use client";
 import React, { useState } from "react";
 import axios from "axios";
-import {
-  ButtonLinkFill,
-  ButtonFill,
-  GoogleButton,
-} from "../../components/Buttons";
+import { GoogleButton } from "../../components/Buttons";
 import { TextField, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useUser } from './../../hooks/useUser';
+import { useUser } from "./../../hooks/useUser";
 
 interface UserSignUp {
   firstName: string;
@@ -28,28 +24,46 @@ const initialUserState: UserSignUp = {
 const GButton = () => {
   const [user, setUser] = useState(initialUserState);
   const [isFailure, setIsFailure] = useState(false);
-   const store = useUser();
+  const store = useUser();
   const navigate = useRouter();
 
- const handleSubmit = async (e: any) => {
-   e.preventDefault();
-   try {
-     // Check if the email exists before proceeding with registration
-     const emailCheckResponse = await axios.get(
-       `/api/users?email=${user.email}`
-     );
-     
-     store.setUser(emailCheckResponse.data);
-     navigate.push("/profile");
-   } catch (error) {
-     setIsFailure(true);
-     return;
-   }
- };
+  // const handleSubmit = async (e: any) => {
+  //   e.preventDefault();
+  //   try {
+  //     // Check if the email exists before proceeding with registration
+  //     const emailCheckResponse = await axios.get(
+  //       `/api/users?email=${user.email}`
+  //     );
 
- const handleChange = (e: any) => {
-   setUser({ ...user, [e.target.name]: e.target.value });
- };
+  //     store.setUser(emailCheckResponse.data.user);
+  //     navigate.push("/profile");
+  //   } catch (error) {
+  //     setIsFailure(true);
+  //     return;
+  //   }
+  // };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      const response = await axios.get(`/api/login`, {
+        params: {
+          email: user.email,
+          password: user.password,
+        },
+      });
+
+      store.setUser(response.data.user);
+      navigate.push("/profile");
+    } catch (error) {
+      setIsFailure(true);
+      return;
+    }
+  };
+
+  const handleChange = (e: any) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="flex flex-col items-center -mt-14 justify-center w-full min-h-screen px-0 font-Messina-Sans overflow-x-hidden">
@@ -65,19 +79,7 @@ const GButton = () => {
         >
           <p>Login to your account</p>
         </div>
-        <div className="text-sm mt-4 font-medium leading-none text-gray-500">
-          <p>Dont have account? </p>
-          <a
-            tabIndex={0}
-            role="link"
-            href="/register"
-            aria-label="Sign up here"
-            className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer"
-          >
-            {" "}
-            Sign up here
-          </a>
-        </div>
+
         <GoogleButton />
         <div className="w-full flex items-center justify-between py-5">
           <hr className="w-full bg-slate-950" />
@@ -118,8 +120,21 @@ const GButton = () => {
             />
           </div>
           <small className={`text-red-500 ${isFailure ? "visible" : "hidden"}`}>
-            Invalid credentials
+            Invalid email or password
           </small>
+        </div>
+
+        <div className="flex flex-row text-sm mt-4 font-medium leading-none text-gray-500">
+          <p className="mr-1">Dont have account? </p>
+          <a
+            tabIndex={0}
+            role="link"
+            href="/registration"
+            aria-label="Sign up here"
+            className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer"
+          >
+            Sign up here
+          </a>
         </div>
 
         <div className="mt-8 flex xl:flex-row flex-col gap-5">

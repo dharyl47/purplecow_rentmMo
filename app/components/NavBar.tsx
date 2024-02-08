@@ -1,49 +1,49 @@
-'use client';
-import { useState } from 'react';
-import { useUser } from  './../hooks/useUser';
-import { ButtonLink, ButtonLinkNoFillRounded, ButtonLinkFill } from './Buttons';
-import { FaBars, FaXmark } from 'react-icons/fa6';
-import { BiUser, BiHelpCircle, BiLogOut } from 'react-icons/bi';
-import axios from 'axios';
-import  Link  from 'next/link';
-import { useRouter } from 'next/navigation'; // Import useRouter from 'next/router' to access the routing functionality
-import logo from '../assets/logo/RentMo-logo.svg';
-import avatar from '../assets/logo/avatar-logo.png';
-import Image from 'next/image';
+"use client";
+import { useState } from "react";
+import { useUser } from "./../hooks/useUser";
+import { ButtonLink, ButtonLinkNoFillRounded, ButtonLinkFill } from "./Buttons";
+import { FaBars, FaXmark } from "react-icons/fa6";
+import { BiUser, BiHelpCircle, BiLogOut } from "react-icons/bi";
+import axios from "axios";
+import Link from "next/link";
+import { useRouter } from "next/navigation"; // Import useRouter from 'next/router' to access the routing functionality
+import logo from "../assets/logo/RentMo-logo.svg";
+import avatar from "../assets/logo/avatar-logo.png";
+import Image from "next/image";
 
 const Navbar = () => {
-	
-	const [profile, setProfile] = useState(false);
-	const [show, setShow] = useState(false);
-	const store = useUser();
-	const { user = {} }: any = store?.user || {};
+  const [profile, setProfile] = useState(false);
+  const [show, setShow] = useState(false);
+  const store = useUser();
+  const user: any = store?.user || {};
 
-	  const router = useRouter();
+  const router = useRouter();
 
   const scrollByScreenHeight = () => {
     // Use the router object to navigate
-    router.push('/');
+    router.push("/");
 
     setTimeout(() => {
       const screenHeight = window.innerHeight;
       window.scrollBy({
         top: screenHeight,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     }, 0); // Use a small timeout to ensure the navigation has taken place
   };
 
   async function handleLogout() {
     try {
-      const response = await axios.get('/api/v1/auth/logout');
+      // const response = await axios.get('/api/v1/auth/logout');
       // Use the router object to navigate
-      router.push('/');
+      await store?.setUser("");
+      router.push("/");
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
-	return (
+  return (
     <>
       <nav className="w-full border-b 2xl:px-36 px-4 border-none bg-black bg-opacity-0">
         <div className="py-5 lg:py-0 container mx-auto xl:px-2 px-0 flex w-full items-center justify-between">
@@ -153,14 +153,14 @@ const Navbar = () => {
                   <Image
                     className="h-10 rounded-full invert select-none"
                     src={avatar}
-					width={40}
+                    width={40}
                     alt="logo"
                   />
                   <a
                     href="/profile"
                     className="select-none text-white lg:text-lg text-xl ml-2 transition-colors font-bold pointer-events-auto lg:pointer-events-none"
                   >
-                    {user.firstName + " " + user.lastName}
+                    {user?.firstName + " " + user?.lastName}
                   </a>
                 </li>
                 <li

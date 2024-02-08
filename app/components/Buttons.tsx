@@ -2,6 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import gmailLogo from "../assets/logo/icons8-gmail.svg";
 // ... (interface definitions and other components remain unchanged)
 
 interface ButtonProps {
@@ -17,7 +19,7 @@ export const ButtonFillRoundedSearch = ({ text }: any) => {
   const router = useRouter();
   const handleFindRide = () => {
     router.push("/search");
-  }; 
+  };
   return (
     <button
       className="text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition"
@@ -106,15 +108,20 @@ export const GoogleButton = () => {
       role="button"
       className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-10"
     >
-      <svg
+      {/* <svg
         width={19}
         height={20}
         viewBox="0 0 19 20"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-      >
-        {/* ... SVG paths */}
-      </svg>
+      ></svg> */}
+      <Image
+        className="inline self-center no-select"
+        src={gmailLogo}
+        alt="logo"
+        width={19}
+        height={10}
+      />
       <p className="text-base font-medium ml-4 text-gray-700">
         Continue with Google
       </p>

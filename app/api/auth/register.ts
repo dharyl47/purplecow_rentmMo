@@ -1,9 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import connectMongoDB from "@/app/lib/mongodb";
 import UserSchema from "@/app/models/userProfile";
+
+
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
     const { email } = req.query;
+
     if (!email) {
       return res.status(400).json({ message: "Email is required" });
     }

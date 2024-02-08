@@ -27,7 +27,6 @@ export default function ListingStepper({ itemData, onSubmit, handleChangeUpdates
 	const [listingInfo, setListingInfo] = useState(itemData);
 
 	useEffect(() => {
-		console.log(itemData)
 		setListingInfo(itemData);
 	}, [itemData]);
 

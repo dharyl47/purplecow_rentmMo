@@ -23,7 +23,7 @@ const HowItWorks = () => {
 						/>
 					</div>
 					<div className='w-full self-center flex flex-col gap-2 2xl:px-20 lg:px-40 md:px-20 px-0'>
-						<h1 className='md:text-[40px] sm:text-2xl text-xl font-bold text-black dark:text-black'>
+						<h1 className='md:text-[40px] sm:text-2xl text-xl font-bold text-black dark:text-black mb-5'>
 							How RentMo Works
 						</h1>
 						<h2 className='md:text-xl text-base font-bold text-black dark:text-black'>1. Sign Up and Apply</h2>
@@ -45,7 +45,7 @@ const HowItWorks = () => {
 						</p>
 						<a
 							href='/support'
-							className='px-6 py-4 font-bold text-md bg-yellow w-fit rounded-full shadow-md hover:scale-105 transition-transform'
+							className='mt-2 bg-yellow-300 px-6 py-3 font-bold text-md bg-yellow w-fit rounded-full shadow-md hover:scale-105 transition-transform'
 						>
 							Learn More
 						</a>
@@ -64,7 +64,7 @@ const HowItWorks = () => {
 						/>
 					</div>
 					<div className='w-full self-center flex flex-col gap-6 2xl:px-20 lg:px-40 md:px-20 px-0'>
-						<h1 className='md:text-[40px] sm:text-2xl text-xl font-bold text-black dark:text-black'>
+						<h1 className='md:text-[40px] sm:text-2xl text-xl font-bold text-black dark:text-black mb-5'>
 							Why Choose RentMo?
 						</h1>
 						<div className='flex sm:flex-row flex-col gap-6 h-fit items-center'>
