@@ -9,6 +9,7 @@ import {
   BsTelephoneFill,
   BsCashCoin,
 } from "react-icons/bs";
+
 import axios from "axios";
 import Modal from "react-responsive-modal";
 import ListingStepper from "./ListingStepperUpdate";
@@ -19,7 +20,14 @@ import "react-responsive-modal/styles.css";
 import noImage from "../assets/images/noImage.png";
 import { useServiceCarContext } from "../context/ServiceCarContext";
 
+import { useUser } from "./../hooks/useUser";
+
 const MyListings = () => {
+  const store = useUser();
+  const user: any = store?.user || {};
+
+  const [myListing, setMyListing] = useState<ICar[]>([]);
+
   const [update, setUpdate] = useState(false);
   const [updateData, setUpdateData] = useState(initialInfoState);
   const [itemsPerPage, setItemsPerPage] = useState(4); // Number of items to display per page
@@ -31,8 +39,7 @@ const MyListings = () => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const updateRef = useRef<HTMLDivElement | null>(null);
 
-  const { data, fetchData, updateListing } = useServiceCarContext();
-  // console.log("My data:", data);
+  const { data, fetchData } = useServiceCarContext();
 
   const handleUpdate = (item: any) => {
     setUpdate(!update);
@@ -55,7 +62,7 @@ const MyListings = () => {
     const deleteItemID = deleteItem?._id;
 
     try {
-      const response = await axios.delete(`/api/listing`, {
+      await axios.delete(`/api/listing`, {
         data: { _id: deleteItemID },
       });
       window.location.reload(); // Reload the page after successful deletion
@@ -70,13 +77,30 @@ const MyListings = () => {
       await axios.put("/api/listing", updatedData);
       setUpdate(false);
       fetchData(); // Refresh the data after the update
+      fetchMyListing();
     } catch (error) {
       console.error("Error updating listing:", error);
       // Handle specific error types here if needed
     }
   };
 
+  const fetchMyListing = async () => {
+    try {
+      const response = await axios.get(`/api/listing/listingOwner`, {
+        params: {
+          ownerId: user._id,
+        },
+      });
+
+      setMyListing(response.data.listings);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   useEffect(() => {
+    fetchMyListing();
+
     const updateItemsPerPage = () => {
       if (window.innerWidth < 600) {
         setItemsPerPage(1);
@@ -104,13 +128,13 @@ const MyListings = () => {
   useEffect(() => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const toDisplay = Array.isArray(data)
-      ? data.slice(indexOfFirstItem, indexOfLastItem)
+    const toDisplay = Array.isArray(myListing)
+      ? myListing.slice(indexOfFirstItem, indexOfLastItem)
       : [];
-    const displayCount = Math.ceil(data.length / itemsPerPage);
+    const displayCount = Math.ceil(myListing.length / itemsPerPage);
     setCount(displayCount);
     setCurrentItems(toDisplay);
-  }, [currentPage, data]);
+  }, [currentPage, myListing]);
 
   const handlePageChange = (newPage: any) => {
     setCurrentPage(newPage);
@@ -135,7 +159,7 @@ const MyListings = () => {
         <div className="flex w-full items-center">
           <Image className="h-8" width={30} src={iconsCar} alt="logo" />
           <p className="block p-2 no-select w-full">
-            {data.length + " Listing/s"}
+            {myListing.length + " Listing/s"}
           </p>
         </div>
         <div className="w-full items-center justify-start flex flex-wrap gap-4 mx-auto">

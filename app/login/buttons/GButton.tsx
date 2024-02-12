@@ -1,9 +1,12 @@
 "use client";
+
 import React, { useState } from "react";
+
 import axios from "axios";
-import { GoogleButton } from "../../components/Buttons";
-import { TextField, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { TextField, Button, CircularProgress } from "@mui/material";
+
+import { GoogleButton } from "../../components/Buttons";
 import { useUser } from "./../../hooks/useUser";
 
 interface UserSignUp {
@@ -24,26 +27,12 @@ const initialUserState: UserSignUp = {
 const GButton = () => {
   const [user, setUser] = useState(initialUserState);
   const [isFailure, setIsFailure] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const store = useUser();
   const navigate = useRouter();
 
-  // const handleSubmit = async (e: any) => {
-  //   e.preventDefault();
-  //   try {
-  //     // Check if the email exists before proceeding with registration
-  //     const emailCheckResponse = await axios.get(
-  //       `/api/users?email=${user.email}`
-  //     );
-
-  //     store.setUser(emailCheckResponse.data.user);
-  //     navigate.push("/profile");
-  //   } catch (error) {
-  //     setIsFailure(true);
-  //     return;
-  //   }
-  // };
-
   const handleSubmit = async (e: any) => {
+    setIsLoading(true);
     e.preventDefault();
     try {
       const response = await axios.get(`/api/login`, {
@@ -54,9 +43,11 @@ const GButton = () => {
       });
 
       store.setUser(response.data.user);
+      setIsLoading(false);
       navigate.push("/profile");
     } catch (error) {
       setIsFailure(true);
+      setIsLoading(false);
       return;
     }
   };
@@ -66,7 +57,7 @@ const GButton = () => {
   };
 
   return (
-    <div className="flex flex-col items-center -mt-14 justify-center w-full min-h-screen px-0 font-Messina-Sans overflow-x-hidden">
+    <div className="flex flex-col items-center justify-center w-full min-h-screen px-0 font-Messina-Sans overflow-x-hidden">
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow rounded lg:w-1/3 md:w-1/2 w-full p-10 mt-10"
@@ -144,7 +135,11 @@ const GButton = () => {
             color="primary"
             onClick={handleSubmit} // Automatically check email and proceed with registration
           >
-            Login
+            {isLoading ? (
+              <CircularProgress style={{ color: "#fff" }} size={24} />
+            ) : (
+              "Login"
+            )}
           </Button>
           <a
             className="text-center focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 text-sm font-semibold leading-none text-white focus:outline-none bg-gray-700 rounded hover:opacity-70 py-4 w-full transition"

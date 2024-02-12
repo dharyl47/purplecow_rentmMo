@@ -19,7 +19,7 @@ import badge from "../assets/logo/icons8-verified-badge.png";
 import phoneIcon from "../assets/logo/icons8-phone.png";
 
 // UseContext
-import { useUserContext } from "../context/UserContext";
+// import { useUserContext } from "../context/UserContext";
 
 // Hooks
 import { useUser } from "../hooks/useUser";
@@ -30,7 +30,7 @@ const ProfileCard = () => {
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
 
-  const { data, fetchData } = useUserContext();
+  // const { data, fetchData } = useUserContext();
 
   const store = useUser();
   const user: any = store?.user || {};
@@ -47,8 +47,6 @@ const ProfileCard = () => {
   // 		console.error('Error fetching data:', error);
   // 	}
   // };
-
-  console.log(data);
 
   const reviews = "0 reviews";
   const userName = `${user.firstName + " " + user.lastName}`;

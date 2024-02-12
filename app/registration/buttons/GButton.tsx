@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import { GoogleButton } from "../../components/Buttons";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, CircularProgress } from "@mui/material";
 
 interface UserSignUp {
   firstName: string;
@@ -35,8 +35,10 @@ const initialUserState: UserSignUp = {
 
 const GButton = () => {
   const [user, setUser] = useState(initialUserState);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: any) => {
+    setIsLoading(true);
     e.preventDefault();
 
     const { confirmPassword, ...userData } = user;
@@ -50,6 +52,7 @@ const GButton = () => {
     try {
       await axios.post("/api/users", userData);
 
+      setIsLoading(false);
       window.location.href = "/login";
     } catch (error) {
       // Display an error message if there's an error
@@ -57,6 +60,7 @@ const GButton = () => {
         error?.response?.data?.message ||
         "Something went wrong. Please try again.";
       alert(errorMessage);
+      setIsLoading(false);
     }
   };
 
@@ -65,7 +69,7 @@ const GButton = () => {
   };
 
   return (
-    <div className="flex flex-col items-center -mt-14 justify-center w-full min-h-screen px-0 font-Messina-Sans overflow-x-hidden">
+    <div className="flex flex-col items-center justify-center w-full min-h-screen px-0 font-Messina-Sans overflow-x-hidden">
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-10"
@@ -242,7 +246,11 @@ const GButton = () => {
             type="submit"
             // onClick={handleSubmit} // Automatically check email and proceed with registration
           >
-            Create my account
+            {isLoading ? (
+              <CircularProgress style={{ color: "#fff" }} size={24} />
+            ) : (
+              "Create my account"
+            )}
           </Button>
           <a
             className="text-center focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 text-sm font-semibold leading-none text-white focus:outline-none bg-gray-700 rounded hover:opacity-70 py-4 w-full transition"

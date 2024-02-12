@@ -11,11 +11,13 @@ function Login() {
       style={{ backgroundImage: `url(${BgHomepage.src})` }}
     >
       <div className="flex flex-col items-center justify-center">
-        <Image
-          className="h-20 inline self-center no-select"
-          src={RentMoLOGO}
-          alt="logo"
-        />
+        <a role="img" href="/">
+          <Image
+            className="inline self-center no-select"
+            src={RentMoLOGO}
+            alt="logo"
+          />
+        </a>
         <GButton />
       </div>
     </div>

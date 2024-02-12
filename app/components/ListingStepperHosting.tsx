@@ -1,20 +1,21 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import PersonalInfoForm from '../forms/PersonalInfoForm';
-import ListingInfoForm from '../forms/ListingInfoForm';
-import BillingInfoForm from '../forms/BillingInfoForm';
-import { Stepper, Step, Typography } from '@material-tailwind/react';
-import { BsPersonFill, BsCreditCardFill, BsCarFrontFill } from 'react-icons/bs';
+"use client";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import PersonalInfoForm from "../forms/PersonalInfoForm";
+import ListingInfoForm from "../forms/ListingInfoForm";
+import BillingInfoForm from "../forms/BillingInfoForm";
+import { Stepper, Step, Typography } from "@material-tailwind/react";
+import { BsPersonFill, BsCreditCardFill, BsCarFrontFill } from "react-icons/bs";
 
-import { Alert, LinearProgress } from '@mui/material';
+import { Alert, LinearProgress } from "@mui/material";
+import { useUser } from "../hooks/useUser";
 
-export const initialInfoState = {
+export const initialInfoState = (user: any) => ({
   brand: "",
   carAvailability: {
     startDate: new Date(),
     endDate: new Date(),
-    checked: false
+    checked: false,
   },
   carRegistrationNumber: "",
   city: "",
@@ -38,51 +39,43 @@ export const initialInfoState = {
   cardExpiration: "",
   securityCode: "",
   reviews: {
-		name: "",
-		date: new Date(),
-		starRating: "",
-		feedback: ""
-	},
+    name: "",
+    date: new Date(),
+    starRating: "",
+    feedback: "",
+  },
   features: {
-		automaticTransmission: false,
-		allWheelDrive: false,
-		androidAuto: false,
-		appleCarPlay: false,
-		auxInput: false,
-		backUpCamera: false,
-		bikeRack: false,
-		converTible: false,
-		gps: false,
-		petFriendly: false,
-		tollPass: false,
-		usbCharger: false
-	}
-};
+    automaticTransmission: false,
+    allWheelDrive: false,
+    androidAuto: false,
+    appleCarPlay: false,
+    auxInput: false,
+    backUpCamera: false,
+    bikeRack: false,
+    converTible: false,
+    gps: false,
+    petFriendly: false,
+    tollPass: false,
+    usbCharger: false,
+  },
+  ownerId: user._id,
+});
+
 export default function ListingStepper() {
-	const [activeStep, setActiveStep] = React.useState(0);
-	const [isLastStep, setIsLastStep] = React.useState(false);
-	const [isFirstStep, setIsFirstStep] = React.useState(false);
-	const [isComplete, setIsComplete] = React.useState(true);
-	const [isLoading, setIsLoading] = React.useState(false);
+  const store = useUser();
+  const user: any = store?.user || {};
 
-	const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
-	const handlePrev = () => (!isFirstStep && setIsComplete(true)) || setActiveStep((cur) => cur - 1);
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [isLastStep, setIsLastStep] = React.useState(false);
+  const [isFirstStep, setIsFirstStep] = React.useState(false);
+  const [isComplete, setIsComplete] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-	const [listingInfo, setListingInfo] = useState(initialInfoState);
+  const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
+  const handlePrev = () =>
+    (!isFirstStep && setIsComplete(true)) || setActiveStep((cur) => cur - 1);
 
-	// const handleChange = (e: any) => {
-  //   if (e.target.name === "startDate" || e.target.name === "endDate") {
-  //    setListingInfo({
-  //      ...listingInfo,
-  //      carAvailability: {
-  //        ...listingInfo.carAvailability,
-  //        [e.target.name]: new Date(e.target.value), // Convert the string to a Date object
-  //      },
-  //    });
-  //   } else {
-  //     setListingInfo({ ...listingInfo, [e.target.name]: e.target.value });
-  //   }
-  // };
+  const [listingInfo, setListingInfo] = useState(() => initialInfoState(user));
 
   const featureChecker = [
     "automaticTransmission",
@@ -91,17 +84,15 @@ export default function ListingStepper() {
     "appleCarPlay",
     "auxInput",
     "backUpCamera",
-    'bikeRack',
+    "bikeRack",
     "converTible",
     "gps",
     "petFriendly",
     "tollPass",
-    "usbCharger"
-  ]
+    "usbCharger",
+  ];
 
   const handleChange = (e: any) => {
-      console.log(e.target.name);
-      
     if (e.target.name === "startDate" || e.target.name === "endDate") {
       setListingInfo({
         ...listingInfo,
@@ -126,27 +117,34 @@ export default function ListingStepper() {
           [e.target.name]: e.target.checked,
         },
       });
-    }  else {
+    } else {
       setListingInfo({ ...listingInfo, [e.target.name]: e.target.value });
     }
   };
 
-
-
-const handleChangeUpdate = (x: any, y: any, c: any, s: any, ct: any, s1: any, s2: any, zc: any,) => {
-  setListingInfo({
-    ...listingInfo,
-    lat: x,
-    lon: y,
-    city: c,
-    state: s,
-    country: ct,
-    street1: s1,
-    street2: s2,
-    zipCode: zc,
-  });
-};
-const handleChangeUpdates = (b: any, m: any, lp: any, cr: any, dc: any) => {
+  const handleChangeUpdate = (
+    x: any,
+    y: any,
+    c: any,
+    s: any,
+    ct: any,
+    s1: any,
+    s2: any,
+    zc: any
+  ) => {
+    setListingInfo({
+      ...listingInfo,
+      lat: x,
+      lon: y,
+      city: c,
+      state: s,
+      country: ct,
+      street1: s1,
+      street2: s2,
+      zipCode: zc,
+    });
+  };
+  const handleChangeUpdates = (b: any, m: any, lp: any, cr: any, dc: any) => {
     setListingInfo({
       ...listingInfo,
       brand: b,
@@ -156,10 +154,15 @@ const handleChangeUpdates = (b: any, m: any, lp: any, cr: any, dc: any) => {
       description: dc,
     });
   };
-  
 
-	const handleSubmit = async (e: React.FormEvent): Promise<void> => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
+
+    if (!isLastStep) {
+      handleNext();
+
+      return;
+    }
 
     try {
       setIsLoading(true);
@@ -178,7 +181,6 @@ const handleChangeUpdates = (b: any, m: any, lp: any, cr: any, dc: any) => {
         },
       });
 
-      console.log(response.data);
       window.location.href = "profile";
     } catch (error) {
       setIsLoading(false);
@@ -187,11 +189,8 @@ const handleChangeUpdates = (b: any, m: any, lp: any, cr: any, dc: any) => {
     }
   };
 
-
-
-
-	const renderStepContent = () => {
-		return (
+  const renderStepContent = () => {
+    return (
       <>
         <div className={`step-${activeStep}`}>
           {activeStep === 0 && (
@@ -223,9 +222,15 @@ const handleChangeUpdates = (b: any, m: any, lp: any, cr: any, dc: any) => {
         </div>
       </>
     );
-	};
+  };
 
-	return (
+  useEffect(() => {
+    if (Object.keys(user).length === 0 && user.constructor === Object) {
+      window.location.href = "login";
+    }
+  }, []);
+
+  return (
     <>
       <form
         onSubmit={handleSubmit}

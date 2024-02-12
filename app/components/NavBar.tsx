@@ -36,7 +36,7 @@ const Navbar = () => {
     try {
       // const response = await axios.get('/api/v1/auth/logout');
       // Use the router object to navigate
-      await store?.setUser("");
+      store.logout();
       router.push("/");
     } catch (error) {
       console.log(error);

@@ -31,8 +31,6 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {
     } catch (error) {
       console.error(error);
     }
-
-    console.log(data);
     // window.location.href = '/profile';
   };
 

@@ -1,17 +1,19 @@
 "use client";
+
+// React
 import React from "react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import DatePicker from "react-datepicker";
+
+// Css
 import "react-datepicker/dist/react-datepicker.css";
-import { FaCalendar } from "react-icons/fa";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+
+// components
 import CustomDateTimePicker from "../components/CustomDateTimePicker";
 import Gallery from "../components/Gallery";
 import ReviewCard from "../components/ReviewCard ";
 
+// Images And Logo
 import {
   FaCreditCard,
   FaMoneyBillAlt,
@@ -32,18 +34,18 @@ interface CarAvailability {
   checked: boolean;
 }
 interface features {
-  automaticTransmission: boolean,
-  allWheelDrive: boolean,
-  androidAuto: boolean,
-  appleCarPlay: boolean,
-  auxInput: boolean,
-  backUpCamera: boolean,
-  bikeRack: boolean,
-  converTible: boolean,
-  gps: boolean,
-  petFriendly: boolean,
-  tollPass: boolean,
-  usbCharger: boolean,
+  automaticTransmission: boolean;
+  allWheelDrive: boolean;
+  androidAuto: boolean;
+  appleCarPlay: boolean;
+  auxInput: boolean;
+  backUpCamera: boolean;
+  bikeRack: boolean;
+  converTible: boolean;
+  gps: boolean;
+  petFriendly: boolean;
+  tollPass: boolean;
+  usbCharger: boolean;
 }
 
 interface CarDetails {
@@ -86,13 +88,13 @@ const CarDetailPage: React.FC = () => {
     }
   }
 
-    const criteriaData = [
-      { name: "Cleanliness", rating: 4.7 },
-      { name: "Maintenance", rating: 4.7 },
-      { name: "Communication", rating: 4.7 },
-      { name: "Convenience", rating: 4.7 },
-      { name: "Accuracy", rating: 4.7 },
-    ];
+  const criteriaData = [
+    { name: "Cleanliness", rating: 4.7 },
+    { name: "Maintenance", rating: 4.7 },
+    { name: "Communication", rating: 4.7 },
+    { name: "Convenience", rating: 4.7 },
+    { name: "Accuracy", rating: 4.7 },
+  ];
 
   const [startTripDate, setStartTripDate] = React.useState(new Date());
   const [endTripDate, setEndTripDate] = React.useState(new Date());
@@ -178,8 +180,12 @@ const CarDetailPage: React.FC = () => {
                       <FaUser className="text-white h-full w-full" />
                     </div>
                     <div className="ml-2">
-                      <p className="font-bold">John Smith</p>
-                      <p className="text-xs text-gray-500">Joined Dec 2017</p>
+                      <p className="font-bold">
+                        {`${carDetails?.ownerId?.firstName} ${carDetails?.ownerId?.lastName}`}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        Joined {carDetails?.ownerId?.createdAt?.split("-")[0]}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -205,29 +211,64 @@ const CarDetailPage: React.FC = () => {
                     </p>
                     <ul className="ml-2 mb-10">
                       <li className="flex items-center">
-                        <span className={`${carDetails?.features?.automaticTransmission && "invisible"} mr-2 checkmark`}>✔</span> 
-                        
-                        Automatic
-                        Transmission
+                        <span
+                          className={`${
+                            carDetails?.features?.automaticTransmission &&
+                            "invisible"
+                          } mr-2 checkmark`}
+                        >
+                          ✔
+                        </span>
+                        Automatic Transmission
                       </li>
                       <li className="flex items-center">
-                        <span className={`${carDetails?.features?.allWheelDrive && "invisible"} mr-2 checkmark`}>✔</span> All-wheel
-                        drive
+                        <span
+                          className={`${
+                            carDetails?.features?.allWheelDrive && "invisible"
+                          } mr-2 checkmark`}
+                        >
+                          ✔
+                        </span>{" "}
+                        All-wheel drive
                       </li>
                       <li className="flex items-center">
-                        <span className={`${carDetails?.features?.androidAuto && "invisible"} mr-2 checkmark`}>✔</span> 
+                        <span
+                          className={`${
+                            carDetails?.features?.androidAuto && "invisible"
+                          } mr-2 checkmark`}
+                        >
+                          ✔
+                        </span>
                         Android Auto
                       </li>
                       <li className="flex items-center">
-                        <span className={`${carDetails?.features?.appleCarPlay && "invisible"} mr-2 checkmark`}>✔</span>
-                         Apple CarPlay
+                        <span
+                          className={`${
+                            carDetails?.features?.appleCarPlay && "invisible"
+                          } mr-2 checkmark`}
+                        >
+                          ✔
+                        </span>
+                        Apple CarPlay
                       </li>
                       <li className="flex items-center">
-                        <span className={`${carDetails?.features?.auxInput && "invisible"} mr-2 checkmark`}>✔</span> 
+                        <span
+                          className={`${
+                            carDetails?.features?.auxInput && "invisible"
+                          } mr-2 checkmark`}
+                        >
+                          ✔
+                        </span>
                         AUX input
                       </li>
                       <li className="flex items-center">
-                        <span className={`${carDetails?.features?.backUpCamera && "invisible"} mr-2 checkmark`}>✔</span> 
+                        <span
+                          className={`${
+                            carDetails?.features?.backUpCamera && "invisible"
+                          } mr-2 checkmark`}
+                        >
+                          ✔
+                        </span>
                         Backup camera
                       </li>
                     </ul>
@@ -240,22 +281,64 @@ const CarDetailPage: React.FC = () => {
                     </p>
                     <ul className="ml-2 mb-10">
                       <li className="flex items-center">
-                        <span className={`${carDetails?.features?.bikeRack && "invisible"} mr-2 checkmark`}>✔</span> Bike rack
+                        <span
+                          className={`${
+                            carDetails?.features?.bikeRack && "invisible"
+                          } mr-2 checkmark`}
+                        >
+                          ✔
+                        </span>{" "}
+                        Bike rack
                       </li>
                       <li className="flex items-center">
-                        <span className={`${carDetails?.features?.converTible && "invisible"} mr-2 checkmark`}>✔</span> Convertible
+                        <span
+                          className={`${
+                            carDetails?.features?.converTible && "invisible"
+                          } mr-2 checkmark`}
+                        >
+                          ✔
+                        </span>{" "}
+                        Convertible
                       </li>
                       <li className="flex items-center">
-                        <span className={`${carDetails?.features?.gps && "invisible"} mr-2 checkmark`}>✔</span> GPS
+                        <span
+                          className={`${
+                            carDetails?.features?.gps && "invisible"
+                          } mr-2 checkmark`}
+                        >
+                          ✔
+                        </span>{" "}
+                        GPS
                       </li>
                       <li className="flex items-center">
-                        <span className={`${carDetails?.features?.petFriendly && "invisible"} mr-2 checkmark`}>✔</span> Pet Friendly
+                        <span
+                          className={`${
+                            carDetails?.features?.petFriendly && "invisible"
+                          } mr-2 checkmark`}
+                        >
+                          ✔
+                        </span>{" "}
+                        Pet Friendly
                       </li>
                       <li className="flex items-center">
-                        <span className={`${carDetails?.features?.tollPass && "invisible"} mr-2 checkmark`}>✔</span> Toll pass
+                        <span
+                          className={`${
+                            carDetails?.features?.tollPass && "invisible"
+                          } mr-2 checkmark`}
+                        >
+                          ✔
+                        </span>{" "}
+                        Toll pass
                       </li>
                       <li className="flex items-center">
-                        <span className={`${carDetails?.features?.usbCharger && "invisible"} mr-2 checkmark`}>✔</span> USB charger
+                        <span
+                          className={`${
+                            carDetails?.features?.usbCharger && "invisible"
+                          } mr-2 checkmark`}
+                        >
+                          ✔
+                        </span>{" "}
+                        USB charger
                       </li>
                     </ul>
                   </div>

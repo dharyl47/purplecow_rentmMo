@@ -1,6 +1,8 @@
+import bcrypt from 'bcryptjs'; 
 import { NextResponse } from "next/server";
 import connectMongoDB from "../../lib/mongodb";
 import UserSchema from "../../models/userProfile";
+
 
 // export async function POST(request) {
 //     const {firstName, lastName, email, password, authProvider} = await request.json();
@@ -11,8 +13,9 @@ import UserSchema from "../../models/userProfile";
 
 export async function POST(request) {
   try {
-      const requestData = await request.json();
+      let requestData = await request.json();
       const email = requestData.email;
+      const password = requestData.password; 
 
       // Connect to MongoDB 
       await connectMongoDB();
@@ -22,6 +25,10 @@ export async function POST(request) {
       if (existingUser) {
           return NextResponse.json({ message: "Email already exists" }, { status: 400 });
       }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      requestData.password = hashedPassword
 
       // Create new user if email doesn't exist
       await UserSchema.create(requestData);
@@ -46,21 +53,21 @@ export async function GET(request, { query }) {
      }
 }
 
-export async function GETlogin(request, { query }) {
-  await connectMongoDB();
-  const queryParams = new URL(request.url).searchParams;
-  const email = queryParams.get('email'); // Extract the email from the query parameters
-  const password = queryParams.get('password'); // Extract the password from the query parameters
+// export async function GETlogin(request, { query }) {
+//   await connectMongoDB();
+//   const queryParams = new URL(request.url).searchParams;
+//   const email = queryParams.get('email'); // Extract the email from the query parameters
+//   const password = queryParams.get('password'); // Extract the password from the query parameters
 
-  // Check if the email and password match an existing user
-  const user = await UserSchema.findOne({ email, password });
+//   // Check if the email and password match an existing user
+//   const user = await UserSchema.findOne({ email, password });
 
-  if (user) {
-      return NextResponse.json({ message: "Login successful", user });
-  } else {
-      return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
-  }
-}
+//   if (user) {
+//       return NextResponse.json({ message: "Login successful", user });
+//   } else {
+//       return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
+//   }
+// }
 
 export async function PUT(request) {
     try {

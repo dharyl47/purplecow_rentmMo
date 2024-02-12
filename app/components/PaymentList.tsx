@@ -7,10 +7,10 @@ interface Payment {
   attributes: {
     amount: number;
     billing: {
-    name: string;
-    email: string;
-    phone: string;
-    }
+      name: string;
+      email: string;
+      phone: string;
+    };
     status: string;
     fee: number;
     net_amount: number;
@@ -46,7 +46,6 @@ const PaymentList = () => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data.data);
           setPayments(data.data);
         } else {
           console.error("Failed to fetch payments");

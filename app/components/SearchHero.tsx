@@ -1,25 +1,30 @@
-'use client';
-import React, { useEffect, useState } from 'react';
+"use client";
+import React, { useEffect, useState } from "react";
 import { ButtonFillRoundedSearch, ButtonFillRounded } from "./Buttons";
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { FormControl, InputLabel, InputAdornment, IconButton, OutlinedInput } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { HiLocationMarker } from 'react-icons/hi';
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import {
+  FormControl,
+  InputLabel,
+  InputAdornment,
+  IconButton,
+  OutlinedInput,
+} from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { HiLocationMarker } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 
-
 const theme = createTheme({
-	typography: {
-		fontSize: 16,
-		fontFamily: 'Messina Sans',
-	},
-	palette: {
-		text: {
-			secondary: '#c2c2c2',
-		},
-	},
+  typography: {
+    fontSize: 16,
+    fontFamily: "Messina Sans",
+  },
+  palette: {
+    text: {
+      secondary: "#c2c2c2",
+    },
+  },
 });
 
 export interface SearchHeroProps {
@@ -29,7 +34,7 @@ export interface SearchHeroProps {
   };
   city: string;
   onFindRide: (formData: FormData) => void;
-};
+}
 
 export interface FormData {
   location: string;
@@ -44,12 +49,13 @@ const SearchHero: React.FC<SearchHeroProps> = ({
   city,
   onFindRide,
 }) => {
+  const [isLoading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
-    location: '',
+    location: "",
     startDate: carAvailability?.startDate || null,
-    startTime: '',
+    startTime: "",
     endDate: carAvailability?.endDate || null,
-    endTime: '',
+    endTime: "",
   });
   // const router = useRouter();
 
@@ -57,26 +63,26 @@ const SearchHero: React.FC<SearchHeroProps> = ({
     setFormData({
       location: city,
       startDate: carAvailability?.startDate || null,
-      startTime: '',
+      startTime: "",
       endDate: carAvailability?.endDate || null,
-      endTime: '',
+      endTime: "",
     });
   }, [carAvailability, city]);
 
-  const handleFindRide = () => {
-    // Use the captured values from formData as needed
-    console.log("Location:", formData.location);
-    console.log("Start Date:", formData.startDate);
-    console.log("Start Time:", formData.startTime);
-    console.log("End Date:", formData.endDate);
-    console.log("End Time:", formData.endTime);
+  // const handleFindRide = () => {
+  // Use the captured values from formData as needed
+  // console.log("Location:", formData.location);
+  // console.log("Start Date:", formData.startDate);
+  // console.log("Start Time:", formData.startTime);
+  // console.log("End Date:", formData.endDate);
+  // console.log("End Time:", formData.endTime);
 
-    // Pass the form data to the parent component or any other callback
-    onFindRide(formData);
-  };
-// const SearchHero = () => {
+  // Pass the form data to the parent component or any other callback
+  // onFindRide(formData);
+  // };
+  // const SearchHero = () => {
 
-	return (
+  return (
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <div className="flex justify-center hero-searchbox">
@@ -124,15 +130,14 @@ const SearchHero: React.FC<SearchHeroProps> = ({
                 label="End Trip"
                 slotProps={{ textField: { variant: "outlined" } }}
                 value={formData.endDate}
-                  onChange={(date) =>
-                    setFormData({ ...formData, endDate: date })
-                  }
+                onChange={(date) => setFormData({ ...formData, endDate: date })}
               />
             </div>
             <div className="flex self-end ml-4">
               <ButtonFillRoundedSearch text="Find a ride" />
             </div>
           </div>
+
           <div className="flex-col xl:hidden w-full min-w-fit max-w-sm h-fit bg-white mx-6 md:p-10 p-6 rounded-lg shadow-searchbox ">
             {/* Location */}
             <div className="flex flex-col w-full items-start gap-3 search-loc">

@@ -28,7 +28,9 @@ export async function POST(request) {
       zipCode,
       lat,
       lon,
+      ownerId,
     } = await request.json();
+
 
     await connectMongoDB();
 
@@ -74,6 +76,7 @@ export async function POST(request) {
       zipCode,
       lat,
       lon,
+      ownerId
     });
 
     return NextResponse.json({ message: "Listing Created" }, { status: 201 });
@@ -112,7 +115,7 @@ export async function GET() {
     await connectMongoDB();
 
     // Fetch all listings
-    const listings = await ListingModel.find({});
+    const listings = await ListingModel.find({}).populate('ownerId');
 
     return NextResponse.json({ listings }, { status: 200 });
   } catch (error) {
@@ -120,6 +123,7 @@ export async function GET() {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
+
 
 export async function DELETE(request) {
   try {

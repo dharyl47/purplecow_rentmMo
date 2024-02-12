@@ -2,6 +2,11 @@ import mongoose, { Schema } from "mongoose";
 
 const listingSchema = new Schema(
   {
+    ownerId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
     brand: String,
     carAvailability: {
       startDate: {
@@ -70,8 +75,8 @@ const listingSchema = new Schema(
     lat: String,
     lon: String,
     cardNumber: String,
-    cardExpiration: String,
-    securityCode: Date,
+    cardExpiration: Date,
+    securityCode: String,
   },
   {
     timestamps: true,
