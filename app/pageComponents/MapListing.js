@@ -1,50 +1,71 @@
 'use client';
-import React, { useState, useEffect } from "react";
-import ReactMapGL, { Marker, Popup } from "react-map-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
-import { RouteModule } from "next/dist/server/future/route-modules/route-module";
-import Image from "next/image";
-const MapComponent = ({ carList, cardSelected }) => {
-  const defaultLocation = { lat: 7.069139, lng: 125.601695 };
-  const [defaultLat, setDefaultLat] = useState(7.069139);
-  const [defaultLon, setDefaultLon] = useState(125.601695);
 
-  // Local state for viewport
-  const [viewPort, setViewport] = useState({
-    latitude: defaultLat,
-    longitude: defaultLon,
-    zoom: 11,
-  });
+// React
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import MapGL, { Marker, Popup } from 'react-map-gl';
+import "mapbox-gl/dist/mapbox-gl.css";
+
+// Next
+import Image from "next/image";
+
+// Style
+import "mapbox-gl/dist/mapbox-gl.css";
+
+// Context
+import { useServiceCarContext } from "../context/ServiceCarContext";
+
+// import { RouteModule } from "next/dist/server/future/route-modules/route-module";
+
+const MapComponent = ({ carList, cardSelected, onCardClick }) => {
+  const { data } = useServiceCarContext();
+  const mapRef = useRef(null);
+
+  const onSelectCar = useCallback((param) => {
+    if (param?.longitude && param?.latitude) {
+      mapRef.current?.flyTo({ center: [param.longitude, param.latitude], duration: 2000 });
+    }
+  }, []);
 
   const [selectedCar, setSelectedCar] = useState(null);
 
   const handleMarkerClick = (car) => {
-    console.log("click", car);
-    setDefaultLat(car.lat);
-    setDefaultLon(car.lon);
+    onCardClick(car);
     setSelectedCar(car);
   };
 
   useEffect(() => {
     setSelectedCar(cardSelected);
+    onSelectCar({ longitude: cardSelected?.lon, latitude: cardSelected?.lat });
   }, [cardSelected]);
 
+  useEffect(() => {
+    onSelectCar({ longitude: data[0]?.lon, latitude:  data[0]?.lat });
+  }, [data]);
+
   return (
-    <ReactMapGL
-      {...viewPort}
-      mapboxAccessToken="pk.eyJ1IjoiZGhhcnlsOTciLCJhIjoiY2w5NTluMDh2MXQ3YTNucW16cG9tbGU3dyJ9.z96hyUi9vkmIJDdBB6WjxA"
-      mapStyle="mapbox://styles/mapbox/streets-v11"
+    <MapGL
+      ref={mapRef}
+      initialViewState={{
+        longitude: 125.601695,
+        latitude: 7.069139,
+        zoom: 11
+      }}
       width="100%"
       height="100%"
-      onViewportChange={(viewPort) => setViewport(viewPort)}
       transitionDuration="100"
+      mapStyle="mapbox://styles/mapbox/streets-v11"
+      mapboxAccessToken="pk.eyJ1IjoiZGhhcnlsOTciLCJhIjoiY2w5NTluMDh2MXQ3YTNucW16cG9tbGU3dyJ9.z96hyUi9vkmIJDdBB6WjxA"
     >
       {carList.map((car) => (
         <Marker
+          style={{cursor: "pointer"}}
           key={car.id}
           latitude={car.lat}
           longitude={car.lon}
-          onClick={() => handleMarkerClick(car)}
+          onClick={e => {
+            e.originalEvent.stopPropagation();
+            handleMarkerClick(car);
+          }}
         >
           {/* You can customize the Marker content here if needed */}
         </Marker>
@@ -61,6 +82,7 @@ const MapComponent = ({ carList, cardSelected }) => {
           }}
         >
           <Popup
+            anchor="top"
             latitude={selectedCar.lat}
             longitude={selectedCar.lon}
             onClose={() => setSelectedCar(null)}
@@ -95,7 +117,7 @@ const MapComponent = ({ carList, cardSelected }) => {
           </Popup>
         </div>
       )}
-    </ReactMapGL>
+    </MapGL>
   );
 };
 

@@ -24,7 +24,7 @@ export const ButtonFillRoundedSearch = ({ text }: any) => {
   return (
     <button
       className="text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition"
-      onClick={handleFindRide}
+      // onClick={handleFindRide}
     >
       {text}
     </button>

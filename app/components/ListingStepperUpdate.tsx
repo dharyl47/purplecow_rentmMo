@@ -60,31 +60,39 @@ export default function ListingStepper({
   ];
 
   const handleChange = (e: any) => {
-    if (e.target.name == "startDate" || e.target.name == "endDate") {
+    const { name, value, checked } = e.target;
+
+    if (name == "startDate" || name == "endDate") {
       setListingInfo({
         ...listingInfo,
         carAvailability: {
           ...listingInfo.carAvailability,
-          [e.target.name]: e.target.value,
+          [name]: value,
         },
       });
-    } else if (e.target.name === "isAlways") {
+    } else if (name === "isAlways") {
       setListingInfo({
         ...listingInfo,
         carAvailability: {
           ...listingInfo.carAvailability,
-          checked: e.target.checked,
+          checked: checked,
         },
       });
-    } else if (featureChecker.includes(e.target.name)) {
+    } else if (featureChecker.includes(name)) {
       setListingInfo({
         ...listingInfo,
         features: {
           ...listingInfo.features,
-          [e.target.name]: e.target.checked,
+          [name]: checked,
         },
       });
-    } else setListingInfo({ ...listingInfo, [e.target.name]: e.target.value });
+    } else {
+      setListingInfo({ ...listingInfo, [name]: value });
+    }
+  };
+
+  const handleChangeLatAndLon = (lat: string, lon: string) => {
+    setListingInfo({ ...listingInfo, lat, lon });
   };
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
@@ -139,6 +147,7 @@ export default function ListingStepper({
               <PersonalInfoForm
                 handleChange={handleChange}
                 handleChangeUpdate={handleChangeUpdate}
+                handleChangeLatAndLon={handleChangeLatAndLon}
                 personalInfo={listingInfo}
               />
             </div>
@@ -147,7 +156,7 @@ export default function ListingStepper({
             <div>
               <ListingInfoForm
                 handleChange={handleChange}
-                handleChangeUpdates={handleChangeUpdates}
+                // handleChangeUpdates={handleChangeUpdates}
                 listingInfo={listingInfo}
               />
             </div>

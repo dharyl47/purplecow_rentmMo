@@ -49,15 +49,16 @@ const SearchHero: React.FC<SearchHeroProps> = ({
   city,
   onFindRide,
 }) => {
+  // const router = useRouter();
   const [isLoading, setLoading] = useState<boolean>(false);
+
   const [formData, setFormData] = useState<FormData>({
     location: "",
-    startDate: carAvailability?.startDate || null,
+    startDate: null,
     startTime: "",
-    endDate: carAvailability?.endDate || null,
+    endDate: null,
     endTime: "",
   });
-  // const router = useRouter();
 
   useEffect(() => {
     setFormData({
@@ -67,19 +68,13 @@ const SearchHero: React.FC<SearchHeroProps> = ({
       endDate: carAvailability?.endDate || null,
       endTime: "",
     });
-  }, [carAvailability, city]);
+    // }, [carAvailability, city]);
+  }, []);
 
-  // const handleFindRide = () => {
-  // Use the captured values from formData as needed
-  // console.log("Location:", formData.location);
-  // console.log("Start Date:", formData.startDate);
-  // console.log("Start Time:", formData.startTime);
-  // console.log("End Date:", formData.endDate);
-  // console.log("End Time:", formData.endTime);
-
-  // Pass the form data to the parent component or any other callback
-  // onFindRide(formData);
-  // };
+  const handleFindRide = () => {
+    // Pass the form data to the parent component or any other callback
+    onFindRide(formData);
+  };
   // const SearchHero = () => {
 
   return (
@@ -134,7 +129,16 @@ const SearchHero: React.FC<SearchHeroProps> = ({
               />
             </div>
             <div className="flex self-end ml-4">
-              <ButtonFillRoundedSearch text="Find a ride" />
+              {/* <ButtonFillRoundedSearch
+                text="Find a ride"
+                onClick={handleFindRide}
+              /> */}
+              <button
+                className="text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition"
+                onClick={handleFindRide}
+              >
+                Find a ride
+              </button>
             </div>
           </div>
 
@@ -148,7 +152,7 @@ const SearchHero: React.FC<SearchHeroProps> = ({
                 Location
               </label>
               <div className="flex w-full">
-                <img className="h-6" src="../src/assets/logo/pin-loc.png"></img>
+                <img className="h-6" src="../assets/logo/pin-loc.png"></img>
                 <div className="flex border-b-2 border-white hover:border-dark200 transition-colors w-full">
                   <input
                     id="input-location"

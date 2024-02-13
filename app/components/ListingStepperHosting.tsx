@@ -155,6 +155,10 @@ export default function ListingStepper() {
     });
   };
 
+  const handleChangeLatAndLon = (lat: string, lon: string) => {
+    setListingInfo({ ...listingInfo, lat, lon });
+  };
+
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
@@ -199,6 +203,7 @@ export default function ListingStepper() {
                 handleChange={handleChange}
                 handleChangeUpdate={handleChangeUpdate}
                 personalInfo={listingInfo}
+                handleChangeLatAndLon={handleChangeLatAndLon}
               />
             </div>
           )}
@@ -206,7 +211,7 @@ export default function ListingStepper() {
             <div>
               <ListingInfoForm
                 handleChange={handleChange}
-                handleChangeUpdates={handleChangeUpdates}
+                // handleChangeUpdates={handleChangeUpdates}
                 listingInfo={listingInfo}
               />
             </div>

@@ -71,6 +71,7 @@ interface CarDetails {
   createdAt: string;
   updatedAt: string;
   __v: number;
+  ownerId: any;
 }
 
 const CarDetailPage: React.FC = () => {

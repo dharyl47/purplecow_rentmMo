@@ -11,7 +11,6 @@ import { theme } from "./themes/themes";
 import MapComponent from "../components/MapComponent"; // Import the MapComponent
 // import { set } from "mongoose";
 
-
 type Props = {
   handleChange: (e: any) => void;
   handleChangeUpdate: (
@@ -22,9 +21,10 @@ type Props = {
     ct: string | undefined,
     s1: string | undefined,
     s2: string | undefined,
-    zc: string | undefined,
+    zc: string | undefined
   ) => void;
   personalInfo: ICar;
+  handleChangeLatAndLon: (lat: string, lon: string) => void;
 };
 
 // Added by Leo
@@ -47,6 +47,7 @@ const PersonalInfoForm = ({
   handleChange,
   handleChangeUpdate,
   personalInfo,
+  handleChangeLatAndLon,
 }: Props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -68,7 +69,16 @@ const PersonalInfoForm = ({
       },
     });
   };
-  
+
+  const customHandleChange = (name: any, value: any) => {
+    handleChange({
+      target: {
+        name: name,
+        value: value,
+      },
+    });
+  };
+
   const handleModalOpen = () => {
     setModalOpen(true);
   };
@@ -123,34 +133,64 @@ const PersonalInfoForm = ({
   const onChangeAddress = (autocomplete: google.maps.places.Autocomplete) => {
     const place = autocomplete.getPlace();
 
-    console.log("dataview", autocomplete.getPlace());
+    // console.log("dataview", autocomplete.getPlace());
+    // console.log("testtttttttttttttttttttt");
+
     const addressComponents = place.address_components;
     const formattedAddress = place.formatted_address;
+
     const latitude = place.geometry?.location?.lat();
     const longitude = place.geometry?.location?.lng();
+
     setLatX(latitude);
     setLonY(longitude);
 
-    let isAutoFill = true; // Assuming this change is due to auto-fill
+    // console.log(latitude);
+    // console.log(longitude);
+
+    // let isAutoFill = true; // Assuming this change is due to auto-fill
     setAddress(extractAddress(place));
+    handleChangeLatAndLon(
+      latitude?.toString() ?? "",
+      longitude?.toString() ?? ""
+    );
     // Trigger changes only if the event is not due to auto-fill
   };
 
-    useEffect(() => {
-      let isMounted = true;
-      const updateState = () => {
-        if (latX){
-          handleChangeUpdate(
-            latX?.toString(), lonY?.toString(), city, state, country, street1, street2, zipCode);}
-      };
-      if (isMounted) {
-        updateState();
+  useEffect(() => {
+    let isMounted = true;
+    const updateState = () => {
+      if (latX) {
+        handleChangeUpdate(
+          latX?.toString(),
+          lonY?.toString(),
+          city,
+          state,
+          country,
+          street1,
+          street2,
+          zipCode
+        );
       }
-      return () => {
-        isMounted = false;
-      };
-    }, [latX, lonY, city, state, country, state, street1, street2, zipCode, personalInfo]);
-
+    };
+    if (isMounted) {
+      updateState();
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [
+    latX,
+    lonY,
+    city,
+    state,
+    country,
+    state,
+    street1,
+    street2,
+    zipCode,
+    personalInfo,
+  ]);
 
   const initAutocomplete = () => {
     if (!searchInput.current) return;
@@ -292,7 +332,7 @@ const PersonalInfoForm = ({
                   (Pin on Location)
                 </p>
               </div>
-             
+
               <TextField
                 variant="outlined"
                 size="small"
@@ -458,7 +498,6 @@ const PersonalInfoForm = ({
           </Modal>
         </div>
       </ThemeProvider>
-
     </>
   );
 };

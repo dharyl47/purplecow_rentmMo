@@ -1,115 +1,104 @@
-'use client';
+"use client";
+
+// React
 import React, { useEffect, useState } from "react";
-import CarListing from "../pageComponents/CarListingCard";
-import Map from "../pageComponents/MapListing";
-import HeroPageSearch from "../pageComponents/HeroPageSearch";
-import { BiSearch } from "react-icons/bi";
+
+// Context
 import { useServiceCarContext } from "../context/ServiceCarContext";
+
+// React Icons
+import { BiSearch } from "react-icons/bi";
 import { TbListTree } from "react-icons/tb";
 import { FaMapMarkedAlt } from "react-icons/fa";
-// const cars = [
-//   {
-//     id: 1,
-//     title: "Car 1",
-//     price: 20000,
-//     image: "/assets/images/testImages/toyotaVios.jpg",
-//     rating: 4.5,
-//     totalReviews: 100,
-//   },
-//   {
-//     id: 2,
-//     title: "Car 2",
-//     price: 25000,
-//     image: "/assets/images/testImages/toyotaVios.jpg",
-//     rating: 4.8,
-//     totalReviews: 200,
-//   },
-//   {
-//     id: 3,
-//     title: "Car 2",
-//     price: 25000,
-//     image: "/assets/images/testImages/toyotaVios.jpg",
-//     rating: 4.8,
-//     totalReviews: 200,
-//   },
-//   {
-//     id: 4,
-//     title: "Car 2",
-//     price: 25000,
-//     image: "/assets/images/testImages/toyotaVios.jpg",
-//     rating: 4.8,
-//     totalReviews: 200,
-//   },
-//   {
-//     id: 5,
-//     title: "Car 2",
-//     price: 25000,
-//     image: "/assets/images/testImages/toyotaVios.jpg",
-//     rating: 4.8,
-//     totalReviews: 200,
-//   },
-//   {
-//     id: 6,
-//     title: "Car 2",
-//     price: 25000,
-//     image: "/assets/images/testImages/toyotaVios.jpg",
-//     rating: 4.8,
-//     totalReviews: 200,
-//   },
-//   // Add more cars as needed
-// ];
+
+// Page Components
+import Map from "../pageComponents/MapListing";
+import CarListing from "../pageComponents/CarListingCard";
+import HeroPageSearch from "../pageComponents/HeroPageSearch";
 
 const CarListingPage = () => {
-  const { data, fetchData } = useServiceCarContext();
+  const { data, searchListing } = useServiceCarContext();
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [showMap, setShowMap] = useState(true); // State for toggling map visibility
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
   const handleCardClick = (car: any) => {
     // Call the handleMarkerClick function from MapListing.js
-    console.log("dataSERVE ",car)
     setSelectedVehicle(car);
-};
-const toggleMapVisible = () => {
-  setShowMap((prevState) => !prevState);
-};
-
-useEffect(() => {
-  const handleResize = () => {
-    setIsMobile(window.innerWidth <= 767);
   };
-  window.addEventListener("resize", handleResize);
-
-  return () => {
-    window.removeEventListener("resize", handleResize);
+  const toggleMapVisible = () => {
+    setShowMap((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    // if (data.length === 0) {
+    //   searchListing({
+    //     location: "davao city",
+    //     startDate: new Date(),
+    //     endDate: new Date(),
+    //   });
+    // }
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 767);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
     <div>
       <HeroPageSearch />
       <div className="flex">
-        <div className={`hero-page-search-listing w-1/2 p-4 overflow-y-auto max-h-screen ${
+        <div
+          className={`hero-page-search-listing w-1/2 p-2 overflow-y-auto max-h-screen ${
             showMap && isMobile ? "hidden" : "" // Hide if showMap is true
-          }`} style={{ height: "600px" }}>
-          {data.map((car: any) => (
-            <CarListing key={car.id} car={car} onCardClick={handleCardClick} />
-          ))}
+          }`}
+          style={{ height: "600px" }}
+        >
+          {data.length === 0 ? (
+            <p>Sorry, there are currently no cars available in this area.</p>
+          ) : (
+            data.map((car: any) => (
+              <CarListing
+                key={car.id}
+                car={car}
+                onCardClick={handleCardClick}
+              />
+            ))
+          )}
         </div>
-        <div className={`hero-page-search-map w-1/2 p-4 relative ${
+
+        {/* <div
+          className={`hero-page-search-map w-1/2 p-2 relative ${
             !showMap || !isMobile ? "" : "hidden" // Hide if showMap is false
-          }`}>
-          <Map carList={data} cardSelected={selectedVehicle} />
-          <button
+          }`}
+        > */}
+        <div
+          className={`hero-page-search-map w-1/2 p-2 relative ${
+            !showMap || !isMobile ? "" : "hidden" // Hide if showMap is false
+          }`}
+        >
+          <Map
+            carList={data}
+            cardSelected={selectedVehicle}
+            onCardClick={handleCardClick}
+          />
+          {/* <button
             className="search-this-area absolute bottom-4 left-1/2 transform mt-2 -translate-x-1/2 px-4 py-2 text-black flex items-center rounded-full bg-yellow-300"
             style={{ marginBottom: "30px" }}
           >
             <BiSearch className="h-6 w-6 mr-2" />
             Search this area
-          </button>
+          </button> */}
         </div>
       </div>
-      <button className="flex w-full justify-center fixed bottom-4 map-listing-mob-toggle items-center"
-              onClick={toggleMapVisible} >
+      <button
+        className="flex w-full justify-center fixed bottom-4 map-listing-mob-toggle items-center"
+        onClick={toggleMapVisible}
+      >
         <span className="text-yellow-300 bg-black rounded-full px-5 py-3 flex">
           {showMap ? (
             <>

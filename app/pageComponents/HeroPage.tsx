@@ -1,20 +1,31 @@
 "use client";
-import BgHomepage from "../assets/images/Rent-mo-hero-bg.png";
+
+import React from "react";
 import Navbar from "../components/NavBar";
-import React, { useState, useEffect } from "react";
+import BgHomepage from "../assets/images/Rent-mo-hero-bg.png";
 import SearchHero, {
   FormData as SearchHeroProps,
 } from "../components/SearchHero";
+
+import { useServiceCarContext } from "../context/ServiceCarContext";
+import { useRouter } from "next/navigation";
+
 //import '../layout.css';
 
 // const HeroPage = () => {
 const HeroPage: React.FC = () => {
-  const [formData, setFormData] = useState<SearchHeroProps | null>(null);
+  const router = useRouter();
+  // const [formData, setFormData] = useState<SearchHeroProps | null>(null);
 
-  const handleFindRide = (formData: SearchHeroProps) => {
+  const { searchListing } = useServiceCarContext();
+
+  const handleFindRide = async (formData: SearchHeroProps) => {
     // Implement the logic for finding a ride based on the form data
-    setFormData(formData);
-    console.log("Finding a ride with form data:", formData);
+    // setFormData(formData);
+    // console.log("Finding a ride with form data:", formData);
+    await searchListing(formData);
+
+    router.push("/search");
   };
 
   const carAvailability = {
@@ -24,16 +35,17 @@ const HeroPage: React.FC = () => {
 
   const city = "Davao city";
 
-  useEffect(() => {
-    // Execute the handleFindRide function with initial data when the component mounts
-    setFormData({
-      location: city, // Assuming you want to use the city as the location
-      startDate: carAvailability.startDate,
-      startTime: "", // You may need to provide a default value
-      endDate: carAvailability.endDate,
-      endTime: "", // You may need to provide a default value
-    });
-  }, []);
+  // useEffect(() => {
+  //   // Execute the handleFindRide function with initial data when the component mounts
+  //   setFormData({
+  //     location: city, // Assuming you want to use the city as the location
+  //     startDate: carAvailability.startDate,
+  //     startTime: "", // You may need to provide a default value
+  //     endDate: carAvailability.endDate,
+  //     endTime: "", // You may need to provide a default value
+  //   });
+  // }, []);
+
   return (
     <div
       className=" bg-cover pb-12 min-h-screen font-Messina-Sans"

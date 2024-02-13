@@ -43,14 +43,16 @@ const MapComponent = ({ handleChangeUpdate, handleChangeLat, handleChangeLon }) 
         const streetAdd = place.text;
         setStreetAddress(streetAdd)
 
-          console.log('LOCATION DETAILS');
-          console.log('Street:', streetAdd);
-          console.log('Lat:', lat);
-          console.log('Lon:', lng);
-          console.log('City:', city);
-          console.log('Country:', country);
-          console.log('County:', county);
-          console.log('Zip Code:', zipCode);
+        // console.log(place)
+
+        //   console.log('LOCATION DETAILS');
+        //   console.log('Street:', streetAdd);
+        //   console.log('Lat:', lat);
+        //   console.log('Lon:', lng);
+        //   console.log('City:', city);
+        //   console.log('Country:', country);
+        //   console.log('County:', county);
+        //   console.log('Zip Code:', zipCode);
 
           setSelectedLocation({ lat, lng });
           setViewport({
@@ -65,9 +67,6 @@ const MapComponent = ({ handleChangeUpdate, handleChangeLat, handleChangeLon }) 
           setZipState(zipCode);
           setCountyState(county);
           
-          handleChangeLat('lat', lat);
-          handleChangeLon('lon', lng);
-
         // Update street information
       } else {
         console.error('Failed to fetch data from Mapbox Geocoding API');

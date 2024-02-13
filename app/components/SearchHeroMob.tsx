@@ -95,10 +95,7 @@ const SearchHeroMob: React.FC<SearchHeroMobProps> = ({
                   Location
                 </label>
                 <div className="flex w-full">
-                  <img
-                    className="h-6"
-                    src="../src/assets/logo/pin-loc.png"
-                  ></img>
+                  <img className="h-6" src="../assets/logo/pin-loc.png"></img>
                   <div className="flex border-b-2 border-white hover:border-dark200 transition-colors w-full">
                     <input
                       id="input-location"

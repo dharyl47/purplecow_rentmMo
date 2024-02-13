@@ -15,13 +15,13 @@ import { ICar } from "../types/types";
 
 type Props = {
   handleChange: (e: any) => void;
-  1: (
-    b: string | undefined,
-    m: string | undefined,
-    lp: string | undefined,
-    cr: string | undefined,
-    dc: string | undefined
-  ) => void;
+  // 1: (
+  //   b: string | undefined,
+  //   m: string | undefined,
+  //   lp: string | undefined,
+  //   cr: string | undefined,
+  //   dc: string | undefined
+  // ) => void;
   listingInfo: ICar;
 };
 
