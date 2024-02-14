@@ -250,7 +250,7 @@ const MyListings = () => {
       <div
         ref={!update ? updateRef : null}
         className={`self-center w-fit transition-transform ${
-          update ? "scale-y-100 h-fit" : "scale-y-0 h-0"
+          update ? "w-full scale-y-100 h-fit" : "scale-y-0 h-0"
         }`}
       >
         <ListingStepper

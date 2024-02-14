@@ -133,8 +133,7 @@ const PersonalInfoForm = ({
   const onChangeAddress = (autocomplete: google.maps.places.Autocomplete) => {
     const place = autocomplete.getPlace();
 
-    // console.log("dataview", autocomplete.getPlace());
-    // console.log("testtttttttttttttttttttt");
+    console.log("dataview", place);
 
     const addressComponents = place.address_components;
     const formattedAddress = place.formatted_address;

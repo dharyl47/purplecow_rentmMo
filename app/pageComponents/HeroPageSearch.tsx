@@ -1,11 +1,12 @@
-import { Fragment, useEffect, useState } from "react";
-import BgHomepage from "../assets/images/Rent-mo-hero-bg.png";
+import { Fragment } from "react";
+// import BgHomepage from "../assets/images/Rent-mo-hero-bg.png";
 import Navbar from "../components/NavBar";
-import SearchHero, {
-  FormData as SearchHeroProps,
-} from "../components/SearchHero";
-import SearchHeroMob from "../components/SearchHeroMob";
-import { useServiceCarContext } from "../context/ServiceCarContext";
+import SearchHero from "../components/SearchHero";
+// import SearchHeroModal from "../components/SearchHeroModal";
+import {
+  SearchFormData,
+  useServiceCarContext,
+} from "../context/ServiceCarContext";
 import { useRouter } from "next/navigation";
 
 //import '../layout.css';
@@ -13,48 +14,40 @@ import { useRouter } from "next/navigation";
 const HeroPage = () => {
   const router = useRouter();
 
-  const [showSearchHero, setShowSearchHero] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  // const [showSearchHero, setShowSearchHero] = useState(false);
+  // const [isMobile, setIsMobile] = useState(false);
 
   const { searchListing } = useServiceCarContext();
 
-  useEffect(() => {
-    // Check if the screen size is below a certain width (e.g., 768px for mobile devices)
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 767);
-    };
+  // useEffect(() => {
+  //   // Check if the screen size is below a certain width (e.g., 768px for mobile devices)
+  //   const handleResize = () => {
+  //     setIsMobile(window.innerWidth < 767);
+  //   };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
-  const handleFindRide = async (formData: SearchHeroProps) => {
+  const handleFindRide = async (searchFormData: SearchFormData) => {
     // Implement the logic for finding a ride based on the form data
     // setFormData(formData);
     // console.log("Finding a ride with form data:", formData);
-    await searchListing(formData);
+    await searchListing(searchFormData);
 
     router.push("/search");
   };
 
-  const handleClick = () => {
-    // Handle click event for mobile devices
-    setShowSearchHero(true);
-  };
-
-  const carAvailability = {
-    startDate: new Date(),
-    endDate: new Date(),
-  };
-
-  const city = "Davao city";
+  // const handleClick = () => {
+  //   // Handle click event for mobile devices
+  //   setShowSearchHero(true);
+  // };
 
   return (
     <div className="bg-black bg-cover pb-12 max-h-100 font-Messina-Sans hero-page-search-bg">
-      {/* Code block starts */}
       <>
         <Navbar />
         <div className="">
@@ -64,30 +57,26 @@ const HeroPage = () => {
         </div>
         <Fragment>
           <div className="search-modal-btn text-center">
-            <button
-              className="text-white text-xl"
+            {/* <div
+              className={`${isMobile && "hidden"}`}
+              // onClick={ ? handleClick : undefined}
+            > */}
+            <SearchHero onFindRide={handleFindRide} />
+            {/* </div> */}
+
+            {/* <button
+              className={`text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition ${
+                !isMobile && "hidden"
+              }`}
               onClick={isMobile ? handleClick : undefined}
             >
-              <SearchHero
-                carAvailability={carAvailability}
-                city={city}
-                onFindRide={handleFindRide}
-              />
-              {/* <SearchHero 
-              carAvailability={{
-                startDate: new Date(),
-                endDate: new Date()
-              }} city={''} 
-              
-              onFindRide={function (formData: FormData): void {
-                throw new Error('Function not implemented.');
-              } }
-              /> */}
-            </button>
-            <SearchHeroMob
+              Find a ride
+            </button> */}
+
+            {/* <SearchHeroModal
               isvisible={showSearchHero}
               onClose={() => setShowSearchHero(false)}
-            />
+            /> */}
           </div>
         </Fragment>
       </>

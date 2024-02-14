@@ -67,15 +67,15 @@ const ProfileCard = () => {
       : "No address provided";
   const language = user.language ? `${user.language}` : "Unknown"; //
   const phoneNumber = `${user.phoneNumber}`;
-  const isLicensed = user.isLicensed
-    ? "Licensed to Drive"
-    : "Not Licensed to Drive";
-  const isVerified = user.isVerified ? "Verified" : "Not Verified";
+  // const isLicensed = user.isLicensed
+  //   ? "Licensed to Drive"
+  //   : "Not Licensed to Drive";
+  // const isVerified = user.isVerified ? "Verified" : "Not Verified";
   const badges = user.badge ? user.badge : "No Badge to Display";
 
   return (
     <>
-      <div className="self-start flex flex-col w-full lg:w-fit h-fit bg-white shadow-searchbox rounded-lg text-gray-900 pt-10 mt-10 2xl:hover:scale-[102%] transition-all">
+      <div className="border border-black self-start flex flex-col w-full lg:w-fit h-fit  bg-white shadow-searchbox rounded-lg text-gray-900 pt-10 mt-10 2xl:hover:scale-[102%] transition-all">
         <div className="lg:hidden flex flex-col h-fit w-full sm:px-10 px-2 items-center mb-5">
           <h1 className="text-3xl font-bold text-center">{userName}</h1>
           <p className=" text-sm">Joined {yearJoined}</p>

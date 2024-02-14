@@ -24,9 +24,12 @@ const CarListingPage = () => {
   const handleCardClick = (car: any) => {
     // Call the handleMarkerClick function from MapListing.js
     setSelectedVehicle(car);
+    setShowMap(true);
   };
   const toggleMapVisible = () => {
-    setShowMap((prevState) => !prevState);
+    setShowMap((prevState) => {
+      return !prevState;
+    });
   };
 
   useEffect(() => {
@@ -56,10 +59,12 @@ const CarListingPage = () => {
           className={`hero-page-search-listing w-1/2 p-2 overflow-y-auto max-h-screen ${
             showMap && isMobile ? "hidden" : "" // Hide if showMap is true
           }`}
-          style={{ height: "600px" }}
+          style={{ height: "650px" }}
         >
           {data.length === 0 ? (
-            <p>Sorry, there are currently no cars available in this area.</p>
+            <div className="h-full flex justify-center items-center">
+              <p>Sorry, there are currently no cars available in this area.</p>
+            </div>
           ) : (
             data.map((car: any) => (
               <CarListing

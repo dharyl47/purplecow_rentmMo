@@ -178,7 +178,7 @@ export default function ListingStepper({
     <>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col min-h-[720px] self-center w-full bg-white px-4 py-10 sm:p-12 shadow-searchbox rounded-lg mt-5 m-2 justify-between"
+        className="border border-black flex flex-col min-h-[720px] self-center w-full bg-white px-4 py-10 sm:p-12  rounded-lg mt-5 m-2 justify-between"
       >
         <div>
           <h1

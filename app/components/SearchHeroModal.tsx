@@ -33,7 +33,7 @@ const theme = createTheme({
   },
 });
 
-const SearchHeroMob: React.FC<SearchHeroMobProps> = ({
+const SearchHeroModal: React.FC<SearchHeroMobProps> = ({
   isvisible,
   onClose,
 }) => {
@@ -167,4 +167,4 @@ const SearchHeroMob: React.FC<SearchHeroMobProps> = ({
   );
 };
 
-export default SearchHeroMob;
+export default SearchHeroModal;

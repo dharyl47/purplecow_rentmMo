@@ -9,19 +9,23 @@ interface ServiceSearchHeroProps {
   endDate: Date | null;
 }
 
-interface SearchFormData {
+export interface SearchFormData {
   location: string;
   startDate: Date | null;
-  startTime: string;
   endDate: Date | null;
-  endTime: string;
+  startTime: String | null;
+  endTime: String | null;
 }
 
 interface ServiceCarContextType {
   data: ICar[];
+  searchLoading: boolean;
+  searchFormData: SearchFormData;
   fetchData: () => Promise<void>;
   updateListing: (id: number, updatedData: Partial<ICar>) => Promise<void>;
   searchListing: (formData: ServiceSearchHeroProps) => Promise<void>; // Define the type signature here
+  setSearchFormData: React.Dispatch<React.SetStateAction<SearchFormData>>;
+  setSearchLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ServiceCarContext = createContext<ServiceCarContextType | null>(
@@ -42,11 +46,12 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [data, setData] = useState<ICar[]>([]);
-  const [formData, setFormData] = useState<SearchFormData>({
-    location: "",
-    startDate: null,
+  const [searchLoading, setSearchLoading] = useState<boolean>(false);
+  const [searchFormData, setSearchFormData] = useState<SearchFormData>({
+    location: "Davao city",
+    startDate: new Date(),
+    endDate: new Date(),
     startTime: "",
-    endDate: null,
     endTime: "",
   });
 
@@ -83,6 +88,7 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({
       });
 
       setData(response.data.listings);
+      setSearchLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -105,7 +111,16 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <ServiceCarContext.Provider
-      value={{ data, fetchData, updateListing, searchListing }}
+      value={{
+        data,
+        searchFormData,
+        searchLoading,
+        fetchData,
+        updateListing,
+        searchListing,
+        setSearchFormData,
+        setSearchLoading,
+      }}
     >
       {children}
     </ServiceCarContext.Provider>

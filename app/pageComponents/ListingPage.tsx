@@ -23,7 +23,9 @@ export const Listing4Wheel = () => {
   const itemsPerPage = 4; // Number of items to display per page
 
   const toVehicleDetails = (item: any) => {
-    navigate.push(`#`);
+    const carObject = encodeURIComponent(JSON.stringify(item));
+
+    navigate.push(`/carDetail?car=${carObject}`);
     // navigate.push(`/vehicle/details/${item}`);
 
     setTimeout(() => {

@@ -8,7 +8,6 @@ import MyListings from "../components/MyListings";
 
 // Hooks
 import { useUser } from "../hooks/useUser";
-import { Box, Skeleton } from "@mui/material";
 
 const Profile = () => {
   const store = useUser();

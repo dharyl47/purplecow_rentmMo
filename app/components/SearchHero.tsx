@@ -10,10 +10,17 @@ import {
   InputAdornment,
   IconButton,
   OutlinedInput,
+  Button,
+  CircularProgress,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { HiLocationMarker } from "react-icons/hi";
 import { useRouter } from "next/navigation";
+
+import {
+  SearchFormData,
+  useServiceCarContext,
+} from "../context/ServiceCarContext";
 
 const theme = createTheme({
   typography: {
@@ -28,52 +35,46 @@ const theme = createTheme({
 });
 
 export interface SearchHeroProps {
-  carAvailability: {
-    startDate: Date;
-    endDate: Date;
-  };
-  city: string;
-  onFindRide: (formData: FormData) => void;
+  onFindRide: (searchFormData: SearchFormData) => void;
 }
 
-export interface FormData {
-  location: string;
-  startDate: Date | null;
-  startTime: string;
-  endDate: Date | null;
-  endTime: string;
-}
+// export interface FormData {
+//   location: string;
+//   startDate: Date | null;
+//   startTime: string;
+//   endDate: Date | null;
+//   endTime: string;
+// }
 
-const SearchHero: React.FC<SearchHeroProps> = ({
-  carAvailability,
-  city,
-  onFindRide,
-}) => {
+const SearchHero: React.FC<SearchHeroProps> = ({ onFindRide }) => {
   // const router = useRouter();
-  const [isLoading, setLoading] = useState<boolean>(false);
 
-  const [formData, setFormData] = useState<FormData>({
-    location: "",
-    startDate: null,
-    startTime: "",
-    endDate: null,
-    endTime: "",
-  });
+  const { searchFormData, setSearchFormData, searchLoading, setSearchLoading } =
+    useServiceCarContext();
 
-  useEffect(() => {
-    setFormData({
-      location: city,
-      startDate: carAvailability?.startDate || null,
-      startTime: "",
-      endDate: carAvailability?.endDate || null,
-      endTime: "",
-    });
-    // }, [carAvailability, city]);
-  }, []);
+  // const [formData, setFormData] = useState<FormData>({
+  //   location: "",
+  //   startDate: null,
+  //   startTime: "",
+  //   endDate: null,
+  //   endTime: "",
+  // });
 
-  const handleFindRide = () => {
+  // useEffect(() => {
+  //   // setFormData({
+  //   //   location: city,
+  //   //   startDate: carAvailability?.startDate || null,
+  //   //   startTime: "",
+  //   //   endDate: carAvailability?.endDate || null,
+  //   //   endTime: "",
+  //   // });
+  //   // }, [carAvailability, city]);
+  // }, []);
+
+  const handleFindRide = async () => {
     // Pass the form data to the parent component or any other callback
-    onFindRide(formData);
+    await setSearchLoading(true);
+    onFindRide(searchFormData);
   };
   // const SearchHero = () => {
 
@@ -90,9 +91,12 @@ const SearchHero: React.FC<SearchHeroProps> = ({
                   label="Location"
                   id="location"
                   type="text"
-                  value={formData.location}
+                  value={searchFormData.location}
                   onChange={(e) =>
-                    setFormData({ ...formData, location: e.target.value })
+                    setSearchFormData({
+                      ...searchFormData,
+                      location: e.target.value,
+                    })
                   }
                   endAdornment={
                     <InputAdornment position="end">
@@ -111,9 +115,9 @@ const SearchHero: React.FC<SearchHeroProps> = ({
                 <DateTimePicker
                   label="Start Trip"
                   slotProps={{ textField: { variant: "outlined" } }}
-                  value={formData.startDate}
+                  value={searchFormData.startDate}
                   onChange={(date) =>
-                    setFormData({ ...formData, startDate: date })
+                    setSearchFormData({ ...searchFormData, startDate: date })
                   }
                 />
               </div>
@@ -124,8 +128,10 @@ const SearchHero: React.FC<SearchHeroProps> = ({
               <DateTimePicker
                 label="End Trip"
                 slotProps={{ textField: { variant: "outlined" } }}
-                value={formData.endDate}
-                onChange={(date) => setFormData({ ...formData, endDate: date })}
+                value={searchFormData.endDate}
+                onChange={(date) =>
+                  setSearchFormData({ ...searchFormData, endDate: date })
+                }
               />
             </div>
             <div className="flex self-end ml-4">
@@ -136,14 +142,82 @@ const SearchHero: React.FC<SearchHeroProps> = ({
               <button
                 className="text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition"
                 onClick={handleFindRide}
+                disabled={searchLoading}
               >
-                Find a ride
+                {searchLoading ? (
+                  <CircularProgress style={{ color: "#fff" }} size={24} />
+                ) : (
+                  "Find a ride"
+                )}
               </button>
             </div>
           </div>
 
-          <div className="flex-col xl:hidden w-full min-w-fit max-w-sm h-fit bg-white mx-6 md:p-10 p-6 rounded-lg shadow-searchbox ">
+          {/* Mobile View */}
+
+          <div className="h-full w-full flex-col xl:hidden mx-5  bg-white p-3 rounded-lg">
             {/* Location */}
+            <div className="mb-5">
+              <FormControl variant="outlined" className="w-full">
+                <InputLabel htmlFor="location">Location</InputLabel>
+                <OutlinedInput
+                  label="Location"
+                  id="location"
+                  type="text"
+                  value={searchFormData.location}
+                  onChange={(e) =>
+                    setSearchFormData({
+                      ...searchFormData,
+                      location: e.target.value,
+                    })
+                  }
+                />
+              </FormControl>
+            </div>
+
+            <div className="flex flex-row gap-2">
+              {/* Start Trip */}
+              <div className="mb-5 w-1/2">
+                <DateTimePicker
+                  className="w-full"
+                  label="Start Trip"
+                  slotProps={{ textField: { variant: "outlined" } }}
+                  value={searchFormData.startDate}
+                  onChange={(date) =>
+                    setSearchFormData({ ...searchFormData, startDate: date })
+                  }
+                />
+              </div>
+              {/* End Trip */}
+              <div className="mb-5 w-1/2">
+                <DateTimePicker
+                  label="End Trip"
+                  className="w-full"
+                  slotProps={{ textField: { variant: "outlined" } }}
+                  value={searchFormData.endDate}
+                  onChange={(date) =>
+                    setSearchFormData({ ...searchFormData, endDate: date })
+                  }
+                />
+              </div>
+            </div>
+
+            <div className="text-right">
+              <button
+                className="p-2 font-bold text-black rounded-md bg-yellow-300 transition"
+                onClick={handleFindRide}
+                disabled={searchLoading}
+              >
+                {searchLoading ? (
+                  <CircularProgress style={{ color: "#fff" }} size={24} />
+                ) : (
+                  "Find a ride"
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* <div className="flex-col xl:hidden w-full min-w-fit max-w-sm h-fit bg-white mx-6 md:p-10 p-6 rounded-lg shadow-searchbox ">
             <div className="flex flex-col w-full items-start gap-3 search-loc">
               <label
                 htmlFor="input-location"
@@ -164,7 +238,6 @@ const SearchHero: React.FC<SearchHeroProps> = ({
               </div>
             </div>
             <span className="flex w-full h-[2px] bg-dark400 rounded-full my-6 shadow-searchbox-span"></span>
-            {/* Start Trip */}
             <div className="flex flex-col justify-start items-start w-full gap-3 search-startrp">
               <label
                 htmlFor="input-start-trip"
@@ -183,13 +256,15 @@ const SearchHero: React.FC<SearchHeroProps> = ({
                   type="time"
                   className="text-black bg-transparent focus:outline-none lg:w-5/6 w-full md:text-lg text-base"
                   onChange={(e) =>
-                    setFormData({ ...formData, startTime: e.target.value })
+                    setSearchFormData({
+                      ...searchFormData,
+                      startTime: e.target.value,
+                    })
                   }
                 />
               </div>
             </div>
             <span className="flex w-full h-[2px] bg-dark400 rounded-full my-6 shadow-searchbox-span"></span>
-            {/* End Trip */}
             <div className="flex flex-col justify-start items-start w-full gap-3 search-endtrp">
               <label
                 htmlFor="input-start-trip"
@@ -208,7 +283,10 @@ const SearchHero: React.FC<SearchHeroProps> = ({
                   type="time"
                   className="text-black bg-transparent focus:outline-none lg:w-5/6 w-full md:text-lg text-base"
                   onChange={(e) =>
-                    setFormData({ ...formData, endTime: e.target.value })
+                    setSearchFormData({
+                      ...searchFormData,
+                      endTime: e.target.value,
+                    })
                   }
                 />
               </div>
@@ -216,7 +294,7 @@ const SearchHero: React.FC<SearchHeroProps> = ({
             <div className="flex justify-center w-full md:mt-10 mt-6">
               <ButtonFillRoundedSearch text="Find a ride" />
             </div>
-          </div>
+          </div> */}
         </div>
       </LocalizationProvider>
     </ThemeProvider>

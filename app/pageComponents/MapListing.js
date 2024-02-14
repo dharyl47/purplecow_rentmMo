@@ -22,7 +22,7 @@ const MapComponent = ({ carList, cardSelected, onCardClick }) => {
 
   const onSelectCar = useCallback((param) => {
     if (param?.longitude && param?.latitude) {
-      mapRef.current?.flyTo({ center: [param.longitude, param.latitude], duration: 2000 });
+      mapRef.current?.flyTo({ center: [param.longitude, param.latitude], duration: 2000, zoom: 11 });
     }
   }, []);
 

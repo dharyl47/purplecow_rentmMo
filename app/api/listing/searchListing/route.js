@@ -10,25 +10,35 @@ export async function GET(request, { query }) {
         const startDate = queryParams.get('startDate');
         const endDate = queryParams.get('endDate');
 
-        // Convert query parameters to Date objects and then to UTC format
         const utcStartDate = new Date(startDate);
         const utcEndDate = new Date(endDate);
 
-
-        const queryObj = {};
-        if (city) queryObj.city = { $regex: new RegExp(city, 'i') }; 
-
-        // Construct the $or condition
-        queryObj.$or = [
-            {
-                $and: [
-                    { 'carAvailability.startDate': { $lte: utcEndDate } },
-                    { 'carAvailability.endDate': { $gte: utcStartDate } }
-                ]
-            },
-            { 'carAvailability.checked': true }
-        ];
-
+        const queryObj = {
+            $and: [
+                {
+                    $or: [
+                        { city: { $regex: city, $options: 'i' } },
+                        { street: { $regex: city, $options: 'i' } },
+                        { province: { $regex: city, $options: 'i' } },
+                        { country: { $regex: city, $options: 'i' } },
+                        { state: { $regex: city, $options: 'i' } },
+                        { zipcode: { $regex: city, $options: 'i' } }
+                    ]
+                },
+                {
+                    $or: [ 
+                        {
+                            $and: [
+                                { 'carAvailability.startDate': { $lte: utcEndDate } },
+                                { 'carAvailability.endDate': { $gte: utcStartDate } }
+                            ]
+                        },
+                        { 'carAvailability.checked': true }
+                    ]
+                },
+            ]
+        };
+        
         // Fetch listings by city, startDate, endDate
         const listings = await ListingModel.find(queryObj).populate('ownerId');
   
