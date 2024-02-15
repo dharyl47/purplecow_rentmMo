@@ -3,12 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { ICar } from "../types/types";
 import imageUnavailable from "../assets/logo/image_not_available.png";
 import { CardContent, Card, Pagination } from "@mui/material";
-import {
-  BsFillStarFill,
-  BsMapFill,
-  BsTelephoneFill,
-  BsCashCoin,
-} from "react-icons/bs";
 
 import axios from "axios";
 import Modal from "react-responsive-modal";

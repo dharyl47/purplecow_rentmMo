@@ -42,6 +42,7 @@ export default function ListingStepper({
 
   useEffect(() => {
     setListingInfo(itemData);
+    setActiveStep(0);
   }, [itemData]);
 
   const featureChecker = [
@@ -137,6 +138,18 @@ export default function ListingStepper({
     zc: any
   ) => {
     // Define the functionality for handleChangeUpdate if required
+    setListingInfo({
+      ...listingInfo,
+      lat: x,
+      lon: y,
+      city: c,
+      state: s,
+      country: ct,
+      street: s1 ? s1 : s2,
+      street1: s1,
+      street2: s2,
+      zipCode: zc,
+    });
   };
   const renderStepContent = () => {
     return (

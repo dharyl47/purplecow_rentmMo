@@ -93,32 +93,34 @@ export default function ListingStepper() {
   ];
 
   const handleChange = (e: any) => {
-    if (e.target.name === "startDate" || e.target.name === "endDate") {
+    const { name, value, checked } = e.target;
+
+    if (name === "startDate" || name === "endDate") {
       setListingInfo({
         ...listingInfo,
         carAvailability: {
           ...listingInfo.carAvailability,
-          [e.target.name]: new Date(e.target.value), // Convert the string to a Date object
+          [name]: new Date(value), // Convert the string to a Date object
         },
       });
-    } else if (e.target.name === "isAlways") {
+    } else if (name === "isAlways") {
       setListingInfo({
         ...listingInfo,
         carAvailability: {
           ...listingInfo.carAvailability,
-          checked: e.target.checked,
+          checked: checked,
         },
       });
-    } else if (featureChecker.includes(e.target.name)) {
+    } else if (featureChecker.includes(name)) {
       setListingInfo({
         ...listingInfo,
         features: {
           ...listingInfo.features,
-          [e.target.name]: e.target.checked,
+          [name]: checked,
         },
       });
     } else {
-      setListingInfo({ ...listingInfo, [e.target.name]: e.target.value });
+      setListingInfo({ ...listingInfo, [name]: value });
     }
   };
 
@@ -139,21 +141,23 @@ export default function ListingStepper() {
       city: c,
       state: s,
       country: ct,
+      street: s1 ? s1 : s2,
       street1: s1,
       street2: s2,
       zipCode: zc,
     });
   };
-  const handleChangeUpdates = (b: any, m: any, lp: any, cr: any, dc: any) => {
-    setListingInfo({
-      ...listingInfo,
-      brand: b,
-      model: m,
-      licensePlateNumber: lp,
-      carRegistrationNumber: cr,
-      description: dc,
-    });
-  };
+
+  // const handleChangeUpdates = (b: any, m: any, lp: any, cr: any, dc: any) => {
+  //   setListingInfo({
+  //     ...listingInfo,
+  //     brand: b,
+  //     model: m,
+  //     licensePlateNumber: lp,
+  //     carRegistrationNumber: cr,
+  //     description: dc,
+  //   });
+  // };
 
   const handleChangeLatAndLon = (lat: string, lon: string) => {
     setListingInfo({ ...listingInfo, lat, lon });
@@ -161,6 +165,8 @@ export default function ListingStepper() {
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
+
+    console.log(listingInfo);
 
     if (!isLastStep) {
       handleNext();

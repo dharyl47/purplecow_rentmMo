@@ -1,16 +1,16 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import Head from 'next/head';
-import { useRouter } from 'next/navigation';
+"use client";
+import React, { useEffect, useState } from "react";
+import Head from "next/head";
+import { useRouter } from "next/navigation";
 
-import CreditCard from '../components/CreditCard';
-import GCash from '../components/GCash';
-import GrabPay from '../components/GrabPay';
+import CreditCard from "../components/CreditCard";
+import GCash from "../components/GCash";
+import GrabPay from "../components/GrabPay";
 
 export default function Cart() {
   const [paymentOption, setPaymentOption] = useState(0);
   const [total, setTotal] = useState(0);
-  const [checkoutID, setCheckoutID] = useState('');
+  const [checkoutID, setCheckoutID] = useState("");
   const router = useRouter();
 
   const displayPaymentForm = (paymentOption: any) => {
@@ -28,12 +28,12 @@ export default function Cart() {
   };
 
   useEffect(() => {
-    const totalJSON = localStorage.getItem('totalPayment');
+    const totalJSON = localStorage.getItem("totalPayment");
     const totalNumber = totalJSON ? JSON.parse(totalJSON) : 0;
     setTotal(totalNumber);
 
-    const checkoutIDJSON = localStorage.getItem('checkoutID');
-    const checkoutIDString = checkoutIDJSON ? JSON.parse(checkoutIDJSON) : '';
+    const checkoutIDJSON = localStorage.getItem("checkoutID");
+    const checkoutIDString = checkoutIDJSON ? JSON.parse(checkoutIDJSON) : "";
     setCheckoutID(checkoutIDString);
   }, []);
 
@@ -91,10 +91,14 @@ export default function Cart() {
 
           <div className="mt-8 flex flex-col md:flex-row md:justify-between items-center">
             <div className="w-full md:w-1/3 p-4 bg-gray-200 rounded-lg">
-              <h2 className="text-lg font-semibold">Payment ID: {checkoutID}</h2>
+              <h2 className="text-lg font-semibold">
+                Payment ID: {checkoutID}
+              </h2>
               <h3 className="text-xl font-bold mt-2">Amount to Pay: {total}</h3>
             </div>
-            <div className="w-full md:w-2/3 mt-6 md:mt-0">{displayPaymentForm(paymentOption)}</div>
+            <div className="w-full md:w-2/3 mt-6 md:mt-0">
+              {displayPaymentForm(paymentOption)}
+            </div>
           </div>
         </section>
       </main>

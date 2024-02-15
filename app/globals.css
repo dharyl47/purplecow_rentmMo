@@ -42,6 +42,10 @@
 h1,h2,h3,h4,h5,h6 {
 	font-family: 'Messina Sans', sans-serif;
 }
+p {
+	font-family: 'Messina Sans', sans-serif;
+}
+
 
 @font-face {
 	font-family: 'Messina Sans';
@@ -189,8 +193,8 @@ h1,h2,h3,h4,h5,h6 {
 
 .grid {
     display: grid;
-    align-items: center;
-    justify-items: center;
+    /* align-items: center;
+    justify-items: center; */
 }
 .search-modal-close {
     margin-top: -21px;
