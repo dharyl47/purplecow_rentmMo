@@ -1,7 +1,13 @@
 import bcrypt from 'bcryptjs'; 
+
+// Next Connect
 import { NextResponse } from "next/server";
-import connectMongoDB from "../../lib/mongodb";
-import UserSchema from "../../models/userProfile";
+
+// Mongo Connect
+import connectMongoDB from "@/lib/mongodb";
+
+// Model
+import UserSchema from "@/models/user.model";
 
 
 // export async function POST(request) {

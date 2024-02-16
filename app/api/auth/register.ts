@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import connectMongoDB from "@/app/lib/mongodb";
-import UserSchema from "@/app/models/userProfile";
-
+import connectMongoDB from "@/lib/mongodb";
+import UserSchema from "@/models/user.model";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {

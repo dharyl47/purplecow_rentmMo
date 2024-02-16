@@ -121,7 +121,7 @@ const Navbar = () => {
                     <ul className="hidden lg:block p-2 w-40 border-r bg-white absolute rounded left-0 shadow-searchbox mt-16 top-0">
                       <li className="cursor-pointer text-gray-800 text-sm leading-3 tracking-normal py-2 hover:text-yellow-400 focus:text-yellow-400 focus:outline-none transition-colors">
                         <div className="flex items-center">
-                          <BiUser height="10px" width="20px" color="#131313" />
+                          <BiUser size="20px" color="#131313" />
                           <a
                             className="w-full hover:text-yellow-400 ml-2"
                             href="/profile"
@@ -131,7 +131,7 @@ const Navbar = () => {
                         </div>
                       </li>
                       <li className="cursor-pointer text-gray-800 text-sm leading-3 tracking-normal mt-2 py-2 hover:text-yellow-400 focus:text-yellow-400 focus:outline-none flex items-center transition-colors">
-                        <BiHelpCircle size="10px" color="#131313" />
+                        <BiHelpCircle size="20px" color="#131313" />
                         <a
                           href="/getting-started"
                           className="w-full hover:text-yellow-400 ml-2"

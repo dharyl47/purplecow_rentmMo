@@ -8,7 +8,7 @@ import SearchHero from "../components/SearchHero";
 import {
   SearchFormData,
   useServiceCarContext,
-} from "../context/ServiceCarContext";
+} from "../../contexts/ServiceCarContext";
 import { useRouter } from "next/navigation";
 
 //import '../layout.css';

@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { initialUserProfile } from "../types/initialInfo";
+import { initialUserProfile } from "../app/types/initialInfo";
 
 export const UserContext = createContext<any>(null);
 

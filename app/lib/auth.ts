@@ -2,8 +2,8 @@ import { NextAuthOptions, User, getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import GoogleProvider from "next-auth/providers/google";
-import connectMongoDB from "./mongodb";
-import UserSchema from "./../models/userProfile";
+import connectMongoDB from "@/lib/mongodb";
+import UserSchema from "@/models/user.model";
 import { useEffect } from 'react';
 
 export const authConfig: NextAuthOptions = {

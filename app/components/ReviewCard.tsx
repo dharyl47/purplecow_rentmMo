@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
@@ -89,28 +91,26 @@ const ReviewCard: React.FC = () => {
       {currentReviews.map((review) => (
         <div
           key={review.id}
-          className="box-with-shadow w-full bg-white shadow-md mt-2 relative pl-6 pr-6"
+          className="border bg-white rounded-lg shadow-md border border-gray-200 mt-5 relative pl-6 pr-6"
         >
           <div className="flex items-center mb-2 p-2 mt-5">
             {/* Empty Avatar */}
-            <div className="w-8 h-8 bg-gray-300 rounded-full mr-2"></div>
+            <div className="w-12 h-12 bg-gray-300 rounded-full mr-2"></div>
 
             {/* Random Name and Date */}
             <div>
-              <p className="font-semibold">{review.name}</p>
+              <h1 className="font-semibold">{review.name}</h1>
               <p className="text-gray-600">{review.date}</p>
             </div>
             <div className="flex items-center ml-auto">
-                 {/* Star Rating */}
-          <div className="flex items-center mb-2 p-2">
-            <div className="flex items-center">
-              {renderStarRating(review.rating)}
+              {/* Star Rating */}
+              <div className="flex items-center mb-2 p-2">
+                <div className="flex items-center">
+                  {renderStarRating(review.rating)}
+                </div>
+              </div>
             </div>
           </div>
-            </div>
-          </div>
-
-         
 
           {/* Review Text (Lorem Ipsum) */}
           <div className="mb-5 p-2">
@@ -127,7 +127,7 @@ const ReviewCard: React.FC = () => {
             <button
               key={index + 1}
               onClick={() => paginate(index + 1)}
-              className={`bg-yellow-500 text-white p-1 mx-1 mb-3 w-8 ${
+              className={`bg-yellow-500 text-black p-1 mx-1 mb-3 w-8 ${
                 currentPage === index + 1 ? "font-bold" : ""
               }`}
             >

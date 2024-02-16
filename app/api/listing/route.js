@@ -1,8 +1,8 @@
 // route.js
 
 import { NextResponse } from "next/server";
-import connectMongoDB from "../../lib/mongodb";
-import ListingModel from "../../models/listingSchema";
+import connectMongoDB from "@/lib/mongodb";
+import ListingModel from "@/models/listing.model";
 
 export async function POST(request) {
   try {

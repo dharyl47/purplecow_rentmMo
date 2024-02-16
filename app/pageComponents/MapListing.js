@@ -12,7 +12,7 @@ import Image from "next/image";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 // Context
-import { useServiceCarContext } from "../context/ServiceCarContext";
+import { useServiceCarContext } from "../../contexts/ServiceCarContext";
 
 // import { RouteModule } from "next/dist/server/future/route-modules/route-module";
 

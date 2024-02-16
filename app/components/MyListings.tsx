@@ -12,7 +12,7 @@ import iconsCar from "../assets/logo/icons8-car.png";
 import Image from "next/image";
 import "react-responsive-modal/styles.css";
 import noImage from "../assets/images/noImage.png";
-import { useServiceCarContext } from "../context/ServiceCarContext";
+import { useServiceCarContext } from "../../contexts/ServiceCarContext";
 
 import { useUser } from "./../hooks/useUser";
 
@@ -64,6 +64,7 @@ const MyListings = () => {
       console.log(error);
     }
   };
+
   // Add this function to handle the update
   const handleSubmit = async (updatedData: Partial<ICar>) => {
     try {
@@ -159,7 +160,7 @@ const MyListings = () => {
         <div className="w-full items-center justify-start flex flex-wrap gap-4 mx-auto">
           {currentItems.map((item, index) => (
             <Card
-              className="drop-shadow-lg 2xl:hover:-translate-y-2 hover:transition-transform sm:w-64 w-full"
+              className="border bg-white rounded-lg shadow-md border border-gray-200  2xl:hover:-translate-y-2 hover:transition-transform sm:w-64 w-full"
               key={index}
             >
               <div className="relative transition p-2">

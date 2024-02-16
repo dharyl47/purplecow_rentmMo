@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import Navbar from '../components/NavBar';
-import ListingStepper from '../components/ListingStepperHosting';
+import React, { useState } from "react";
+import Navbar from "../components/NavBar";
+import ListingStepper from "../components/ListingStepperHosting";
 
 export default function page() {
-	return (
+  return (
     <>
       <div className="flex flex-col w-full h-fit pb-20 bg-cover bg-no-repeat font-Messina-Sans">
         <Navbar />

@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -11,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 // components
 import CustomDateTimePicker from "../components/CustomDateTimePicker";
 import Gallery from "../components/Gallery";
-import ReviewCard from "../components/ReviewCard ";
+import ReviewCard from "../components/ReviewCard";
 
 // Images And Logo
 import {
@@ -27,6 +27,7 @@ import {
   FaUser,
 } from "react-icons/fa";
 import GcashLogo from "../assets/images/gcash.png"; // Import the Gcash logo image
+import { FaPesoSign } from "react-icons/fa6";
 
 interface CarAvailability {
   startDate: string;
@@ -109,6 +110,24 @@ const CarDetailPage: React.FC = () => {
     setEndTripDate(date);
   };
 
+  const computedValue = useMemo(() => {
+    const startUtc = Date.UTC(
+      startTripDate.getFullYear(),
+      startTripDate.getMonth(),
+      startTripDate.getDate()
+    );
+    const endUtc = Date.UTC(
+      endTripDate.getFullYear(),
+      endTripDate.getMonth(),
+      endTripDate.getDate()
+    );
+    const millisecondsPerDay = 1000 * 60 * 60 * 24;
+    const timeDifference = endUtc - startUtc;
+    const daysDifference = Math.floor(timeDifference / millisecondsPerDay) + 1;
+
+    return daysDifference;
+  }, [startTripDate, endTripDate]);
+
   return (
     <div style={{ backgroundColor: "#F6F6F6" }}>
       <div className="relative w-full h-96 overflow-hidden">
@@ -126,7 +145,7 @@ const CarDetailPage: React.FC = () => {
           <>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <h1 className="text-2xl font-bold mb-4">
+                <h1 className="text-4xl font-bold">
                   {carDetails.brand} {carDetails.model}
                 </h1>
               </div>
@@ -144,26 +163,14 @@ const CarDetailPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center mb-2">
-                <span className="text-yellow-500 mr-1">
-                  <FaStar size={24} />{" "}
-                  {/* Adjust the size prop for the star icon */}
-                </span>
-                <span className="text-s font-semibold ml-2">{4.5}</span>
-                <span className="text-gray-600 ml-1">({99} reviews)</span>
+            <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center mt-2 mr-5">
+                <FaPesoSign size={23} style={{ color: "#43A047" }} />
+                <p className="text-lg ml-2">{carDetails.price} per day</p>
               </div>
-              <div className="flex items-center space-x-10 ml-auto">
-                {" "}
-                {/* Added ml-auto for right alignment */}
-                <span className="flex items-center space-x-1">
-                  <span className="ml-1">
-                    {" "}
-                    <p className="text-gray-600 text-s font-semibold mb-2">
-                      Php {carDetails.price}/day
-                    </p>
-                  </span>
-                </span>
+              <div className="flex flex-row items-center mt-2">
+                <FaStar size={23} className="text-yellow-500" />
+                <p className="text-lg ml-2">4.5 (99 reviews)</p>
               </div>
             </div>
 
@@ -370,12 +377,19 @@ const CarDetailPage: React.FC = () => {
                 <div className="grid grid-cols-2 gap-4 box-with-shadow w-full bg-white shadow-md relative pl-6 pr-6">
                   <div className="flex items-center ml-2 mt-7">
                     <div className="ml-2">
-                      <p className="font">₱ 3,000 x 2 days</p>
+                      <p className="font">
+                        ₱ {carDetails.price} x {computedValue} day
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center ml-auto mt-7">
                     <div className="ml-2">
-                      <p className="font-bold">₱ 6,000</p>
+                      <p className="font-bold">
+                        {carDetails?.price !== undefined &&
+                        computedValue !== undefined
+                          ? `₱ ${parseInt(carDetails.price) * computedValue}`
+                          : "Price not available"}
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center ml-2">
@@ -405,7 +419,9 @@ const CarDetailPage: React.FC = () => {
                   </div>
                   <div className="flex items-center ml-2 ml-auto">
                     <div className="ml-2">
-                      <p className="font-bold">₱ 6,250</p>
+                      <p className="font-bold">
+                        ₱ {parseInt(carDetails.price) * computedValue + 250}
+                      </p>
                     </div>
                   </div>
                   <hr className="col-span-2 my-4 border-t" />

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import connectMongoDB from "../../lib/mongodb";
-import UserSchema from "../../models/userProfile";
+import connectMongoDB from "@/lib/mongodb";
+import UserSchema from "@/models/user.model";
 import bcrypt from 'bcryptjs'; 
 
 export async function GET(request, { query }) {
