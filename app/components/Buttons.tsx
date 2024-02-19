@@ -3,7 +3,8 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import gmailLogo from "../assets/logo/icons8-gmail.svg";
+
+import gmailLogo from "@/public/assets/logo/icons8-gmail.svg";
 // ... (interface definitions and other components remain unchanged)
 
 interface ButtonProps {

@@ -1,17 +1,17 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { ICar } from "../types/types";
-import imageUnavailable from "../assets/logo/image_not_available.png";
+import { ICar } from "@/types/types";
+import imageUnavailable from "@/public/assets/logo/image_not_available.png";
 import { CardContent, Card, Pagination } from "@mui/material";
 
 import axios from "axios";
 import Modal from "react-responsive-modal";
 import ListingStepper from "./ListingStepperUpdate";
-import { initialInfoState } from "../types/initialInfo";
-import iconsCar from "../assets/logo/icons8-car.png";
+import { initialInfoState } from "@/types/initialInfo";
+import iconsCar from "@/public/assets/logo/icons8-car.png";
 import Image from "next/image";
 import "react-responsive-modal/styles.css";
-import noImage from "../assets/images/noImage.png";
+import noImage from "@/public/assets/images/noImage.png";
 import { useServiceCarContext } from "../../contexts/ServiceCarContext";
 
 import { useUser } from "./../hooks/useUser";
@@ -53,11 +53,11 @@ const MyListings = () => {
   }
 
   const handleDelete = async () => {
-    const deleteItemID = deleteItem?._id;
+    const deleteItemID = deleteItem?.id;
 
     try {
       await axios.delete(`/api/listing`, {
-        data: { _id: deleteItemID },
+        data: { id: deleteItemID },
       });
       window.location.reload(); // Reload the page after successful deletion
     } catch (error) {
@@ -81,11 +81,9 @@ const MyListings = () => {
 
   const fetchMyListing = async () => {
     try {
-      const response = await axios.get(`/api/listing/listingOwner`, {
-        params: {
-          ownerId: user._id,
-        },
-      });
+      const response = await axios.get(
+        `/api/listing/getMyListings?ownerId=${user.id}`
+      );
 
       setMyListing(response.data.listings);
     } catch (error) {

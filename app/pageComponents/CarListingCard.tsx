@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FaPesoSign, FaStar } from "react-icons/fa6";
+
 interface Car {
   brand: string;
   carRegistrationNumber: string;

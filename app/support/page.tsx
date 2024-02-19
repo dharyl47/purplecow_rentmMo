@@ -1,14 +1,14 @@
-import React from 'react';
-import Navbar from './../components/NavBar';
-import image_1 from '../assets/images/bacolod.png';
-import image_2 from '../assets/images/cdo.png';
-import image_3 from '../assets/images/cebu.png';
-import image_4 from '../assets/images/davao.png';
-import image_5 from '../assets/images/iloilo@2x.png';
+import React from "react";
+import Navbar from "../../components/common/NavBar";
+import image_1 from "@/public/assets/images/bacolod.png";
+import image_2 from "@/public/assets/images/cdo.png";
+import image_3 from "@/public/assets/images/cebu.png";
+import image_4 from "@/public/assets/images/davao.png";
+import image_5 from "@/public/assets/images/iloilo@2x.png";
 import Image from "next/image";
 
 const HelpPage = () => {
-	const quickGuide = [
+  const quickGuide = [
     {
       color: "bg-red-300",
       description: "Getting started on RentMo",
@@ -41,7 +41,7 @@ const HelpPage = () => {
     },
   ];
 
-	return (
+  return (
     <>
       <div className="flex flex-col w-full h-fit bg-cover bg-no-repeat font-Messina-Sans">
         <Navbar />

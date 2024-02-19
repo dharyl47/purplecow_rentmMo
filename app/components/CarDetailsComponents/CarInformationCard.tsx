@@ -27,7 +27,7 @@ const CarInformationCard = () => {
   ];
 
   return (
-    <div className="grid-item w-full border bg-white rounded-lg shadow-md border border-gray-200 py-10 lg:px-10 md:px-10 px-7">
+    <div className="grid-item w-full  bg-white rounded-lg shadow-md border border-gray-200 py-10 lg:px-10 md:px-10 px-7">
       <h1 className="text-2xl font-bold mb-6 underline underline-offset-2">
         Description
       </h1>

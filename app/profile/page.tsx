@@ -1,7 +1,7 @@
 "use client";
 
 // Components
-import Navbar from "../components/NavBar";
+import Navbar from "../../components/common/NavBar";
 import Reviews from "../components/Reviews";
 import ProfileCard from "../components/ProfileCard";
 import MyListings from "../components/MyListings";

@@ -1,8 +1,8 @@
-import React from 'react';
-import Navbar from '../../components/NavBar';
+import React from "react";
+import Navbar from "../../../components/common/NavBar";
 
 const TwoVerification = () => {
-	return (
+  return (
     <div className=" font-Messina-Sans">
       <div className="flex flex-col w-full h-fit pb-20 bg-cover bg-no-repeat">
         <Navbar />
@@ -35,12 +35,12 @@ const TwoVerification = () => {
           </p>
           <ol className="list-decimal pl-10 lg:text-base text-sm">
             <li>
-              Log in to your account and navigate to the &quot;Security&quot; or &quot;Account
-              Settings&quot; section.
+              Log in to your account and navigate to the &quot;Security&quot; or
+              &quot;Account Settings&quot; section.
             </li>
             <li>
-              Locate the two-factor verification option and select &quot;Enable 2FA&quot;
-              or similar.
+              Locate the two-factor verification option and select &quot;Enable
+              2FA&quot; or similar.
             </li>
             <li>Choose your preferred method of verification:</li>
             <ul className="list-disc pl-10">
@@ -71,8 +71,8 @@ const TwoVerification = () => {
           <p className="lg:text-base text-sm">
             Two-factor verification significantly enhances the security of your
             account by ensuring that only you can access it, even if someone
-            knows your password. Don&quot;t forget to securely store backup codes in
-            case you lose access to your primary verification method.
+            knows your password. Don&quot;t forget to securely store backup
+            codes in case you lose access to your primary verification method.
           </p>
           <div className="mt-8">
             <hr className="w-full border-gray-600 mx-auto" />{" "}

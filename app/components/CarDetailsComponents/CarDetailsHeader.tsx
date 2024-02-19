@@ -10,7 +10,7 @@ const CarDetailsHeader = () => {
   return (
     <div className="w-full">
       <img
-        src={"../assets/units/vios-car@2x.png"}
+        src={"@/public/assets/units/vios-car@2x.png"}
         className="object-cover w-full h-96 border bg-white rounded-lg mb-5"
         alt="logo"
       />

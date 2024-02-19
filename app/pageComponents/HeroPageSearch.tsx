@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-// import BgHomepage from "../assets/images/Rent-mo-hero-bg.png";
-import Navbar from "../components/NavBar";
+// import BgHomepage from "@/public/assets/images/Rent-mo-hero-bg.png";
+import Navbar from "../../components/common/NavBar";
 import SearchHero from "../components/SearchHero";
 // import SearchHeroModal from "../components/SearchHeroModal";
 import {

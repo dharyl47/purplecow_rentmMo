@@ -11,12 +11,12 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { TextField } from "@mui/material";
 
 // Images & Icons
-import GcashLogo from "../../assets/images/gcash.png";
+import GcashLogo from "@/public/assets/images/gcash.png";
 import { FaCcAmex, FaCcJcb, FaCcMastercard, FaCcVisa } from "react-icons/fa6";
 
 const CarBookingCard = () => {
   return (
-    <div className="grid-item w-full border bg-white rounded-lg shadow-md border border-gray-200 py-10 lg:px-10 md:px-10 px-7">
+    <div className="grid-item w-full  bg-white rounded-lg shadow-md border border-gray-200 py-10 lg:px-10 md:px-10 px-7">
       {/* <h1 className="text-2xl font-bold mb-6 underline underline-offset-2">
         Book Information
       </h1> */}
@@ -82,7 +82,7 @@ const CarBookingCard = () => {
             <p className="font">Delivery Fee</p>
           </div>
         </div>
-        <div className="flex items-center ml-2 ml-auto">
+        <div className="flex items-center ml-auto">
           <div className="ml-2">
             <p className="font-bold">₱ 200</p>
           </div>
@@ -92,7 +92,7 @@ const CarBookingCard = () => {
             <p className="font">Platform Fee</p>
           </div>
         </div>
-        <div className="flex items-center ml-2 ml-auto">
+        <div className="flex items-center ml-auto">
           <div className="ml-2">
             <p className="font-bold">₱ 50</p>
           </div>
@@ -102,7 +102,7 @@ const CarBookingCard = () => {
             <p className="font-bold">Total</p>
           </div>
         </div>
-        <div className="flex items-center ml-2 ml-auto">
+        <div className="flex items-center ml-auto">
           <div className="ml-2">
             <p className="font-bold">₱ 6,250</p>
           </div>

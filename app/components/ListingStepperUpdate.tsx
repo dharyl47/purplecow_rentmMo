@@ -6,7 +6,7 @@ import BillingInfoForm from "../forms/BillingInfoForm";
 import { Stepper, Step, Typography } from "@material-tailwind/react";
 import { BsPersonFill, BsCreditCardFill, BsCarFrontFill } from "react-icons/bs";
 import { Alert } from "@mui/material";
-import { ICar } from "../types/types.js";
+import { ICar } from "@/types/types";
 
 type Props = {
   itemData: any;
@@ -217,19 +217,19 @@ export default function ListingStepper({
             >
               <Step
                 onClick={() => setActiveStep(0)}
-                className=" cursor-pointer"
+                className="flex items-center justify-center cursor-pointer"
               >
                 <BsPersonFill className="h-5 w-5 rounded-full" />
               </Step>
               <Step
                 onClick={() => setActiveStep(1)}
-                className=" cursor-pointer"
+                className="flex items-center justify-center cursor-pointer"
               >
                 <BsCarFrontFill className="h-5 w-5" />
               </Step>
               <Step
                 onClick={() => setActiveStep(2)}
-                className=" cursor-pointer"
+                className="flex items-center justify-center cursor-pointer"
               >
                 <BsCreditCardFill className="h-5 w-5" />
               </Step>

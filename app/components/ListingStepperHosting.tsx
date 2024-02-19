@@ -58,7 +58,7 @@ export const initialInfoState = (user: any) => ({
     tollPass: false,
     usbCharger: false,
   },
-  ownerId: user._id,
+  ownerId: user.id,
 });
 
 export default function ListingStepper() {
@@ -272,19 +272,19 @@ export default function ListingStepper() {
             >
               <Step
                 onClick={() => setActiveStep(0)}
-                className=" cursor-pointer"
+                className="flex items-center justify-center cursor-pointer"
               >
                 <BsPersonFill className="h-5 w-5 rounded-full" />
               </Step>
               <Step
                 onClick={() => setActiveStep(1)}
-                className=" cursor-pointer"
+                className="flex items-center justify-center cursor-pointer"
               >
                 <BsCarFrontFill className="h-5 w-5" />
               </Step>
               <Step
                 onClick={() => setActiveStep(2)}
-                className=" cursor-pointer"
+                className="flex items-center justify-center cursor-pointer"
               >
                 <BsCreditCardFill className="h-5 w-5" />
               </Step>

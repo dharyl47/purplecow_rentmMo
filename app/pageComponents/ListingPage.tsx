@@ -2,15 +2,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { CardContent, Card, Pagination } from "@mui/material";
-import { ICar } from "../types/types";
-import imageUnavailable from "../assets/logo/image_not_available.png";
+import { ICar } from "@/types/types";
+import imageUnavailable from "@/public/assets/logo/image_not_available.png";
 import { ButtonFillRoundedFull } from "../components/Buttons";
-import bacolod from "../assets/images/bacolod.png";
-import cdo from "../assets/images/cdo.png";
-import cebu from "../assets/images/cebu.png";
-import davao from "../assets/images/davao.png";
-import iloilo from "../assets/images/iloilo.png";
-import makati from "../assets/images/makati.png";
+import bacolod from "@/public/assets/images/bacolod.png";
+import cdo from "@/public/assets/images/cdo.png";
+import cebu from "@/public/assets/images/cebu.png";
+import davao from "@/public/assets/images/davao.png";
+import iloilo from "@/public/assets/images/iloilo.png";
+import makati from "@/public/assets/images/makati.png";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 

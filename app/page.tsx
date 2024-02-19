@@ -1,11 +1,18 @@
-import Image from 'next/image'
-import Dashboard from './dashboard/page'
+// Sections
+import HeroPage from "@/app/pageComponents/landing/HeroPage";
+import HowItWorks from "@/app/pageComponents/landing/HowItWorks";
+import HostBookCards from "@/app/pageComponents/landing/HostBookCards";
+import Footer from "@/components/common/Footer";
 
 export default function Home() {
   return (
     <main>
-      <Dashboard />
+      <div>
+        <HeroPage />
+        <HowItWorks />
+        <HostBookCards />
+        <Footer />
+      </div>
     </main>
-    
-  )
+  );
 }

@@ -6,7 +6,7 @@ import {
   Button,
   Backdrop,
 } from "@mui/material";
-import { ICar } from "../types/types";
+import { ICar } from "@/types/types";
 import { theme } from "./themes/themes";
 import MapComponent from "../components/MapComponent"; // Import the MapComponent
 // import { set } from "mongoose";
@@ -136,9 +136,6 @@ const PersonalInfoForm = ({
   }, []);
 
   useEffect(() => {
-    console.log(address);
-    console.log("new", address.lat);
-    console.log("old", personalInfo.lat);
     if (address.lat || address.lon) {
       if (
         address.lat.toString() !== personalInfo.lat.toString() ||

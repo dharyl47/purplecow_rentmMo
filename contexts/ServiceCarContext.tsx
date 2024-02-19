@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { ICar } from "../app/types/types";
+import { ICar } from "../types/types";
 
 interface ServiceSearchHeroProps {
   location: string;
@@ -58,6 +58,8 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({
   const fetchData = async () => {
     try {
       const response = await axios.get("/api/listing");
+
+      console.log(response);
       setData(response.data.listings);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -79,7 +81,7 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const searchListing = async (formData: ServiceSearchHeroProps) => {
     try {
-      const response = await axios.get(`/api/listing/searchListing`, {
+      const response = await axios.get(`/api/listing/search`, {
         params: {
           city: formData.location,
           startDate: formData.startDate,

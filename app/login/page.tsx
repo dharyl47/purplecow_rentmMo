@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import BgHomepage from "../assets/images/Rent-mo-hero-bg.png";
+import BgHomepage from "@/public/assets/images/Rent-mo-hero-bg.png";
 import GButton from "./buttons/GButton";
 import Image from "next/image";
-import RentMoLOGO from "../assets/logo/RentMo-logo.svg";
+import RentMoLOGO from "@/public/assets/logo/RentMo-logo.svg";
 
 function Login() {
   return (

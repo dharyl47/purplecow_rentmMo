@@ -1,8 +1,8 @@
-import React from 'react';
-import Navbar from '../../components/NavBar';
+import React from "react";
+import Navbar from "../../../components/common/NavBar";
 
 const GettingStarted = () => {
-	return (
+  return (
     <div className=" font-Messina-Sans">
       <div className="flex flex-col w-full h-fit pb-20 bg-cover bg-no-repeat">
         <Navbar />

@@ -50,7 +50,7 @@ const GButton = () => {
     }
 
     try {
-      await axios.post("/api/users", userData);
+      await axios.post("/api/register", userData);
 
       setIsLoading(false);
       window.location.href = "/login";

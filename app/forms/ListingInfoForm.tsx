@@ -11,7 +11,7 @@ import {
   TextareaAutosize,
 } from "@mui/material";
 import ImageUploader from "../components/ImageUploader";
-import { ICar } from "../types/types";
+import { ICar } from "@/types/types";
 
 type Props = {
   handleChange: (e: any) => void;

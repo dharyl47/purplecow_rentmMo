@@ -3,7 +3,6 @@ import React from "react";
 
 // Icons
 import { FaStar } from "react-icons/fa6";
-import { GoDotFill } from "react-icons/go";
 
 // Custom Components
 import ReviewCard from "../ReviewCard";
@@ -18,7 +17,7 @@ const CarCustomerReviewCard = () => {
   ];
 
   return (
-    <div className="w-full border bg-white rounded-lg shadow-md border border-gray-200 py-10 lg:px-10 md:px-10 px-7">
+    <div className="w-full  bg-white rounded-lg shadow-md border border-gray-200 py-10 lg:px-10 md:px-10 px-7">
       <div className="w-full items-center justify-between flex flex-row  mb-10">
         <h1 className="text-2xl font-bold underline underline-offset-2">
           Customer Reviews

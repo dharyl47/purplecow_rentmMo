@@ -1,8 +1,8 @@
-import React from 'react';
-import Navbar from '../../components/NavBar';
+import React from "react";
+import Navbar from "../../../components/common/NavBar";
 
 const SettingUp = () => {
-	return (
+  return (
     <div className=" font-Messina-Sans">
       <div className="flex flex-col w-full h-fit pb-20 bg-cover bg-no-repeat">
         <Navbar />
@@ -40,7 +40,9 @@ const SettingUp = () => {
           </p>
           <ol className="list-decimal pl-6">
             <li>Visit our website at RentMo.com.</li>
-            <li>Click on the &quot;Sign Up&quot; or &quot;Register&quot; button.</li>
+            <li>
+              Click on the &quot;Sign Up&quot; or &quot;Register&quot; button.
+            </li>
             <li>
               Fill in the required information, including your name, email
               address, and password.
@@ -51,8 +53,8 @@ const SettingUp = () => {
 
           <h2 className="font-bold text-2xl mt-8 mb-4">Verifying Your Email</h2>
           <p className="lg:text-base text-sm">
-            After signing up, you&quot;ll receive a verification email at the address
-            you provided. Follow these steps to verify your email:
+            After signing up, you&quot;ll receive a verification email at the
+            address you provided. Follow these steps to verify your email:
           </p>
           <ol className="list-decimal pl-6">
             <li>Open the email from RentMo.</li>
@@ -71,7 +73,10 @@ const SettingUp = () => {
           </p>
           <ol className="list-decimal pl-6">
             <li>Log in to your account.</li>
-            <li>Navigate to the &quot;Profile&quot; or &quot;Account Settings&quot; section.</li>
+            <li>
+              Navigate to the &quot;Profile&quot; or &quot;Account
+              Settings&quot; section.
+            </li>
             <li>
               Update your profile picture, contact information, and any other
               relevant details.
@@ -143,9 +148,9 @@ const SettingUp = () => {
             <u>Getting Started</u>
           </a>
           <p className="lg:text-base text-sm">
-            Just joined us? We&quot;re excited to have you on board! Discover how to
-            set up your account, personalize your profile, and manage your
-            notification preferences to make the most of your experience.
+            Just joined us? We&quot;re excited to have you on board! Discover
+            how to set up your account, personalize your profile, and manage
+            your notification preferences to make the most of your experience.
           </p>
           <div className="mt-8 mb-8">
             <hr className="w-full border-gray-500 mx-auto" />{" "}

@@ -1,30 +1,39 @@
+// Third Party Components
+import bcrypt from 'bcryptjs';
+import prisma from "@/prisma"
 import { NextResponse } from "next/server";
-import connectMongoDB from "@/lib/mongodb";
-import UserSchema from "@/models/user.model";
-import bcrypt from 'bcryptjs'; 
 
-export async function GET(request, { query }) {
-  await connectMongoDB();
-  const queryParams = new URL(request.url).searchParams;
-  const email = queryParams.get('email'); // Extract the email from the query parameters
-  const password = queryParams.get('password'); // Extract the password from the query parameters
+// Database Connect
+import { connectToDatabase } from "@/helpers/ServerHelpers"
 
-  // Find the user by email
-  const user = await UserSchema.findOne({ email });
+export async function GET(request) {
+  const { searchParams } = new URL(request.url)
+  const email = searchParams.get('email')
+  const password = searchParams.get('password')
 
-  // If user doesn't exist, return error
-  if (!user) {
-    return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
-  }
+  await connectToDatabase();
 
-  // Compare the provided password with the hashed password stored in the database
-  const isPasswordMatch = await bcrypt.compare(password, user.password);
+  try {
+    // Find the user by email
+    const user = await prisma.users.findFirst({ where: { email } });
 
-  if (isPasswordMatch) {
-    // Passwords match, login successful
-    return NextResponse.json({ message: "Login successful", user });
-  } else {
-    // Passwords don't match, return error
-    return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
+    // If user doesn't exist, return error
+    if (!user) {
+      return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
+    }
+
+    // Compare the provided password with the hashed password stored in the database
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+    if (isPasswordMatch) {
+      // Passwords match, login successful
+      return NextResponse.json({ message: "Login successful", user });
+    } else {
+      // Passwords don't match, return error
+      return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

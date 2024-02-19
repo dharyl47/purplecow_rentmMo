@@ -34,6 +34,7 @@ const GButton = () => {
   const handleSubmit = async (e: any) => {
     setIsLoading(true);
     e.preventDefault();
+
     try {
       const response = await axios.get(`/api/login`, {
         params: {
@@ -42,9 +43,9 @@ const GButton = () => {
         },
       });
 
-      store.setUser(response.data.user);
-      setIsLoading(false);
-      navigate.push("/profile");
+      await store.setUser(response.data.user);
+      await setIsLoading(false);
+      await navigate.push("/profile");
     } catch (error) {
       setIsFailure(true);
       setIsLoading(false);

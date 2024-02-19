@@ -26,7 +26,7 @@ import {
   FaStar,
   FaUser,
 } from "react-icons/fa";
-import GcashLogo from "../assets/images/gcash.png"; // Import the Gcash logo image
+import GcashLogo from "@/public/assets/images/gcash.png"; // Import the Gcash logo image
 import { FaPesoSign } from "react-icons/fa6";
 
 interface CarAvailability {
@@ -189,10 +189,10 @@ const CarDetailPage: React.FC = () => {
                     </div>
                     <div className="ml-2">
                       <p className="font-bold">
-                        {`${carDetails?.ownerId?.firstName} ${carDetails?.ownerId?.lastName}`}
+                        {`${carDetails?.owner?.firstName} ${carDetails?.owner?.lastName}`}
                       </p>
                       <p className="text-xs text-gray-500">
-                        Joined {carDetails?.ownerId?.createdAt?.split("-")[0]}
+                        Joined {carDetails?.owner?.createdAt?.split("-")[0]}
                       </p>
                     </div>
                   </div>
@@ -397,7 +397,7 @@ const CarDetailPage: React.FC = () => {
                       <p className="font">Delivery Fee</p>
                     </div>
                   </div>
-                  <div className="flex items-center ml-2 ml-auto">
+                  <div className="flex items-center ml-2">
                     <div className="ml-2">
                       <p className="font-bold">₱ 200</p>
                     </div>
@@ -407,7 +407,7 @@ const CarDetailPage: React.FC = () => {
                       <p className="font">Platform Fee</p>
                     </div>
                   </div>
-                  <div className="flex items-center ml-2 ml-auto">
+                  <div className="flex items-center ml-2">
                     <div className="ml-2">
                       <p className="font-bold">₱ 50</p>
                     </div>
@@ -417,7 +417,7 @@ const CarDetailPage: React.FC = () => {
                       <p className="font-bold">Total</p>
                     </div>
                   </div>
-                  <div className="flex items-center ml-2 ml-auto">
+                  <div className="flex items-center ml-2">
                     <div className="ml-2">
                       <p className="font-bold">
                         ₱ {parseInt(carDetails.price) * computedValue + 250}
@@ -432,7 +432,7 @@ const CarDetailPage: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center ml-2 ml-auto">
+                  <div className="flex items-center ml-2">
                     <div className="ml-2">
                       <p className="font-bold"></p>
                     </div>

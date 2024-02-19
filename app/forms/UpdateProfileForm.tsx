@@ -3,9 +3,9 @@ import { InputBox } from "../components/InputBox";
 import { TextField, Box } from "@mui/material";
 import { MdCloudUpload } from "react-icons/md";
 import axios from "axios";
-import { UserUpdate } from "../types/types.js";
+import { UserUpdate } from "@/types/types";
 import { useUser } from "../hooks/useUser";
-import { initialUserUpdate } from "../types/initialInfo";
+import { initialUserUpdate } from "@/types/initialInfo";
 
 interface UpdateProfileProps {
   onClose: () => void;

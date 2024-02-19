@@ -14,9 +14,12 @@ import UpdateProfile from "./../forms/UpdateProfileForm";
 
 // Styles And Images
 import "react-responsive-modal/styles.css";
-import avatar from "../assets/logo/avatar-logo.png";
-import badge from "../assets/logo/icons8-verified-badge.png";
-import phoneIcon from "../assets/logo/icons8-phone.png";
+import avatar from "@/public/assets/logo/avatar-logo.png";
+import badge from "@/public/assets/logo/icons8-verified-badge.png";
+import phoneIcon from "@/public/assets/logo/icons8-phone.png";
+import emailIcon from "@/public/assets/logo/icons8-email.png";
+import professionIcon from "@/public/assets/logo/icons8-portfolio.png";
+import languageIcon from "@/public/assets/logo/icons8-language.png";
 
 // UseContext
 // import { useUserContext } from "../context/UserContext";
@@ -94,36 +97,25 @@ const ProfileCard = () => {
           Update Profile
         </button>
         <div className="flex flex-col w-full lg:w-96 h-fit sm:px-10 px-2 py-5 gap-2 text-sm overflow-hidden">
-          <ProfileCardText
-            image={"../assets/logo/icons8-phone.png"}
-            text={phoneNumber}
-          />
-          <ProfileCardText
-            image={"../assets/logo/icons8-email.png"}
-            text={email}
-          />
+          <ProfileCardText image={phoneIcon} text={phoneNumber} />
+          <ProfileCardText image={emailIcon} text={email} />
+          <ProfileCardText image={professionIcon} text={profession} />
+          <ProfileCardText image={languageIcon} text={language} />
           {/* <ProfileCardText
-            image={"../assets/logo/icons8-house.png"}
+            image={"@/public/assets/logo/icons8-house.png"}
             text={"Test"}
           /> */}
           {/* <ProfileCardText
-            image="../assets/logo/icons8-star.png"
+            image="@/public/assets/logo/icons8-star.png"
             text={reviews}
           /> */}
-          <ProfileCardText
-            image={"../assets/logo/icons8-portfolio.png"}
-            text={profession}
-          />
-          <ProfileCardText
-            image={"../assets/logo/icons8-language.png"}
-            text={language}
-          />
+
           {/* <ProfileCardText
-            image={"../assets/logo/icons8-driver-license.png"}
+            image={"@/public/assets/logo/icons8-driver-license.png"}
             text={isLicensed}
           />
           <ProfileCardText
-            image={"../assets/logo/icons8-verified.png"}
+            image={"@/public/assets/logo/icons8-verified.png"}
             text={isVerified}
           /> */}
 

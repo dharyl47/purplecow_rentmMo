@@ -75,7 +75,7 @@ const MapComponent = ({ personalInfo, handleChangeUpdate, handleChangeLat, handl
       initialViewState={{
         longitude: personalInfo.lon ? personalInfo.lon : 121.7740,
         latitude: personalInfo.lat ? personalInfo.lat : 12.8797,
-        zoom: 15
+        zoom: 5
       }}
       mapboxAccessToken="pk.eyJ1IjoiZGhhcnlsOTciLCJhIjoiY2w5NTluMDh2MXQ3YTNucW16cG9tbGU3dyJ9.z96hyUi9vkmIJDdBB6WjxA"
       mapStyle="mapbox://styles/mapbox/streets-v11"

@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// Listings Type
+type ListingsCarAvailability {
+  checked   Boolean
+  endDate   DateTime @db.Date
+  startDate DateTime @db.Date
+}
+
+type ListingsFeatures {
+  allWheelDrive         Boolean
+  androidAuto           Boolean
+  appleCarPlay          Boolean
+  automaticTransmission Boolean
+  auxInput              Boolean
+  backUpCamera          Boolean
+  bikeRack              Boolean
+  converTible           Boolean
+  gps                   Boolean
+  petFriendly           Boolean
+  tollPass              Boolean
+  usbCharger            Boolean
+}
+
+// Listings Model
+model Listings {
+  id                    String                  @id @default(auto()) @map("_id") @db.ObjectId
+  brand                 String
+  carAvailability       ListingsCarAvailability
+  carRegistrationNumber String
+  cardExpiration        DateTime                @db.Date
+  cardNumber            String
+  city                  String
+  country               String
+  description           String
+  email                 String
+  features              ListingsFeatures
+  lat                   String
+  licensePlateNumber    String
+  lon                   String
+  mobileNumber          String
+  model                 String
+  owner                 Users                   @relation(fields: [ownerId], references: [id])
+  ownerId               String                  @db.ObjectId
+  price                 String
+  securityCode          String
+  state                 String?
+  street                String
+  vehiclePhotos         String[]
+  zipCode               String?
+  createdAt             DateTime                @default(now()) @db.Date
+  updatedAt             DateTime                @updatedAt @db.Date
+  // v                     Int                     @map("__v")
+}
+
+// Users Model
+model Users {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  aboutMe        String
+  authProvider   String
+  email          String
+  firstName      String
+  language       String
+  lastName       String
+  password       String
+  phoneNumber    String
+  profession     String
+  profilePicture String
+  createdAt      DateTime   @default(now()) @db.Date
+  updatedAt      DateTime   @updatedAt @db.Date
+  // v              Int        @map("__v")
+  listings       Listings[]
+}

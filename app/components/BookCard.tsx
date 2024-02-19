@@ -1,6 +1,6 @@
 import React from "react";
-import ride from "../assets/images/book-a-ride.png";
-import find_car from "../assets/sprites/car-check.png";
+import ride from "@/public/assets/images/book-a-ride.png";
+import find_car from "@/public/assets/sprites/car-check.png";
 import Image from "next/image";
 const BookCard = () => {
   return (
