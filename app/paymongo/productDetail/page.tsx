@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import styles from "../styles/Home.module.css";
-import plainT from "@/public/assets/noImage.jpg";
+import plainT from "../assets/noImage.jpg";
 
 // Product Placeholder
 // Normally this is an API Call to pull data from db

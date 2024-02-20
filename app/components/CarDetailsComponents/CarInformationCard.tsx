@@ -11,6 +11,21 @@ import { FcCheckmark } from "react-icons/fc";
 import MapGL from "react-map-gl";
 
 const CarInformationCard = () => {
+  // const features: { [key: string]: string } = {
+  //   allWheelDrive: "All-wheel drive",
+  //   androidAuto: "Android Auto",
+  //   appleCarPlay: "Apple CarPlay",
+  //   automaticTransmission: "Automatic Transmission",
+  //   auxInput: "AUX input",
+  //   backUpCamera: "Backup camera",
+  //   bikeRack: "Bike rack",
+  //   convertible: "Convertible",
+  //   gps: "GPS",
+  //   petFriendly: "Pet Friendly",
+  //   tollPass: "Toll pass",
+  //   usbCharger: "USB charger",
+  // };
+
   const features: string[] = [
     "Automatic Transmission",
     "All-wheel drive",
@@ -51,6 +66,18 @@ const CarInformationCard = () => {
             <p className="text-sm">{feature}</p>
           </div>
         ))}
+
+        {/* 
+{Object.entries(features).map(([featureKey, featureValue], index) => (
+          <div className="flex flex-row items-center" key={index}>
+            {data?.features?.[featureKey] ? (
+              <FcCheckmark className="mr-2" />
+            ) : (
+              <FcCancel className="mr-2" />
+            )}
+            <p className="text-sm">{featureValue}</p>
+          </div>
+        ))} */}
       </div>
 
       {/* <hr className="my-7" />

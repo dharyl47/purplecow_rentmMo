@@ -44,8 +44,8 @@ const GButton = () => {
       });
 
       await store.setUser(response.data.user);
-      await setIsLoading(false);
-      await navigate.push("/profile");
+      setIsLoading(false);
+      navigate.push("/profile");
     } catch (error) {
       setIsFailure(true);
       setIsLoading(false);

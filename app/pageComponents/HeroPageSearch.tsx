@@ -57,26 +57,7 @@ const HeroPage = () => {
         </div>
         <Fragment>
           <div className="search-modal-btn text-center">
-            {/* <div
-              className={`${isMobile && "hidden"}`}
-              // onClick={ ? handleClick : undefined}
-            > */}
             <SearchHero onFindRide={handleFindRide} />
-            {/* </div> */}
-
-            {/* <button
-              className={`text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition ${
-                !isMobile && "hidden"
-              }`}
-              onClick={isMobile ? handleClick : undefined}
-            >
-              Find a ride
-            </button> */}
-
-            {/* <SearchHeroModal
-              isvisible={showSearchHero}
-              onClose={() => setShowSearchHero(false)}
-            /> */}
           </div>
         </Fragment>
       </>

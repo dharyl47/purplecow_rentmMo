@@ -13,19 +13,21 @@ export interface SearchFormData {
   location: string;
   startDate: Date | null;
   endDate: Date | null;
-  startTime: String | null;
-  endTime: String | null;
+  startTime: string | null;
+  endTime: string | null;
 }
 
 interface ServiceCarContextType {
   data: ICar[];
+  carDetailsData: ICar[];
   searchLoading: boolean;
   searchFormData: SearchFormData;
   fetchData: () => Promise<void>;
   updateListing: (id: number, updatedData: Partial<ICar>) => Promise<void>;
-  searchListing: (formData: ServiceSearchHeroProps) => Promise<void>; // Define the type signature here
+  searchListing: (formData: ServiceSearchHeroProps) => Promise<void>;
   setSearchFormData: React.Dispatch<React.SetStateAction<SearchFormData>>;
   setSearchLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setCarDetailsData: React.Dispatch<React.SetStateAction<ICar[]>>;
 }
 
 export const ServiceCarContext = createContext<ServiceCarContextType | null>(
@@ -46,6 +48,7 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [data, setData] = useState<ICar[]>([]);
+  const [carDetailsData, setCarDetailsData] = useState<ICar[]>([]);
   const [searchLoading, setSearchLoading] = useState<boolean>(false);
   const [searchFormData, setSearchFormData] = useState<SearchFormData>({
     location: "Davao city",
@@ -58,70 +61,69 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({
   const fetchData = async () => {
     try {
       const response = await axios.get("/api/listing");
-
-      console.log(response);
       setData(response.data.listings);
     } catch (error) {
       console.error("Error fetching data:", error);
-      // Handle specific error types here if needed
+      throw new Error("Failed to fetch data. Please try again.");
     }
   };
 
-  // added by John Rey Update Car Details
   const updateListing = async (id: number, updatedData: Partial<ICar>) => {
     try {
-      // await axios.put("/api/updatelisting", updatedData);
-      await axios.put("/api/listing", updatedData);
+      await axios.put(`/api/listing/${id}`, updatedData);
       await fetchData(); // Refresh the data after the update
     } catch (error) {
       console.error("Error updating listing:", error);
-      // Handle specific error types here if needed
+      throw new Error("Failed to update listing. Please try again.");
     }
   };
 
   const searchListing = async (formData: ServiceSearchHeroProps) => {
     try {
-      const response = await axios.get(`/api/listing/search`, {
+      const response = await axios.get("/api/listing/search", {
         params: {
           city: formData.location,
           startDate: formData.startDate,
           endDate: formData.endDate,
         },
       });
-
       setData(response.data.listings);
       setSearchLoading(false);
     } catch (error) {
+      setSearchLoading(false);
       console.error("Error fetching data:", error);
+      throw new Error("Failed to search listings. Please try again.");
     }
   };
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
   // Hydration error fix
-  const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
+    // Set hydrated state to true after initial render
     setHydrated(true);
   }, []);
 
+  // State to track hydration
+  const [hydrated, setHydrated] = useState(false);
+
+  // If not hydrated yet, return null to match client and server rendering
   if (!hydrated) {
-    // Returns null on first render, so the client and server match
     return null;
   }
 
+  // Render the provider with context values
   return (
     <ServiceCarContext.Provider
       value={{
         data,
         searchFormData,
         searchLoading,
+        carDetailsData,
         fetchData,
         updateListing,
         searchListing,
         setSearchFormData,
         setSearchLoading,
+        setCarDetailsData,
       }}
     >
       {children}

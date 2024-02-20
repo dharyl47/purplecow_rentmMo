@@ -31,32 +31,32 @@ type ListingsFeatures {
 
 // Listings Model
 model Listings {
-  id                    String                  @id @default(auto()) @map("_id") @db.ObjectId
+  id                    String                   @id @default(auto()) @map("_id") @db.ObjectId
   brand                 String
-  carAvailability       ListingsCarAvailability
+  carAvailability       ListingsCarAvailability?
   carRegistrationNumber String
-  cardExpiration        DateTime                @db.Date
+  cardExpiration        DateTime                 @db.Date
   cardNumber            String
   city                  String
   country               String
   description           String
   email                 String
-  features              ListingsFeatures
+  features              ListingsFeatures?
   lat                   String
   licensePlateNumber    String
   lon                   String
   mobileNumber          String
   model                 String
-  owner                 Users                   @relation(fields: [ownerId], references: [id])
-  ownerId               String                  @db.ObjectId
+  owner                 Users                    @relation(fields: [ownerId], references: [id])
+  ownerId               String                   @db.ObjectId
   price                 String
   securityCode          String
   state                 String?
   street                String
   vehiclePhotos         String[]
   zipCode               String?
-  createdAt             DateTime                @default(now()) @db.Date
-  updatedAt             DateTime                @updatedAt @db.Date
+  createdAt             DateTime                 @default(now()) @db.Date
+  updatedAt             DateTime                 @updatedAt @db.Date
   // v                     Int                     @map("__v")
 }
 

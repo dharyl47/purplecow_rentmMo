@@ -13,35 +13,40 @@ export async function GET(request) {
         const startDate = queryParams.get('startDate');
         const endDate = queryParams.get('endDate');
 
-        const newStartDate = new Date(startDate).toISOString();
-        const newEndDate = new Date(endDate).toISOString();
-
         const listings = await prisma.listings.findMany({
           where: {
-              AND: [
-                  {
-                      OR: [
-                          { city: { contains: city, mode: 'insensitive' } },
-                          { street: { contains: city, mode: 'insensitive' } },
-                          { country: { contains: city, mode: 'insensitive' } },
-                          { state: { contains: city, mode: 'insensitive' } },
-                          { zipCode: { contains: city, mode: 'insensitive' } }
-                      ]
-                  },
-                  {
-                    OR: [
-                        { "carAvailability.checked": true }, // Filter where checked is true
-                        { "carAvailability.checked": false }, // Filter where checked is false
-                      ],
-                  }
-              ]
+            OR: [
+              { city: { contains: city, mode: 'insensitive' } },
+              { country: { contains: city, mode: 'insensitive' } },
+            ],
           },
-          include: {
-              owner: true
+          include: {  
+              owner: true 
           }
-      });
-      
-  
+        });
+
+        // const listings = await prisma.listings.findMany({
+        //   where: {
+        //     OR: [
+        //       { city: { contains: city, mode: 'insensitive' } },
+        //       { street: { contains: city, mode: 'insensitive' } },
+        //       { country: { contains: city, mode: 'insensitive' } },
+        //       { state: { contains: city, mode: 'insensitive' } },
+        //       { zipCode: { contains: city, mode: 'insensitive' } }
+        //     ],
+        //     carAvailability: {
+        //       some: {
+        //         AND: [
+        //           { startDate: { lte: new Date(endDate).toISOString() } },
+        //           { endDate: { gte: new Date(startDate).toISOString() } },
+        //           { checked: true }
+        //         ]
+        //       }
+        //     }
+        //   }
+        // });
+        
+          
         return NextResponse.json({ listings }, { status: 200 });
     } catch (error) {
         console.error("Error fetching listings:", error);

@@ -270,6 +270,10 @@ h1,h2,h3,h4,h5,h6, p, label, button, span, textarea, a{
 	}
   }
 
+  .custom-popup-map .mapboxgl-popup-content {
+	padding: 0;
+  }
+
 
   @media (min-width: 767px) {
 	.map-listing-mob-toggle {

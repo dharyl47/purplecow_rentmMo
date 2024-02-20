@@ -13,6 +13,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 // Context
 import { useServiceCarContext } from "../../contexts/ServiceCarContext";
+import { FaCity, FaPesoSign, FaStar } from "react-icons/fa6";
 
 // import { RouteModule } from "next/dist/server/future/route-modules/route-module";
 
@@ -73,49 +74,46 @@ const MapComponent = ({ carList, cardSelected, onCardClick }) => {
 
       {/* Popup box */}
       {selectedCar && (
-        <div
-          style={{
-            height: "600px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
           <Popup
             anchor="top"
             latitude={selectedCar.lat}
             longitude={selectedCar.lon}
             onClose={() => setSelectedCar(null)}
+            className="custom-popup-map"
           >
-            <div>
               <Image
                 src="/assets/images/testImages/toyotaVios.jpg"
                 alt="Car Image"
-                width={150}
+                width={1920}
                 height={150}
               />
-              <div className="flex flex-col justify-center text-center">
-                <h3
-                  className="text-s font-bold mb-2"
-                  style={{ fontWeight: 1100 }}
+              <div className="flex flex-col px-3 py-3">
+                <h1
+                  className="text-xl font-bold mb-2"
                 >
-                  {selectedCar.brand}
-                </h3>
-                <div className="flex items-center -mt-3 justify-center text-center">
-                  <span className="text-yellow-500">&#9733;</span>
-                  <span className="text-s font-semibold">{4.5}</span>
-                  <span className="text-gray-600 ml-1">({99} reviews)</span>
+                  {selectedCar.brand} {selectedCar.model}
+                </h1>
+
+                <div className="flex flex-row items-center mt-2">
+                  <FaStar size={15}  />
+                  <p className="text-md ml-2">4.5 (99 reviews)</p>
                 </div>
-                <p
-                  className="text-gray-900 text-s font-bold mt-3 mb-1"
-                  style={{ fontWeight: 800 }}
-                >
-                  Php {selectedCar.price}/day
-                </p>
+
+                <div className="flex flex-row items-center mt-2 mr-5">
+                  <FaPesoSign size={15} />
+                  <p className="text-md ml-2">{selectedCar.price} per day</p>
+                </div>
+
+                <div className="flex flex-row items-center mt-2">
+                  <FaCity size={15} />
+                  <p className="text-md ml-2">{selectedCar.city}</p>
+                </div>
+
+                <div className="flex flex-row justify-end mt-2 w-full">
+                  <p className="text-md ml-2 underline font-bold cursor-pointer">View Car Details</p>
+                </div>
               </div>
-            </div>
           </Popup>
-        </div>
       )}
     </MapGL>
   );

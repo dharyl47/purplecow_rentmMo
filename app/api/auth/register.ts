@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import connectMongoDB from "@/lib/mongodb";
-import UserSchema from "@/models/user.model";
+// import connectMongoDB from "@/lib/mongodb";
+// import UserSchema from "@/models/user.model";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
@@ -11,9 +11,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     try {
-      await connectMongoDB();
-      const existingUser = await UserSchema.findOne({ email });
-      return res.json({ exists: !!existingUser }); // Return true if email exists
+      // await connectMongoDB();
+      // const existingUser = await UserSchema.findOne({ email });
+      // return res.json({ exists: !!existingUser }); // Return true if email exists
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Server error" });

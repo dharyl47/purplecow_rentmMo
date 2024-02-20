@@ -25,7 +25,7 @@ export const Listing4Wheel = () => {
   const toVehicleDetails = (item: any) => {
     const carObject = encodeURIComponent(JSON.stringify(item));
 
-    navigate.push(`/carDetail?car=${carObject}`);
+    navigate.push(`/car-detail-2?car=${carObject}`);
     // navigate.push(`/vehicle/details/${item}`);
 
     setTimeout(() => {

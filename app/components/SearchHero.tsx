@@ -38,45 +38,15 @@ export interface SearchHeroProps {
   onFindRide: (searchFormData: SearchFormData) => void;
 }
 
-// export interface FormData {
-//   location: string;
-//   startDate: Date | null;
-//   startTime: string;
-//   endDate: Date | null;
-//   endTime: string;
-// }
-
 const SearchHero: React.FC<SearchHeroProps> = ({ onFindRide }) => {
-  // const router = useRouter();
-
   const { searchFormData, setSearchFormData, searchLoading, setSearchLoading } =
     useServiceCarContext();
-
-  // const [formData, setFormData] = useState<FormData>({
-  //   location: "",
-  //   startDate: null,
-  //   startTime: "",
-  //   endDate: null,
-  //   endTime: "",
-  // });
-
-  // useEffect(() => {
-  //   // setFormData({
-  //   //   location: city,
-  //   //   startDate: carAvailability?.startDate || null,
-  //   //   startTime: "",
-  //   //   endDate: carAvailability?.endDate || null,
-  //   //   endTime: "",
-  //   // });
-  //   // }, [carAvailability, city]);
-  // }, []);
 
   const handleFindRide = async () => {
     // Pass the form data to the parent component or any other callback
     await setSearchLoading(true);
     onFindRide(searchFormData);
   };
-  // const SearchHero = () => {
 
   return (
     <ThemeProvider theme={theme}>
@@ -135,10 +105,6 @@ const SearchHero: React.FC<SearchHeroProps> = ({ onFindRide }) => {
               />
             </div>
             <div className="flex self-end ml-4">
-              {/* <ButtonFillRoundedSearch
-                text="Find a ride"
-                onClick={handleFindRide}
-              /> */}
               <button
                 className="text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition"
                 onClick={handleFindRide}

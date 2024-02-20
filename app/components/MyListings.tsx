@@ -158,7 +158,7 @@ const MyListings = () => {
         <div className="w-full items-center justify-start flex flex-wrap gap-4 mx-auto">
           {currentItems.map((item, index) => (
             <Card
-              className="border bg-white rounded-lg shadow-md border border-gray-200  2xl:hover:-translate-y-2 hover:transition-transform sm:w-64 w-full"
+              className="border bg-white rounded-lg shadow-md  border-gray-200  2xl:hover:-translate-y-2 hover:transition-transform sm:w-64 w-full"
               key={index}
             >
               <div className="relative transition p-2">
