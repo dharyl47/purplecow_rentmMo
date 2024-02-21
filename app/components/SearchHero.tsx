@@ -1,27 +1,10 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { ButtonFillRoundedSearch, ButtonFillRounded } from "./Buttons";
+import React from "react";
+
+// MUI Datepicker
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import {
-  FormControl,
-  InputLabel,
-  InputAdornment,
-  IconButton,
-  OutlinedInput,
-  Button,
-  CircularProgress,
-} from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { HiLocationMarker } from "react-icons/hi";
-import { useRouter } from "next/navigation";
-
-import {
-  SearchFormData,
-  useServiceCarContext,
-} from "../../contexts/ServiceCarContext";
-
 const theme = createTheme({
   typography: {
     fontSize: 16,
@@ -34,6 +17,25 @@ const theme = createTheme({
   },
 });
 
+// MUI Inputs
+import {
+  FormControl,
+  InputLabel,
+  InputAdornment,
+  IconButton,
+  OutlinedInput,
+  CircularProgress,
+} from "@mui/material";
+
+// Icons
+import { HiLocationMarker } from "react-icons/hi";
+
+// useContext
+import { useServiceCarContext } from "../../contexts/ServiceCarContext";
+
+// Types
+import { SearchFormData } from "@/types/searchCar";
+
 export interface SearchHeroProps {
   onFindRide: (searchFormData: SearchFormData) => void;
 }
@@ -43,7 +45,6 @@ const SearchHero: React.FC<SearchHeroProps> = ({ onFindRide }) => {
     useServiceCarContext();
 
   const handleFindRide = async () => {
-    // Pass the form data to the parent component or any other callback
     await setSearchLoading(true);
     onFindRide(searchFormData);
   };
@@ -182,85 +183,6 @@ const SearchHero: React.FC<SearchHeroProps> = ({ onFindRide }) => {
               </button>
             </div>
           </div>
-
-          {/* <div className="flex-col xl:hidden w-full min-w-fit max-w-sm h-fit bg-white mx-6 md:p-10 p-6 rounded-lg shadow-searchbox ">
-            <div className="flex flex-col w-full items-start gap-3 search-loc">
-              <label
-                htmlFor="input-location"
-                className="text-black font-bold text-sm"
-              >
-                Location
-              </label>
-              <div className="flex w-full">
-                <img className="h-6" src="@/public/assets/logo/pin-loc.png"></img>
-                <div className="flex border-b-2 border-white hover:border-dark200 transition-colors w-full">
-                  <input
-                    id="input-location"
-                    type="search"
-                    placeholder="Drop Location"
-                    className="text-black bg-transparent focus:outline-none w-full md:text-lg text-base px-2"
-                  />
-                </div>
-              </div>
-            </div>
-            <span className="flex w-full h-[2px] bg-dark400 rounded-full my-6 shadow-searchbox-span"></span>
-            <div className="flex flex-col justify-start items-start w-full gap-3 search-startrp">
-              <label
-                htmlFor="input-start-trip"
-                className="text-black font-bold text-sm"
-              >
-                Start Trip
-              </label>
-              <div className="flex md:flex-row w-full md:gap-16 gap-2 flex-col">
-                <input
-                  id="input-start-trip"
-                  type="date"
-                  className="text-black bg-transparent focus:outline-none w-full md:text-lg text-base"
-                />
-                <input
-                  id="input-start-trip-time"
-                  type="time"
-                  className="text-black bg-transparent focus:outline-none lg:w-5/6 w-full md:text-lg text-base"
-                  onChange={(e) =>
-                    setSearchFormData({
-                      ...searchFormData,
-                      startTime: e.target.value,
-                    })
-                  }
-                />
-              </div>
-            </div>
-            <span className="flex w-full h-[2px] bg-dark400 rounded-full my-6 shadow-searchbox-span"></span>
-            <div className="flex flex-col justify-start items-start w-full gap-3 search-endtrp">
-              <label
-                htmlFor="input-start-trip"
-                className="text-black font-bold text-sm"
-              >
-                End Trip
-              </label>
-              <div className="flex flex-col md:flex-row md:gap-16 gap-4 w-full">
-                <input
-                  id="input-end-trip"
-                  type="date"
-                  className="text-black bg-transparent focus:outline-none w-full md:text-lg text-base"
-                />
-                <input
-                  id="input-end-trip-time"
-                  type="time"
-                  className="text-black bg-transparent focus:outline-none lg:w-5/6 w-full md:text-lg text-base"
-                  onChange={(e) =>
-                    setSearchFormData({
-                      ...searchFormData,
-                      endTime: e.target.value,
-                    })
-                  }
-                />
-              </div>
-            </div>
-            <div className="flex justify-center w-full md:mt-10 mt-6">
-              <ButtonFillRoundedSearch text="Find a ride" />
-            </div>
-          </div> */}
         </div>
       </LocalizationProvider>
     </ThemeProvider>

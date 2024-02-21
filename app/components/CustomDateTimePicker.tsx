@@ -1,10 +1,29 @@
+// React
 import React, { useState } from "react";
+
+// MUI Date Picker
 import DatePicker from "react-datepicker";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+
+// Icons
 import { FaCalendar } from "react-icons/fa";
-import { FaMapMarkerAlt } from "react-icons/fa"; // Import the Google Map marker icon
+import { FaMapMarkerAlt } from "react-icons/fa";
+
+// Calendar Custom Theme
+const theme = createTheme({
+  typography: {
+    fontSize: 16,
+    fontFamily: "Messina Sans",
+  },
+
+  palette: {
+    text: {
+      secondary: "#c2c2c2",
+    },
+  },
+});
 
 interface DateTimePickerProps {
   label: React.ReactNode; // Change the type to ReactNode
@@ -59,7 +78,6 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
   );
 };
 
-
 interface CustomDateTimePickerProps {
   startDate: Date;
   endDate: Date;
@@ -78,9 +96,12 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
   handleEndTimeChange,
 }) => {
   return (
-    <ThemeProvider theme={createTheme()}>
+    <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <div className="box-with-shadow w-full bg-white shadow-md mt-2" style={{ height: "220px;" }}>
+        <div
+          className="box-with-shadow w-full bg-white shadow-md mt-2"
+          style={{ height: "220px;" }}
+        >
           <div className="flex justify-between p-4">
             <div className="w-1/2">
               <DateTimePicker

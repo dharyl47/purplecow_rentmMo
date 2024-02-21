@@ -50,7 +50,7 @@ const CarListingCard: React.FC<{
 
   return (
     <div
-      className="border mb-4 flex bg-white rounded-md shadow-md hover:shadow-lg relative carlist-cont"
+      className="border mb-7 flex bg-white rounded-lg shadow-md hover:shadow-lg relative carlist-cont"
       onClick={() => onCardClick(car)}
     >
       <div className="absolute top-5 right-3 div-1">

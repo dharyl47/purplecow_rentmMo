@@ -7,42 +7,23 @@ import BgHomepage from "@/public/assets/images/Rent-mo-hero-bg.png";
 import Navbar from "@/components/common/NavBar";
 import SearchHero from "@/app/components/SearchHero";
 
-import {
-  SearchFormData,
-  useServiceCarContext,
-} from "../../../contexts/ServiceCarContext";
+import { useServiceCarContext } from "../../../contexts/ServiceCarContext";
 import { useRouter } from "next/navigation";
 
-//import '../layout.css';
+// Types
+import { SearchFormData } from "@/types/searchCar";
 
-// const HeroPage = () => {
 const HeroPage: React.FC = () => {
   const router = useRouter();
-  // const [formData, setFormData] = useState<SearchHeroProps | null>(null);
 
-  const { searchListing, setSearchLoading } = useServiceCarContext();
+  const { setSearchLoading } = useServiceCarContext();
 
   const handleFindRide = async (searchFormData: SearchFormData) => {
-    // Implement the logic for finding a ride based on the form data
-    // setFormData(formData);
-    // console.log("Finding a ride with form data:", formData);
-
     await setSearchLoading(true);
-    await searchListing(searchFormData);
+    const encodedSearch = encodeURIComponent(JSON.stringify(searchFormData));
 
-    await router.push("/search");
+    await router.push(`/search?data=${encodedSearch}`);
   };
-
-  // useEffect(() => {
-  //   // Execute the handleFindRide function with initial data when the component mounts
-  //   setFormData({
-  //     location: city, // Assuming you want to use the city as the location
-  //     startDate: carAvailability.startDate,
-  //     startTime: "", // You may need to provide a default value
-  //     endDate: carAvailability.endDate,
-  //     endTime: "", // You may need to provide a default value
-  //   });
-  // }, []);
 
   return (
     <div

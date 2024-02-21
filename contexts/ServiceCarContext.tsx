@@ -3,18 +3,14 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { ICar } from "../types/types";
 
+import { SearchFormData } from "@/types/searchCar";
+
 interface ServiceSearchHeroProps {
   location: string;
   startDate: Date | null;
   endDate: Date | null;
-}
-
-export interface SearchFormData {
-  location: string;
-  startDate: Date | null;
-  endDate: Date | null;
-  startTime: string | null;
-  endTime: string | null;
+  endTime: Date | null;
+  startTime: Date | null;
 }
 
 interface ServiceCarContextType {
@@ -51,7 +47,7 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({
   const [carDetailsData, setCarDetailsData] = useState<ICar[]>([]);
   const [searchLoading, setSearchLoading] = useState<boolean>(false);
   const [searchFormData, setSearchFormData] = useState<SearchFormData>({
-    location: "Davao city",
+    location: "Davao City",
     startDate: new Date(),
     endDate: new Date(),
     startTime: "",

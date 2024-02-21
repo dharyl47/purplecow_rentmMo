@@ -2,12 +2,9 @@
 
 // React
 import React, { useEffect, useState } from "react";
-
-// Context
-import { useServiceCarContext } from "../../contexts/ServiceCarContext";
+import { useSearchParams } from "next/navigation";
 
 // React Icons
-import { BiSearch } from "react-icons/bi";
 import { TbListTree } from "react-icons/tb";
 import { FaMapMarkedAlt } from "react-icons/fa";
 
@@ -16,13 +13,21 @@ import Map from "../pageComponents/MapListing";
 import CarListing from "../pageComponents/CarListingCard";
 import HeroPageSearch from "../pageComponents/HeroPageSearch";
 
+// useContext
+import { useServiceCarContext } from "@/contexts/ServiceCarContext";
+
 const CarListingPage = () => {
-  const { data, searchListing } = useServiceCarContext();
+  const { data, searchListing, setSearchFormData } = useServiceCarContext();
+
+  const getParams = useSearchParams();
+  const encodedSearchData = getParams.get("data");
+
+  // useStates
+  const [showMap, setShowMap] = useState(true);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
-  const [showMap, setShowMap] = useState(true); // State for toggling map visibility
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 767);
+
   const handleCardClick = (car: any) => {
-    // Call the handleMarkerClick function from MapListing.js
     setSelectedVehicle(car);
     setShowMap(true);
   };
@@ -33,14 +38,27 @@ const CarListingPage = () => {
   };
 
   useEffect(() => {
-    // if (data.length === 0) {
-    //   searchListing({
-    //     location: "davao city",
-    //     startDate: new Date(),
-    //     endDate: new Date(),
-    //   });
-    // }
+    if (encodedSearchData) {
+      try {
+        const parsedSearchData = JSON.parse(encodedSearchData);
 
+        const search = {
+          startDate: new Date(parsedSearchData.startDate),
+          endDate: new Date(parsedSearchData.endDate),
+          location: parsedSearchData.location,
+          endTime: "",
+          startTime: ""
+        }
+
+        searchListing(parsedSearchData);
+        setSearchFormData(search);
+      } catch (error) {
+        console.error("Error parsing search data:", error);
+      }
+    }
+  }, [encodedSearchData]);
+
+  useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 767);
     };
@@ -56,11 +74,14 @@ const CarListingPage = () => {
       <HeroPageSearch />
       <div className="flex">
         <div
-          className={`hero-page-search-listing w-1/2 p-2 overflow-y-auto max-h-screen ${
+          className={`hero-page-search-listing w-1/2 px-5 py-2 overflow-y-auto max-h-screen ${
             showMap && isMobile ? "hidden" : "" // Hide if showMap is true
           }`}
           style={{ height: "650px" }}
         >
+          <h1 className="text-2xl my-2 font-bold mb-7">
+            {data.length} Cars Available
+          </h1>
           {data.length === 0 ? (
             <div className="h-full flex justify-center items-center">
               <p>Sorry, there are currently no cars available in this area.</p>
@@ -76,11 +97,6 @@ const CarListingPage = () => {
           )}
         </div>
 
-        {/* <div
-          className={`hero-page-search-map w-1/2 p-2 relative ${
-            !showMap || !isMobile ? "" : "hidden" // Hide if showMap is false
-          }`}
-        > */}
         <div
           className={`hero-page-search-map w-1/2 p-2 relative ${
             !showMap || !isMobile ? "" : "hidden" // Hide if showMap is false
@@ -91,13 +107,6 @@ const CarListingPage = () => {
             cardSelected={selectedVehicle}
             onCardClick={handleCardClick}
           />
-          {/* <button
-            className="search-this-area absolute bottom-4 left-1/2 transform mt-2 -translate-x-1/2 px-4 py-2 text-black flex items-center rounded-full bg-yellow-300"
-            style={{ marginBottom: "30px" }}
-          >
-            <BiSearch className="h-6 w-6 mr-2" />
-            Search this area
-          </button> */}
         </div>
       </div>
       <button

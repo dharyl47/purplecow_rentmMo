@@ -1,12 +1,12 @@
 "use client";
 
 // React
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
 // Css
-import "react-datepicker/dist/react-datepicker.css";
+// import "react-datepicker/dist/react-datepicker.css";
 
 // components
 import CustomDateTimePicker from "../components/CustomDateTimePicker";
@@ -26,8 +26,11 @@ import {
   FaStar,
   FaUser,
 } from "react-icons/fa";
-import GcashLogo from "@/public/assets/images/gcash.png"; // Import the Gcash logo image
 import { FaPesoSign } from "react-icons/fa6";
+// import GcashLogo from "@/public/assets/images/gcash.png";
+
+// Custom Components
+import Navbar from "@/components/common/NavBar";
 
 interface CarAvailability {
   startDate: string;
@@ -71,6 +74,7 @@ interface CarDetails {
   lon: string;
   createdAt: string;
   updatedAt: string;
+  owner: any;
   __v: number;
   ownerId: any;
 }
@@ -130,6 +134,10 @@ const CarDetailPage: React.FC = () => {
 
   return (
     <div style={{ backgroundColor: "#F6F6F6" }}>
+      <div className="bg-black">
+        <Navbar />
+      </div>
+
       <div className="relative w-full h-96 overflow-hidden">
         {/* Use next/image component for responsive images */}
         <Image
@@ -382,7 +390,7 @@ const CarDetailPage: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center ml-auto mt-7">
+                  <div className="flex items-center ml-auto mr-5 mt-7">
                     <div className="ml-2">
                       <p className="font-bold">
                         {carDetails?.price !== undefined &&
@@ -397,7 +405,7 @@ const CarDetailPage: React.FC = () => {
                       <p className="font">Delivery Fee</p>
                     </div>
                   </div>
-                  <div className="flex items-center ml-2">
+                  <div className="flex items-center ml-auto mr-5">
                     <div className="ml-2">
                       <p className="font-bold">₱ 200</p>
                     </div>
@@ -407,7 +415,7 @@ const CarDetailPage: React.FC = () => {
                       <p className="font">Platform Fee</p>
                     </div>
                   </div>
-                  <div className="flex items-center ml-2">
+                  <div className="flex items-center ml-auto mr-5">
                     <div className="ml-2">
                       <p className="font-bold">₱ 50</p>
                     </div>
@@ -417,7 +425,7 @@ const CarDetailPage: React.FC = () => {
                       <p className="font-bold">Total</p>
                     </div>
                   </div>
-                  <div className="flex items-center ml-2">
+                  <div className="flex items-center ml-auto mr-5">
                     <div className="ml-2">
                       <p className="font-bold">
                         ₱ {parseInt(carDetails.price) * computedValue + 250}
@@ -425,7 +433,7 @@ const CarDetailPage: React.FC = () => {
                     </div>
                   </div>
                   <hr className="col-span-2 my-4 border-t" />
-                  <div className="flex items-center ml-2">
+                  {/* <div className="flex items-center ml-2">
                     <div className="ml-2">
                       <p className="font">
                         <strong>Payment Method</strong>
@@ -456,10 +464,10 @@ const CarDetailPage: React.FC = () => {
                       height={100}
                       className="ml-2"
                     />
-                  </div>
+                  </div> */}
 
                   {/* Payment Method: Credit/Debit Card */}
-                  <div className="flex items-center ml-2">
+                  {/* <div className="flex items-center ml-2">
                     <input
                       type="radio"
                       id="creditCard"
@@ -476,7 +484,8 @@ const CarDetailPage: React.FC = () => {
                     <FaCcJcb className="ml-2" />
                     <FaCcAmex className="ml-2" />
                   </div>
-                  <hr className="col-span-2 my-4 border-t" />
+                  <hr className="col-span-2 my-4 border-t" /> */}
+
                   <div className="flex justify-center col-span-2">
                     <button
                       className="w-full bg-yellow-500 text-black rounded-full py-3 px-6 font-bold hover:bg-yellow-600 focus:outline-none focus:ring focus:border-yellow-700"
