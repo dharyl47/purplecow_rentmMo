@@ -1,3 +1,5 @@
+"use client";
+
 import fetch from "node-fetch";
 
 export async function POST(request) {
@@ -42,38 +44,22 @@ export async function POST(request) {
       }
 
       const responseData = await response.json();
-      console.log(responseData);
 
-      return {
-        status: 200,
-        body: "Webhook Received",
-      };
+      return new Response("Webhook Received", { status: 200 });
     } else if (
       data.attributes.type === "payment.paid " &&
       data.attributes.status === "paid"
     ) {
       console.log("Payment Paid");
-      return {
-        status: 200,
-        body: "Payment Paid",
-      };
+      return new Response("Payment Paid", { status: 200 });
     } else if (data.attributes.type === "payment.failed") {
       console.log("Payment Failed");
-      return {
-        status: 200,
-        body: "Payment Failed",
-      };
+      return new Response("Payment Failed", { status: 200 });
+
     } else {
-      return {
-        status: 405,
-        body: "Method Not Allowed",
-      };
+      return new Response("Method Not Allowed", { status: 405 });
     }
   } catch (error) {
-    console.error("Error processing webhook:", error);
-    return {
-      status: 500,
-      body: "Internal Server Error",
-    };
+    return new Response("Internal Server Error", { status: 500 });
   }
 }
