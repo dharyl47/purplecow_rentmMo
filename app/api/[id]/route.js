@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
-import connectMongoDB from '../../lib/mongodb';
-import UserSchema from '../../models/userProfile'
+// import connectMongoDB from '@/lib/mongodb';
+import UserSchema from '@/models/user.model'
 
 export async function PUT(request, { params }) {
 const  { id } = params;
-const { newName: name} = await request.json();
-await connectMongoDB();
-await UserSchema.findByIdAndUpdate(id, { name });
+// const { newName: name} = await request.json();
+// await connectMongoDB();
+// await UserSchema.findByIdAndUpdate(id, { name });
 return NextResponse.json({message: "User (Name) updated."}, {status: 200});
 }
 

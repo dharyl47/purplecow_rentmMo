@@ -1,35 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { InputBox } from '../components/InputBox';
-import { TextField, Box } from '@mui/material';
-import { MdCloudUpload } from 'react-icons/md';
-import axios from 'axios';
-import { UserUpdate } from '../types/types.js';
-import { useUser } from '../hooks/useUser';
-import { initialUserUpdate } from '../types/initialInfo';
+import React, { useState, useEffect } from "react";
+import { InputBox } from "../components/InputBox";
+import { TextField, Box } from "@mui/material";
+import { MdCloudUpload } from "react-icons/md";
+import axios from "axios";
+import { UserUpdate } from "@/types/types";
+import { useUser } from "../hooks/useUser";
+import { initialUserUpdate } from "@/types/initialInfo";
 
-const UpdateProfile = () => {
-	const store = useUser();
-	const { user = {} }: any = store?.user || {};
+interface UpdateProfileProps {
+  onClose: () => void;
+}
 
-	const [data, setData] = useState(user);
+const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {
+  const store = useUser();
+  const user: any = store?.user || {};
 
-	const handleChange = (e: any) => {
-		setData({ ...data, [e.target.name]: e.target.value });
-	};
-	const onSubmit = async (e: React.FormEvent): Promise<void> => {
-		e.preventDefault();
-		try {
-			const response = await axios.patch('/api/v1/auth/updateUser', data);
-			console.log(response);
-			store?.setUser(response.data.data);
-		} catch (error) {
-			console.error(error);
-		}
-		console.log(data);
-		window.location.href = '/profile';
-	};
+  const [data, setData] = useState(user);
 
-	return (
+  const handleChange = (e: any) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+  const onSubmit = async (e: React.FormEvent): Promise<void> => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.put("/api/users", data);
+
+      store?.setUser(response.data.data);
+      onClose();
+    } catch (error) {
+      console.error(error);
+    }
+    // window.location.href = '/profile';
+  };
+
+  return (
     <div className="flex flex-col items-center justify-center h-full w-full">
       <p className="text-base font-semibold text-gray-800">Update Profile</p>
       <div className="p-4">
@@ -37,7 +42,7 @@ const UpdateProfile = () => {
           <div className="flex items-center justify-center w-full">
             <label
               htmlFor="dropzone-file"
-              className="flex flex-col items-center justify-center w-40 h-40 border-2 border-gray-300 border-dashed rounded-full cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+              className="flex flex-col items-center justify-center w-40 h-40 border-2 border-gray-300 border-dashed rounded-full cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500"
             >
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <MdCloudUpload size="28px" color="#747474" />
@@ -96,7 +101,7 @@ const UpdateProfile = () => {
             <TextField
               onChange={handleChange}
               size="small"
-              label="Number"
+              label="Phone Number"
               id="phoneNumber"
               name="phoneNumber"
               variant="outlined"

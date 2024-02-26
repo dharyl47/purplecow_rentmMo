@@ -1,14 +1,13 @@
-'use client';
+"use client";
+
 import React, { useState } from "react";
+
 import axios from "axios";
-import {
-  ButtonLinkFill,
-  ButtonFill,
-  GoogleButton,
-} from "../../components/Buttons";
-import { TextField, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useUser } from './../../hooks/useUser';
+import { TextField, Button, CircularProgress } from "@mui/material";
+
+import { GoogleButton } from "../../components/Buttons";
+import { useUser } from "./../../hooks/useUser";
 
 interface UserSignUp {
   firstName: string;
@@ -28,31 +27,38 @@ const initialUserState: UserSignUp = {
 const GButton = () => {
   const [user, setUser] = useState(initialUserState);
   const [isFailure, setIsFailure] = useState(false);
-   const store = useUser();
+  const [isLoading, setIsLoading] = useState(false);
+  const store = useUser();
   const navigate = useRouter();
 
- const handleSubmit = async (e: any) => {
-   e.preventDefault();
-   try {
-     // Check if the email exists before proceeding with registration
-     const emailCheckResponse = await axios.get(
-       `/api/users?email=${user.email}`
-     );
-     
-     store.setUser(emailCheckResponse.data);
-     navigate.push("/profile");
-   } catch (error) {
-     setIsFailure(true);
-     return;
-   }
- };
+  const handleSubmit = async (e: any) => {
+    setIsLoading(true);
+    e.preventDefault();
 
- const handleChange = (e: any) => {
-   setUser({ ...user, [e.target.name]: e.target.value });
- };
+    try {
+      const response = await axios.get(`/api/login`, {
+        params: {
+          email: user.email,
+          password: user.password,
+        },
+      });
+
+      await store.setUser(response.data.user);
+      setIsLoading(false);
+      navigate.push("/profile");
+    } catch (error) {
+      setIsFailure(true);
+      setIsLoading(false);
+      return;
+    }
+  };
+
+  const handleChange = (e: any) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
 
   return (
-    <div className="flex flex-col items-center -mt-14 justify-center w-full min-h-screen px-0 font-Messina-Sans overflow-x-hidden">
+    <div className="flex flex-col items-center justify-center w-full min-h-screen px-0 font-Messina-Sans overflow-x-hidden">
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow rounded lg:w-1/3 md:w-1/2 w-full p-10 mt-10"
@@ -65,19 +71,7 @@ const GButton = () => {
         >
           <p>Login to your account</p>
         </div>
-        <div className="text-sm mt-4 font-medium leading-none text-gray-500">
-          <p>Dont have account? </p>
-          <a
-            tabIndex={0}
-            role="link"
-            href="/register"
-            aria-label="Sign up here"
-            className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer"
-          >
-            {" "}
-            Sign up here
-          </a>
-        </div>
+
         <GoogleButton />
         <div className="w-full flex items-center justify-between py-5">
           <hr className="w-full bg-slate-950" />
@@ -118,8 +112,21 @@ const GButton = () => {
             />
           </div>
           <small className={`text-red-500 ${isFailure ? "visible" : "hidden"}`}>
-            Invalid credentials
+            Invalid email or password
           </small>
+        </div>
+
+        <div className="flex flex-row text-sm mt-4 font-medium leading-none text-gray-500">
+          <p className="mr-1">Dont have account? </p>
+          <a
+            tabIndex={0}
+            role="link"
+            href="/registration"
+            aria-label="Sign up here"
+            className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer"
+          >
+            Sign up here
+          </a>
         </div>
 
         <div className="mt-8 flex xl:flex-row flex-col gap-5">
@@ -129,7 +136,11 @@ const GButton = () => {
             color="primary"
             onClick={handleSubmit} // Automatically check email and proceed with registration
           >
-            Login
+            {isLoading ? (
+              <CircularProgress style={{ color: "#fff" }} size={24} />
+            ) : (
+              "Login"
+            )}
           </Button>
           <a
             className="text-center focus:ring-2 focus:ring-offset-2 focus:ring-yellow-300 text-sm font-semibold leading-none text-white focus:outline-none bg-gray-700 rounded hover:opacity-70 py-4 w-full transition"

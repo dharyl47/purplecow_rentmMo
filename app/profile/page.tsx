@@ -1,29 +1,27 @@
-'use client';
-import Navbar from '../components/NavBar';
-import Reviews from '../components/Reviews';
-import ProfileCard from '../components/ProfileCard';
-import { ButtonNoFillRounded } from '../components/Buttons.jsx';
-import MyListings from '../components/MyListings';
-import { useUser } from '../hooks/useUser';
+"use client";
+
+// Components
+import Navbar from "../../components/common/NavBar";
+import Reviews from "../components/Reviews";
+import ProfileCard from "../components/ProfileCard";
+import MyListings from "../components/MyListings";
+
+// Hooks
+import { useUser } from "../hooks/useUser";
 
 const Profile = () => {
-	// const store = useUser();
-	// const { user }: any = store?.user;
-	// const userName = `${user.firstName + ' ' + user.lastName}`;
-	// const yearJoined = `${user.createdAt.split('-')[0]}`;
-	// const aboutMe = `${user.aboutMe}`;
-
   const store = useUser();
   if (!store || !store.user) {
     // Handle the case where store or user is null
     return <div>Loading...</div>; // You can replace this with your loading indicator or error message
   }
-	const { user }: any = store;
-	const userName = `${user.firstName} ${user.lastName}`;
-	const yearJoined = `${user.createdAt?.split('-')[0]}`;
-	const aboutMe = `${user.aboutMe}`;
 
-	return (
+  const { user }: any = store;
+  const userName = `${user?.firstName} ${user?.lastName}`;
+  const yearJoined = `${user?.createdAt?.split("-")[0]}`;
+  const aboutMe = `${user?.aboutMe}`;
+
+  return (
     <div className="flex flex-col w-full h-fit pb-20 bg-cover bg-no-repeat font-Messina-Sans">
       <Navbar />
       <div className="absolute w-full h-72 bg-gradient-to-br from-gray-700 to-gray-900 -z-10"></div>
@@ -43,7 +41,7 @@ const Profile = () => {
                 readOnly
                 rows={5}
                 className="lg:text-base text-sm no-select px-4 mt-5 w-full h-fit text-justify resize-none disable select-none overflow-hidden"
-                value={aboutMe}
+                value={aboutMe || "---"}
               ></textarea>
             </div>
             <div className="flex flex-col w-full h-fit text-base mt-5">

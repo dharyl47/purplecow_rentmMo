@@ -1,12 +1,12 @@
-'use client';
+"use client";
 import React, { useState } from "react";
 
 import Head from "next/head";
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
-import styles from "../styles/Home.module.css"
-import plainT from "../assets/noImage.jpg"
+import styles from "../styles/Home.module.css";
+import plainT from "../assets/noImage.jpg";
 
 // Product Placeholder
 // Normally this is an API Call to pull data from db
@@ -86,11 +86,11 @@ export default function Home() {
                     +
                   </button> */}
                 </div>
-                <button className="text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition"
+                <button
+                  className="text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition"
                   onClick={() => {
                     AddToCart(product, quantity);
                   }}
-                  
                   disabled={quantity == 0}
                 >
                   Add to Cart &rarr;

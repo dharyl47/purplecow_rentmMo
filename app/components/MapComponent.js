@@ -6,22 +6,13 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { RouteModule } from 'next/dist/server/future/route-modules/route-module';
 
 
-const MapComponent = ({ handleChangeUpdate, handleChangeLat, handleChangeLon }) => {
-  
-  const defaultLocation = { lat: 7.1907, lng: 125.4553 };
-  // Local state for viewport
-  const [viewPort, setViewport] = useState({
-    latitude: defaultLocation.lat,
-    longitude: defaultLocation.lng,
-    zoom: 12,
-  });
-
+const MapComponent = ({ personalInfo, handleChangeUpdate, handleChangeLat, handleChangeLon }) => {
     const [cityState, setCityState] = useState();
     const [zipCodeState, setZipState] = useState();
     const [countryState, setCountryState] = useState();
     const [countyState, setCountyState] = useState();
     const [streetAddress, setStreetAddress] = useState();
-    const [selectedLocation, setSelectedLocation] = useState(null);
+    const [selectedLocation, setSelectedLocation] = useState({lat: personalInfo.lat, lng: personalInfo.lon});
 
   const handleMapClick = async (event) => {
     if (event.lngLat) {
@@ -41,33 +32,17 @@ const MapComponent = ({ handleChangeUpdate, handleChangeLat, handleChangeLon }) 
         const zipCode = place.context.find((item) => item.id.startsWith('postcode'))?.text;
         const county = place.context.find((item) => item.id.startsWith('region'))?.text;
         const streetAdd = place.text;
-        setStreetAddress(streetAdd)
 
-          console.log('LOCATION DETAILS');
-          console.log('Street:', streetAdd);
-          console.log('Lat:', lat);
-          console.log('Lon:', lng);
-          console.log('City:', city);
-          console.log('Country:', country);
-          console.log('County:', county);
-          console.log('Zip Code:', zipCode);
 
-          setSelectedLocation({ lat, lng });
-          setViewport({
-            // ...viewPort,
-            latitude: lat,
-            longitude: lng,
-          });
+        console.log({ lat, lng })
           // Update your form fields (assuming you have functions like handleChangeCity and handleChangeCountry)
-
+          setStreetAddress(streetAdd)
+          setSelectedLocation({ lat, lng });
           setCityState(city);
           setCountryState(country);
           setZipState(zipCode);
           setCountyState(county);
           
-          handleChangeLat('lat', lat);
-          handleChangeLon('lon', lng);
-
         // Update street information
       } else {
         console.error('Failed to fetch data from Mapbox Geocoding API');
@@ -83,20 +58,25 @@ const MapComponent = ({ handleChangeUpdate, handleChangeLat, handleChangeLon }) 
   };
     // Log coordinates when selectedLocation changes
     useEffect(() => {   
+    
+
       if (selectedLocation) {
         handleChangeLat('lat', selectedLocation.lat);
         handleChangeLon('lon', selectedLocation.lng);
         handleChangeUpdate(
             selectedLocation.lat?.toString(), selectedLocation.lng?.toString(), 
             cityState, countyState, countryState, streetAddress, streetAddress, zipCodeState);
-      }
+      } 
     }, [selectedLocation]);
-
 
 
   return (
     <ReactMapGL
-      // {...viewPort}
+      initialViewState={{
+        longitude: personalInfo.lon ? personalInfo.lon : 121.7740,
+        latitude: personalInfo.lat ? personalInfo.lat : 12.8797,
+        zoom: 5
+      }}
       mapboxAccessToken="pk.eyJ1IjoiZGhhcnlsOTciLCJhIjoiY2w5NTluMDh2MXQ3YTNucW16cG9tbGU3dyJ9.z96hyUi9vkmIJDdBB6WjxA"
       mapStyle="mapbox://styles/mapbox/streets-v11"
       width='100%'

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 import React, { useEffect, useState } from "react";
 
 import Head from "next/head";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 import styles from "../styles/Cart.module.css";
 
@@ -43,64 +43,67 @@ export default function Cart() {
   };
 
   return (
-    <div className="container">
+    <div className="bg-gray-100 h-screen">
       <Head>
         <title>Test Cart</title>
       </Head>
 
-      <main className="main">
-       
-        <section className={styles.cart}>
-          <div className={styles.cartHeader}>
-            <h2>Cart</h2>
+      <main className="p-6 h-full flex flex-col justify-center">
+        <section className="flex flex-col justify-between h-1/2	mx-auto bg-white rounded-lg shadow-md p-8">
+          <div className="mb-6 flex justify-between items-center">
+            <h1 className="text-2xl font-bold">Cart</h1>
             <button
               onClick={() => {
                 router.back();
               }}
-              className="text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition"
+              className="text-black rounded-full px-5 py-3 font-bold bg-yellow-300 text-sm shadow-md  transition"
             >
               Back
             </button>
           </div>
-          {cart ? (
-            <ul className={styles.cartList}>
-              <li className={styles.cartListLabel}>
-                <p>Product</p>
-                <div>
-                  <p>Price</p>
-                  <p>Quantity</p>
-                  <p>Total</p>
-                </div>
-              </li>
-              {cart.map((item: any, index: any) => {
-                return (
-                  <li key={index}>
-                    <p>{item.product.name}</p>
-                    <div>
-                      <p>Php {item.product.price}</p>
-                      <p>{item.quantity}</p>
-                      <p>Php {item.product.price * item.quantity}</p>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          ) : (
-            <p>Loading..</p>
-          )}
-          <hr />
-          <div className={styles.cartFooter}>
+          <div className="flex-1">
+            {cart ? (
+              <ul className={`${styles.cartList}`}>
+                <li className={styles.cartListLabel}>
+                  <p>Product</p>
+                  <div>
+                    <p>Price</p>
+                    <p>Quantity</p>
+                    <p>Total</p>
+                  </div>
+                </li>
+                {cart.map((item: any, index: any) => {
+                  return (
+                    <li key={index}>
+                      <p>{item.product.name}</p>
+                      <div>
+                        <p>Php {item.product.price}</p>
+                        <p>{item.quantity}</p>
+                        <p>Php {item.product.price * item.quantity}</p>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p>Loading..</p>
+            )}
+            <hr className="mt-5" />
+          </div>
+
+          <div className="flex flex-row place-content-between items-center mt-5">
+            <p>
+              Total: <span>Php {total}</span>
+            </p>
+
             <button
               onClick={() => {
                 ProceedPayment(total);
               }}
-              className="text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition"
+              className="text-black rounded-full px-5 py-3 font-bold bg-yellow-300 text-sm shadow-md transition"
             >
               Proceed to Payment
             </button>
-            <p>
-              Total: <span>Php {total}</span>
-            </p>
           </div>
         </section>
       </main>

@@ -30,6 +30,7 @@ type User = {
 type UserState = {
   user: IUser | null;
   setUser: (user: IUser | null) => void;
+  logout: () => void; 
 };
 
 export const useUser = create(
@@ -37,6 +38,7 @@ export const useUser = create(
     (set) => ({
       user: null,
       setUser: (user: IUser | null) => set({ user }),
+      logout: () => set({ user: null }),
     }),
     {
       name: 'user-storage',

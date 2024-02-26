@@ -1,8 +1,8 @@
-import React from 'react';
-import Navbar from '../../components/NavBar';
+import React from "react";
+import Navbar from "../../../components/common/NavBar";
 
 const ManageAccount = () => {
-	return (
+  return (
     <div className=" font-Messina-Sans">
       <div className="flex flex-col w-full h-fit pb-20 bg-cover bg-no-repeat">
         <Navbar />
@@ -36,15 +36,16 @@ const ManageAccount = () => {
           </h2>
           <p className="lg:text-base text-sm">
             Begin by logging in to your user account using your provided
-            credentials. If you&rsquo;ve forgotten your password, you can request a
-            password reset via email.
+            credentials. If you&rsquo;ve forgotten your password, you can
+            request a password reset via email.
           </p>
           <h2 className="font-bold lg:text-2xl text-lg mt-2">
             2. Navigate to Account Settings
           </h2>
           <p className="lg:text-base text-sm">
-            Once logged in, locate the &quot;Account Settings&quot; or &quot;Profile&quot; section.
-            This is accessible through the menu in the navigation bar.
+            Once logged in, locate the &quot;Account Settings&quot; or
+            &quot;Profile&quot; section. This is accessible through the menu in
+            the navigation bar.
           </p>
           <h2 className="font-bold lg:text-2xl text-lg mt-2">
             3. Review Your Account Information
@@ -58,10 +59,10 @@ const ManageAccount = () => {
             4. Update Personal Details
           </h2>
           <p className="lg:text-base text-sm">
-            If you&rsquo;ve moved, changed your email address, or updated your phone
-            number, this is the place to make those changes. Update any outdated
-            or incorrect information to ensure that you can be reached when
-            needed.
+            If you&rsquo;ve moved, changed your email address, or updated your
+            phone number, this is the place to make those changes. Update any
+            outdated or incorrect information to ensure that you can be reached
+            when needed.
           </p>
           <h2 className="font-bold lg:text-2xl text-lg mt-2">
             5. Personalize Your Profile Picture
@@ -91,9 +92,9 @@ const ManageAccount = () => {
             8. Save Your Changes
           </h2>
           <p className="lg:text-base text-sm">
-            After making any desired updates, be sure to click the &quot;Save&quot; or
-            button to confirm your changes. This ensures that your preferences
-            are reflected across the platform.
+            After making any desired updates, be sure to click the
+            &quot;Save&quot; or button to confirm your changes. This ensures
+            that your preferences are reflected across the platform.
           </p>
           <h2 className="font-bold lg:text-2xl text-lg mt-2">
             Enhancing Your Account&rsquo;s Security
@@ -123,15 +124,17 @@ const ManageAccount = () => {
               strong password
             </li>
             <li>
-              Click &quot;Change Password&quot; or a similar option to finalize the update
+              Click &quot;Change Password&quot; or a similar option to finalize
+              the update
             </li>
           </ol>
           <br />
           <p className="lg:text-base text-sm">
             Remember, managing your user account ensures a personalized and
             secure experience on the platform. If you encounter any difficulties
-            or have questions, don&quot;t hesitate to reach out to the platform&quot;s
-            support team—they&quot;re there to assist you every step of the way.
+            or have questions, don&quot;t hesitate to reach out to the
+            platform&quot;s support team—they&quot;re there to assist you every
+            step of the way.
           </p>
           <div className="mt-8">
             <hr className="w-full border-gray-500 mx-auto" />{" "}
@@ -144,9 +147,9 @@ const ManageAccount = () => {
             <u>Getting Started</u>
           </a>
           <p className="lg:text-base text-sm">
-            Just joined us? We&quot;re excited to have you on board! Discover how to
-            set up your account, personalize your profile, and manage your
-            notification preferences to make the most of your experience.
+            Just joined us? We&quot;re excited to have you on board! Discover
+            how to set up your account, personalize your profile, and manage
+            your notification preferences to make the most of your experience.
           </p>
           <div className="mt-8 mb-8">
             <hr className="w-full border-gray-500 mx-auto" />{" "}
@@ -155,9 +158,9 @@ const ManageAccount = () => {
             <u>Setting up your account</u>
           </a>
           <p className="lg:text-base text-sm">
-            You&quot;ve logged in, but you need to edit your account. Where do you
-            go? Here&quot;s how to update your profile, manage notification settings,
-            and more.
+            You&quot;ve logged in, but you need to edit your account. Where do
+            you go? Here&quot;s how to update your profile, manage notification
+            settings, and more.
           </p>
           {/* Add more content here */}
         </div>

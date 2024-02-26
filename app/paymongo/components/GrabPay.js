@@ -74,8 +74,12 @@ const GrabPay = ({ amount, description }) => {
 
         if (sourceData.attributes.status === "failed") {
           setPaymentStatus("Payment Failed");
+          setPayProcess(sourceData.attributes.status);
+          break;
         } else if (sourceData.attributes.status === "paid") {
           setPaymentStatus("Payment Success");
+          setPayProcess(sourceData.attributes.status);
+          break;
         } else {
           i = 5;
           setPayProcess(sourceData.attributes.status);

@@ -1,7 +1,7 @@
-import React from 'react';
-import Navbar from '../../components/NavBar';
+import React from "react";
+import Navbar from "../../../components/common/NavBar";
 const ReservingHelp = () => {
-	return (
+  return (
     <div className=" font-Messina-Sans">
       <div className="flex flex-col w-full h-fit pb-20 bg-cover bg-no-repeat">
         <Navbar />
@@ -30,7 +30,10 @@ const ReservingHelp = () => {
           </p>
           <ol className="list-decimal pl-10 lg:text-base text-sm">
             <li>Log in to your account or sign up if you&quot;re new.</li>
-            <li>Navigate to the &quot;Vehicle Rentals&quot; or &quot;Fleet&quot; section.</li>
+            <li>
+              Navigate to the &quot;Vehicle Rentals&quot; or &quot;Fleet&quot;
+              section.
+            </li>
             <li>
               Use search filters to find the perfect vehicle for your needs.
             </li>

@@ -27,8 +27,8 @@ const GCash = ({ amount, description }) => {
           attributes: {
             amount: amount * 100,
             redirect: {
-              success: "http://localhost:3000/paymongo/payment",
-              failed: "http://localhost:3000/paymongo/payment",
+              success: "http://localhost:3000/paymongo/successPayment",
+              failed: "http://localhost:3000/payment",
             },
             billing: { name: `${name}`, phone: `${phone}`, email: `${email}` },
             type: "gcash",
@@ -47,9 +47,8 @@ const GCash = ({ amount, description }) => {
 
   // Function to Listen to the Source in the Front End
   const listenToPayment = async (sourceId) => {
-    let i = 10;
-    for (let i = 10; i > 0; i--) {
-      
+    let i = 5;
+    for (let i = 5; i > 0; i--) {
       setPaymentStatus(`Listening to Payment in ${i}`);
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -69,30 +68,66 @@ const GCash = ({ amount, description }) => {
             return response.json();
           })
           .then((response) => {
-            // console.log(response.data);
+            console.log(response.data);
             return response.data;
           });
- console.log(
-   "data reading: payProcess " +
-     sourceData.attributes.status
- );
+
         if (sourceData.attributes.status === "failed") {
           setPaymentStatus("Payment Failed");
+          setPayProcess(sourceData.attributes.status);
+          const paymentDetails = {
+            amount: amount,
+            name: name,
+            email: email,
+            sourceId: sourceId,
+          };
+          localStorage.setItem(
+            "paymentDetails",
+            JSON.stringify(paymentDetails)
+          );
+          break;
         } else if (sourceData.attributes.status === "paid") {
           setPaymentStatus("Payment Success");
+          setPayProcess(sourceData.attributes.status);
+            const paymentDetails = {
+              amount: amount,
+              name: name,
+              email: email,
+              sourceId: sourceId
+            };
+           localStorage.setItem(
+             "paymentDetails",
+             JSON.stringify(paymentDetails)
+           );
+          break;
         } else {
-          i = 10;
+          i = 5;
+          const paymentDetails = {
+            amount: amount,
+            name: name,
+            email: email,
+            sourceId: sourceId,
+          };
+          localStorage.setItem(
+            "paymentDetails",
+            JSON.stringify(paymentDetails)
+          );
           setPayProcess(sourceData.attributes.status);
         }
-      } 
-     
+      }
     }
-   
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
     const source = await createSource();
+    const paymentDetails = {
+      amount: amount,
+      name: name,
+      email: email,
+      sourceId: source.data.id,
+    };
+    localStorage.setItem("paymentDetails", JSON.stringify(paymentDetails));
     window.open(source.data.attributes.redirect.checkout_url, "_blank");
     listenToPayment(source.data.id);
   };

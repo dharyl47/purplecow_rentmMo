@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 import styles from "../styles/Payment.module.css";
 
 const CreditCard = ({ amount, description }) => {
@@ -61,8 +61,9 @@ const CreditCard = ({ amount, description }) => {
 
   // Function to Create a Payment Intent by calling the site's api
   const createPaymentIntent = async () => {
+     console.log("createPaymentIntent", amount + " " + description);
     setPaymentStatus("Creating Payment Intent");
-    const paymentIntent = await fetch("/api/createPaymentIntent", {
+    const paymentIntent = await fetch("/api/paymongoCreatePaymentIntent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,14 +71,23 @@ const CreditCard = ({ amount, description }) => {
       body: JSON.stringify({
         data: {
           attributes: {
-            amount: amount * 100,
-            payment_method_allowed: ["card"],
+            amount: 200000,
+            payment_method_allowed: [
+              "atome",
+              "card",
+              "dob",
+              "paymaya",
+              "billease",
+              "gcash",
+              "grab_pay",
+            ],
             payment_method_options: {
-              card: { request_three_d_secure: "any" },
+              card: {
+                request_three_d_secure: "any",
+              },
             },
             currency: "PHP",
-            description: description,
-            statement_descriptor: "descriptor business name",
+            capture_type: "automatic",
           },
         },
       }),
@@ -94,6 +104,7 @@ const CreditCard = ({ amount, description }) => {
 
   // Function to Create a Payment Method by calling the PayMongo API
   const createPaymentMethod = async () => {
+    console.log("createPaymentMethod");
     setPaymentStatus("Creating Payment Method");
     const paymentMethod = fetch("https://api.paymongo.com/v1/payment_methods", {
       method: "POST",
@@ -134,12 +145,14 @@ const CreditCard = ({ amount, description }) => {
         setPaymentStatus(err);
         return err;
       });
-
+   
+    
     return paymentMethod;
   };
 
   // Function to Attach a Payment Method to the Intent by calling the PayMongo API
   const attachIntentMethod = async (intent, method) => {
+    console.log("attachIntentMethod ", intent);
     setPaymentStatus("Attaching Intent to Method");
     fetch(`https://api.paymongo.com/v1/payment_intents/${intent.id}/attach`, {
       method: "POST",

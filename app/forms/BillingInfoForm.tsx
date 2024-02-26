@@ -1,15 +1,17 @@
-import React from 'react';
-import PaymentCard from '../components/PaymentCard';
-import { TextField } from '@mui/material';
-import { ICar } from '../types/types.js';
+import React from "react";
+import PaymentCard from "../components/PaymentCard";
+import { TextField } from "@mui/material";
+import { ICar } from "@/types/types";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 type Props = {
-	handleChange: (e: any) => void;
-	billingInfo: ICar;
+  handleChange: (e: any) => void;
+  billingInfo: ICar;
 };
 
 const BillingInfoForm = ({ handleChange, billingInfo }: Props) => {
-	return (
+  return (
     <>
       <div className="flex flex-col w-full">
         <div className="w-full">
@@ -37,8 +39,8 @@ const BillingInfoForm = ({ handleChange, billingInfo }: Props) => {
             </label>
             <TextField
               size="small"
-              //onChange={}
-              defaultValue={""}
+              onChange={handleChange}
+              value={billingInfo.cardNumber ?? ""}
               name="cardNumber"
               id="cardNumber"
               type="number"
@@ -51,15 +53,39 @@ const BillingInfoForm = ({ handleChange, billingInfo }: Props) => {
             <label className="mb-3 text-sm leading-none text-gray-900">
               Expiration Date
             </label>
-            <TextField
+            {/* <TextField
               size="small"
-              //onChange={}
-              defaultValue=""
+              onChange={handleChange}
+              value={billingInfo.cardExpiration ?? ""}
               name="cardExpiration"
               id="cardExpiration"
               type="string"
               placeholder="Enter expiration date"
-            />
+            /> */}
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                onChange={(value) => {
+                  // Check if value is a valid date string
+                  if (typeof value === "string" || value instanceof Date) {
+                    handleChange({
+                      target: {
+                        name: "cardExpiration",
+                        value,
+                      },
+                    });
+                  }
+                }}
+                value={
+                  billingInfo.cardExpiration &&
+                  typeof billingInfo.cardExpiration === "string"
+                    ? new Date(billingInfo.cardExpiration)
+                    : null
+                }
+                name="cardExpiration"
+                className="w-full"
+                slotProps={{ textField: { size: "small" } }}
+              />
+            </LocalizationProvider>
           </div>
 
           <div className="flex flex-col sm:mt-5 mt-0 w-full">
@@ -68,8 +94,8 @@ const BillingInfoForm = ({ handleChange, billingInfo }: Props) => {
             </label>
             <TextField
               size="small"
-              //onChange={}
-              defaultValue={""}
+              onChange={handleChange}
+              value={billingInfo.securityCode ?? ""}
               name="securityCode"
               id="securityCode"
               type="number"

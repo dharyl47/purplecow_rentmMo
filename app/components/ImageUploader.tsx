@@ -1,54 +1,56 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
-import { MdCloudUpload, MdAddCircle, MdClose } from 'react-icons/md';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { ICar } from '../types/types';
-import { set } from 'date-fns';
+import React, { useState, ChangeEvent, useEffect } from "react";
+import { MdCloudUpload, MdAddCircle, MdClose } from "react-icons/md";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { ICar } from "@/types/types";
+import { set } from "date-fns";
 
 type Props = {
-	handleChange: (e: any) => void;
-	imageFile: ICar;
+  handleChange: (e: any) => void;
+  imageFile: ICar;
 };
 
 function ImageUploader({ handleChange, imageFile }: Props) {
-	const [images, setImages] = useState<any>(imageFile.vehiclePhotos);
+  const [images, setImages] = useState<any>(imageFile.vehiclePhotos);
 
-	const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-		if (event.target.files) {
-			const selectedImages: File[] = Array.from(event.target.files);
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const selectedImages: File[] = Array.from(event.target.files);
 
-			if (selectedImages.length === 1) {
-				// Handle single image upload
-				const updatedImages = [...images, selectedImages[0]];
-				handleChange({
-					target: {
-						name: 'vehiclePhotos',
-						value: updatedImages,
-					},
-				});
-				setImages(updatedImages);
-			} else if (selectedImages.length > 1) {
-				// Handle multiple image upload (limit to 8 images)
-				const limitedImages = selectedImages.slice(0, 8 - images.length);
-				const updatedImages = [...images, ...limitedImages];
-				handleChange({
-					target: {
-						name: 'vehiclePhotos',
-						value: updatedImages,
-					},
-				});
-				setImages(updatedImages);
-			}
-		}
-	};
+      if (selectedImages.length === 1) {
+        // Handle single image upload
+        const updatedImages = [...images, selectedImages[0]];
+        handleChange({
+          target: {
+            name: "vehiclePhotos",
+            value: updatedImages,
+          },
+        });
+        setImages(updatedImages);
+      } else if (selectedImages.length > 1) {
+        // Handle multiple image upload (limit to 8 images)
+        const limitedImages = selectedImages.slice(0, 8 - images.length);
+        const updatedImages = [...images, ...limitedImages];
+        handleChange({
+          target: {
+            name: "vehiclePhotos",
+            value: updatedImages,
+          },
+        });
+        setImages(updatedImages);
+      }
+    }
+  };
 
-	const handleRemoveImage = (indexToRemove: number) => {
-		const updatedImages = images.filter((_: any, index: number) => index !== indexToRemove);
-		setImages(updatedImages);
-		handleChange({ target: { name: 'vehiclePhotos', value: updatedImages } });
-	};
+  const handleRemoveImage = (indexToRemove: number) => {
+    const updatedImages = images.filter(
+      (_: any, index: number) => index !== indexToRemove
+    );
+    setImages(updatedImages);
+    handleChange({ target: { name: "vehiclePhotos", value: updatedImages } });
+  };
 
-	return (
+  return (
     <div>
       <div className="mt-3 lg:flex items-center">
         <div className="flex items-center justify-center w-full">
