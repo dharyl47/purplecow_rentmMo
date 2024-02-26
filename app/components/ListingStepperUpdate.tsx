@@ -106,7 +106,8 @@ export default function ListingStepper({
         if (key === "vehiclePhotos") {
           const vehiclePhotos = listingInfo[key] as File[];
           vehiclePhotos.forEach((photo, index) => {
-            formData.append("vehiclePhotos", photo); // Use the same field name for all images
+            // formData.append("vehiclePhotos", photo); // Use the same field name for all images
+            formData.append("vehiclePhotos", photo.name);
           });
         } else if (key === "carAvailability") {
           formData.append(key, JSON.stringify(listingInfo[key]));
@@ -115,8 +116,14 @@ export default function ListingStepper({
         }
       }
 
+      const updatedListing = {
+        ...listingInfo, // Spread the original object to keep its other properties intact
+        vehiclePhotos: listingInfo.vehiclePhotos.map((value: any) => value.name) // Use map() to update each value
+      };
+
+
       onSubmit({
-        ...listingInfo, // Include the existing listingInfo data
+        ...updatedListing, // Include the existing listingInfo data
         // You may want to add additional fields or modify the data as needed
       });
 
