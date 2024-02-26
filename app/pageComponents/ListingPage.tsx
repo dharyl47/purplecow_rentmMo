@@ -210,8 +210,8 @@ export const Listing2Wheel = () => {
 
 export const ListingByLocation = () => {
   const navigate = useRouter();
-  const [data, setData] = useState<ICar[]>([]);
-  const [currentItems, setCurrentItems] = useState<ICar[]>([]);
+  const [data, setData] = useState<any>([]);
+  const [currentItems, setCurrentItems] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [count, setCount] = useState(0);
   const itemsPerPage = 6; // Number of items to display per page
@@ -266,7 +266,7 @@ export const ListingByLocation = () => {
         Browse by Location
       </h4>
       <div className="w-full items-center justify-center flex flex-wrap gap-2">
-        {currentItems.map((item, index) => (
+        {currentItems.map((item: any, index: any) => (
           <Card
             className="drop-shadow-lg hover:scale-[102%] hover:transition-transform h-fit w-fit"
             key={index}
@@ -276,8 +276,7 @@ export const ListingByLocation = () => {
                 {item.brand}
               </h4>
               <Image
-                // src={item.vehiclePhotos} // Access the image path associated with the location
-                src={imageUnavailable}
+                src={item.vehiclePhotos} // Access the image path associated with the location
                 alt={`Image ${index}`}
                 onError={(e: any) => (e.target.src = imageUnavailable)}
                 className="mx-auto 3xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[16rem] h-[16rem] 3xl:h-72 object-cover select-none object-center"
