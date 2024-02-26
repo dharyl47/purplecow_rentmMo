@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import { GoogleButton } from "../../components/Buttons";
 import { TextField, Button, CircularProgress } from "@mui/material";
@@ -55,11 +55,16 @@ const GButton = () => {
       setIsLoading(false);
       window.location.href = "/login";
     } catch (error) {
-      // Display an error message if there's an error
-      const errorMessage =
-        error?.response?.data?.message ||
-        "Something went wrong. Please try again.";
-      alert(errorMessage);
+      if (error instanceof AxiosError) { // Check if the error is an instance of AxiosError
+        const errorMessage =
+          error.response?.data?.message || // Access response property safely
+          "Something went wrong. Please try again.";
+        alert(errorMessage);
+      } else {
+        // Handle other types of errors
+        console.error("Unexpected error:", error);
+        alert("Unexpected error occurred. Please try again.");
+      }
       setIsLoading(false);
     }
   };
