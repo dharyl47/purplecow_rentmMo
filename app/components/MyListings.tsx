@@ -68,6 +68,7 @@ const MyListings = () => {
   // Add this function to handle the update
   const handleSubmit = async (updatedData: Partial<ICar>) => {
     try {
+      console.log(updatedData)
       // await updateListing(updatedData);
       await axios.put("/api/listing", updatedData);
       setUpdate(false);
@@ -162,7 +163,7 @@ const MyListings = () => {
               key={index}
             >
               <div className="relative transition p-2">
-                {item?.vehiclePhotos?.[0] &&
+                {/* {item?.vehiclePhotos?.[0] &&
                   (item.vehiclePhotos[0].startsWith("http://") ||
                   item.vehiclePhotos[0].startsWith("https://") ? (
                     <Image
@@ -176,7 +177,7 @@ const MyListings = () => {
                       }}
                       className="mx-auto w-full h-48 object-cover select-none object-center rounded-md"
                     />
-                  ) : (
+                  ) : ( */}
                     <Image
                       src={imageUnavailable}
                       width={200}
@@ -184,7 +185,7 @@ const MyListings = () => {
                       alt={`Image ${index}`}
                       className="mx-auto w-full h-48 object-cover select-none object-center rounded-md"
                     />
-                  ))}
+                  {/* ))} */}
               </div>
 
               <CardContent className="flex flex-col w-full h-12 gap-0 justify-center text-center items-center">
