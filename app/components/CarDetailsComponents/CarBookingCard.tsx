@@ -14,7 +14,12 @@ import { TextField } from "@mui/material";
 import GcashLogo from "@/public/assets/images/gcash.png";
 import { FaCcAmex, FaCcJcb, FaCcMastercard, FaCcVisa } from "react-icons/fa6";
 
-const CarBookingCard = () => {
+interface CarProps {
+  price: number | 0;
+}
+
+const CarBookingCard: React.FC<CarProps> = ({ price }) => {
+
   return (
     <div className="grid-item w-full  bg-white rounded-lg shadow-md border border-gray-200 py-10 lg:px-10 md:px-10 px-7">
       {/* <h1 className="text-2xl font-bold mb-6 underline underline-offset-2">
@@ -69,12 +74,12 @@ const CarBookingCard = () => {
       <div className="grid grid-cols-2 gap-4 box-with-shadow w-full">
         <div className="flex items-center">
           <div className="ml-2">
-            <p className="font">₱ 3,000 x 2 days</p>
+            <p className="font">₱ {price} x 2 days</p>
           </div>
         </div>
         <div className="flex items-center ml-auto">
           <div className="ml-2">
-            <p className="font-bold">₱ 6,000</p>
+            <p className="font-bold">₱ {price * 2}</p>
           </div>
         </div>
         <div className="flex items-center ">
@@ -104,7 +109,7 @@ const CarBookingCard = () => {
         </div>
         <div className="flex items-center ml-auto">
           <div className="ml-2">
-            <p className="font-bold">₱ 6,250</p>
+            <p className="font-bold">₱ {price * 2 + 250}</p>
           </div>
         </div>
       </div>

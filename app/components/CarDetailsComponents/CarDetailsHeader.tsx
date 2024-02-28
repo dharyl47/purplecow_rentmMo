@@ -6,22 +6,29 @@ import { FaStar } from "react-icons/fa";
 import { FaPesoSign } from "react-icons/fa6";
 import { IoHeartOutline, IoShareSocialOutline } from "react-icons/io5";
 
-const CarDetailsHeader = () => {
+interface CarProps {
+  brand: string;
+  model: string;
+  price: number | null;
+}
+
+const CarDetailsHeader: React.FC<CarProps> = ({ brand, model, price }) => {
+
   return (
     <div className="w-full">
       <img
-        src={"@/public/assets/units/vios-car@2x.png"}
+        src={"/assets/units/vios-car@2x.png"}
         className="object-cover w-full h-96 border bg-white rounded-lg mb-5"
         alt="logo"
       />
 
       <div className="flex lg:flex-row md:flex-row flex-col place-content-between items-center">
         <div className="mb-5 lg:mb-0 md:mb:0">
-          <h1 className="text-4xl mt-5 font-bold">Evergreen Evolve E450</h1>
+          <h1 className="text-4xl mt-5 font-bold">{brand} {model}</h1>
           <div className="flex flex-row items-center mt-2">
             <div className="flex flex-row items-center mt-2 mr-5">
               <FaPesoSign size={23} style={{ color: "#43A047" }} />
-              <p className="text-lg ml-2">3,000 per day</p>
+              <p className="text-lg ml-2">{price} per day</p>
             </div>
             <div className="flex flex-row items-center mt-2">
               <FaStar size={23} className="text-yellow-500" />

@@ -45,7 +45,8 @@ const CarListingCard: React.FC<{
     const carObject = encodeURIComponent(JSON.stringify(car));
 
     // Navigate to the carDetails page with the car object as a query parameter
-    router.push(`/carDetail?car=${carObject}`);
+    // router.push(`/carDetail?car=${carObject}`);
+    router.push(`/car-details-2?car=${carObject}`);
   };
 
   return (

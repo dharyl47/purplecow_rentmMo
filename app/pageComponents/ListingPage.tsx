@@ -23,9 +23,9 @@ export const Listing4Wheel = () => {
   const itemsPerPage = 4; // Number of items to display per page
 
   const toVehicleDetails = (item: any) => {
-    const carObject = encodeURIComponent(JSON.stringify(item));
+    // const carObject = encodeURIComponent(JSON.stringify(item));
 
-    navigate.push(`/car-detail-2?car=${carObject}`);
+    navigate.push(`/car-details-2/?id=${item}`);
     // navigate.push(`/vehicle/details/${item}`);
 
     setTimeout(() => {
@@ -92,7 +92,7 @@ export const Listing4Wheel = () => {
             </CardContent>
             <div className="px-4 pb-4 pt-2 w-full flex text-center">
               <button
-                onClick={() => toVehicleDetails(item._id)}
+                onClick={() => toVehicleDetails(item.id)}
                 className="bg-yellow-300 text-dark900 rounded-full w-full py-2 bg-yellow font-bold text-md hover:shadow-md transition"
               >
                 Rent Now
@@ -187,7 +187,8 @@ export const Listing2Wheel = () => {
             </CardContent>
             <div className="px-4 pb-4 pt-2 w-full flex text-center">
               <button
-                onClick={() => toVehicleDetails(item._id)}
+                type="button"
+                onClick={() => toVehicleDetails(item.id)}
                 className="bg-yellow-300 text-dark900 rounded-full w-full py-2 bg-yellow font-bold text-md hover:shadow-md transition"
               >
                 Rent Now

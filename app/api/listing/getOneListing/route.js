@@ -8,14 +8,14 @@ import { connectToDatabase } from "@/helpers/ServerHelpers"
 export async function GET(request) {
     try {
         const { searchParams } = new URL(request.url)
-        const ownerId = searchParams.get('ownerId')
+        const id = searchParams.get('id')
 
         await connectToDatabase();
 
         // Fetch listings by owner ID
         const listings = await prisma.listings.findMany({
             where: {
-                ownerId: ownerId
+                id: id
             },
             include: {
                 owner: true 

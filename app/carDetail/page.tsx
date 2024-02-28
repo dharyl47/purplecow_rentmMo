@@ -83,6 +83,7 @@ const CarDetailPage: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const carParam = searchParams.get("car");
+  
   let carDetails: CarDetails | null = null;
 
   if (carParam) {
