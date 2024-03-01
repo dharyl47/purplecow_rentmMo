@@ -44,15 +44,15 @@ export default function Cart() {
       </Head>
 
       <main className="p-6">
-        <section className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8">
-          <div className="flex justify-between items-center">
+        <section className="w-1/2 mx-auto bg-white rounded-lg shadow-md p-8 gap-10">
+          <div className="flex justify-between items-center w-1/2 mb-10">
             <h1 className="text-2xl font-bold">Select Payment Option</h1>
-            <button
+            {/* <button
               className="px-4 py-2 bg-yellow-300 text-gray-800 rounded-md font-semibold hover:bg-yellow-400 transition"
               onClick={() => router.back()}
             >
               Back
-            </button>
+            </button> */}
           </div>
 
           <form className="mt-6 flex flex-col space-y-4 md:flex-row md:justify-between">

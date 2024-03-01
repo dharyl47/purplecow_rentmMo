@@ -14,11 +14,11 @@ import axios from "axios";
 import { ICar } from "@/types/types";
 
 
-
 const CarDetailPage2 = () => {
   const searchParams = useSearchParams();
   const carId = searchParams.get("id");
   const [carDetails, setCarDetails] = useState<ICar>({});
+
 
   const fetchData = async () => {
     try {
@@ -34,16 +34,17 @@ const CarDetailPage2 = () => {
     fetchData()
   }, [])
 
+
   return (
     <div>
       <div className="bg-black">
         <Navbar />
       </div>
-      <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6 lg:max-w-[80%] lg:px-8">
+      <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6 lg:max-w-[90%] lg:px-8">
         <CarDetailsHeader brand={carDetails.brand} model={carDetails.model} price={carDetails.price} />
 
         <div className="grid gap-10 items-start lg:grid-cols-2 md:grid-cols-1 sm:lg:grid-cols-1 mt-10">
-          <CarInformationCard description={carDetails.description} features={carDetails.features} owner={carDetails.owner} />
+          <CarInformationCard description={carDetails.description} features={carDetails.features} owner={carDetails.ownerId} lat={carDetails.lat} lon={carDetails.lon} />
           <CarBookingCard price={carDetails.price}  />
         </div>
 
@@ -54,5 +55,6 @@ const CarDetailPage2 = () => {
     </div>
   );
 };
+
 
 export default CarDetailPage2;

@@ -1,28 +1,17 @@
-// Third Party Components
-import prisma from "@/prisma"
 import { NextResponse } from "next/server";
+import connectMongoDB from "@/lib/mongodb";
+import ListingModel from "@/lib/models/listing.model";
 
-// Database Connect
-import { connectToDatabase } from "@/helpers/ServerHelpers"
 
-export async function GET(request) {
+export async function GET(request, { query }) {
     try {
-        const { searchParams } = new URL(request.url)
-        const id = searchParams.get('id')
-
-        await connectToDatabase();
+        await connectMongoDB();
+        const queryParams = new URL(request.url).searchParams;
+        const id = queryParams.get('id');
 
         // Fetch listings by owner ID
-        const listings = await prisma.listings.findMany({
-            where: {
-                id: id
-            },
-            include: {
-                owner: true 
-            }
-        });  
-
-
+        const listings = await ListingModel.find({ _id: id }).populate('ownerId');
+  
         return NextResponse.json({ listings }, { status: 200 });
     } catch (error) {
         console.error("Error fetching listings by ownerId:", error);

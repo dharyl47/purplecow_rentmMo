@@ -60,7 +60,7 @@ const MapComponent = ({ carList, cardSelected, onCardClick }) => {
       {carList.map((car) => (
         <Marker
           style={{cursor: "pointer"}}
-          key={car.id}
+          key={car._id}
           latitude={car.lat}
           longitude={car.lon}
           onClick={e => {

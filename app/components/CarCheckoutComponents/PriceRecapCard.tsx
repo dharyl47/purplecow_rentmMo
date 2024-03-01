@@ -1,11 +1,30 @@
+"use client";
+
 // React
 import React from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 
 // Icons
 import { FaCalendarDays, FaLocationDot, FaUser } from "react-icons/fa6";
-import { FcCalendar } from "react-icons/fc";
 
 const PriceRecapCard = () => {
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  let bookingDetailsParam = searchParams.get("bookingDetails");
+  bookingDetailsParam = JSON.parse(bookingDetailsParam);
+
+  const formatDate = (timestamp: any) => {
+    const date = new Date(timestamp);
+    const options = { month: 'long', day: '2-digit', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  };
+
+  const handleCheckoutRide = () => {
+    router.push(`/paymongo/payment`);
+  };
+
+
   return (
     <div className="w-full py-10 lg:px-10 md:px-10 px-7">
       <img
@@ -20,19 +39,18 @@ const PriceRecapCard = () => {
       <h1 className="text-lg font-thin text-center">John Doe</h1>
 
       <div
-        style={{ width: "50%" }}
         className=" bg-white rounded-lg shadow-md border border-gray-200 py-5 px-10 mt-5 mx-auto"
       >
-        <h1 className="text-2xl font-semibold mb-6 underline underline-offset-2 text-center">
+        <h1 className="text-2xl font-semibold mb-6 underline underline-offset-2 ">
           Booking Details
         </h1>
 
-        <div className="flex items-center justify-evenly mt-10">
+        <div className="flex flex-start justify-center mt-10 gap-10">
           <div className="flex items-center">
             <FaCalendarDays size={30} />
             <div className="ml-3">
               <h1 className="text-lg font-bold">Start Trip</h1>
-              <p className="text-sm text-gray-500">February 01, 2024</p>
+              <p className="text-sm text-gray-500">{formatDate(bookingDetailsParam.startTripDate)}</p>
             </div>
           </div>
 
@@ -40,21 +58,22 @@ const PriceRecapCard = () => {
             <FaCalendarDays size={30} />
             <div className="ml-3">
               <h1 className="text-lg font-bold">End Trip</h1>
-              <p className="text-sm text-gray-500">February 10, 2024</p>
+              <p className="text-sm text-gray-500">{formatDate(bookingDetailsParam.endTripDate)}</p>
             </div>
           </div>
+
+          <div className="flex items-center">
+            <FaLocationDot size={30} />
+            <div className="ml-3">
+              <h1 className="text-lg font-bold">Pickup & Return</h1>
+              <p className="text-sm text-gray-500">
+                {bookingDetailsParam.location}
+              </p>
+            </div>
+        </div>
         </div>
 
-        <div className="flex items-center mt-10">
-          <FaLocationDot size={30} />
-          <div className="ml-3">
-            <h1 className="text-lg font-bold">Pickup & Return</h1>
-            <p className="text-sm text-gray-500">
-              J. P. Laurel Avenue (just fronting the Gaisano Mall), Bajada,
-              Davao City, Davao Del Sur
-            </p>
-          </div>
-        </div>
+     
 
         <hr className="my-7" />
 
@@ -99,6 +118,17 @@ const PriceRecapCard = () => {
               <p className="font-bold">₱ 6,250</p>
             </div>
           </div>
+        </div>
+
+        <hr className="my-7" />
+
+        <div className="flex justify-center col-span-2">
+          <button
+            className="w-full bg-yellow-300 text-black rounded-lg py-3 px-6 font-bold hover:bg-yellow-400 hover:text-gray-900 transition-all duration-300"
+            onClick={handleCheckoutRide}
+          >
+            Proceed To Payment
+          </button>
         </div>
       </div>
     </div>

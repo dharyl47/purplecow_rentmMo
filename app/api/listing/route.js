@@ -1,9 +1,8 @@
-// Third Party Components
-import prisma from "@/prisma"
-import { NextResponse } from "next/server";
+// route.js
 
-// Database Connect
-import { connectToDatabase } from "@/helpers/ServerHelpers"
+import { NextResponse } from "next/server";
+import connectMongoDB from "@/lib/mongodb";
+import ListingModel from "@/lib/models/listing.model";
 
 export async function POST(request) {
   try {
@@ -33,54 +32,51 @@ export async function POST(request) {
     } = await request.json();
 
 
-    await connectToDatabase();
+    await connectMongoDB();
 
     const startDate = new Date(carAvailability.startDate);
     const endDate = new Date(carAvailability.endDate);
 
-
-    await prisma.listings.create({
-      data: {
-        brand,
-        carRegistrationNumber,
-        description,
-        cardNumber,
-        cardExpiration,
-        securityCode,
-        city,
-        country,
-        email,
-        licensePlateNumber,
-        mobileNumber,
-        model,
-        price,
-        state,
-        street,
-        vehiclePhotos,
-        zipCode,
-        lat,
-        lon,
-        ownerId,
-        carAvailability: {
-            startDate: startDate.toISOString(),
-            endDate: endDate.toISOString(),
-            checked: carAvailability.checked
-        },
-        features: {
-            automaticTransmission: features.automaticTransmission,
-            allWheelDrive: features.allWheelDrive,
-            androidAuto: features.androidAuto,
-            appleCarPlay: features.appleCarPlay,
-            auxInput: features.auxInput,
-            backUpCamera: features.backUpCamera,
-            bikeRack: features.bikeRack,
-            converTible: features.converTible,
-            gps: features.gps,
-            petFriendly: features.petFriendly,
-            tollPass: features.tollPass,
-            usbCharger: features.usbCharger
-        }
-      }
+    await ListingModel.create({
+      brand,
+      carAvailability: {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        checked: carAvailability.checked,
+      },
+      features: {
+        automaticTransmission: features.automaticTransmission,
+        allWheelDrive: features.allWheelDrive,
+        androidAuto: features.androidAuto,
+        appleCarPlay: features.appleCarPlay,
+        auxInput: features.auxInput,
+        backUpCamera: features.backUpCamera,
+        bikeRack: features.bikeRack,
+        converTible: features.converTible,
+        gps: features.gps,
+        petFriendly: features.petFriendly,
+        tollPass: features.tollPass,
+        usbCharger: features.usbCharger,
+      },
+      carRegistrationNumber,
+      description,
+      cardNumber,
+      cardExpiration,
+      securityCode,
+      city,
+      country,
+      email,
+      licensePlateNumber,
+      mobileNumber,
+      model,
+      price,
+      state,
+      street,
+      vehiclePhotos,
+      zipCode,
+      lat,
+      lon,
+      ownerId
     });
 
     return NextResponse.json({ message: "Listing Created" }, { status: 201 });
@@ -92,13 +88,11 @@ export async function POST(request) {
 
 export async function PUT(request) {
   try {
-    let requestData = await request.json();
-    
-    delete requestData.owner;
+    const requestData = await request.json();
 
-    const { id, ...updateData } = requestData;
+    const { _id, ...updateData } = requestData;
 
-    await connectToDatabase();
+    await connectMongoDB();
 
     if (updateData.carAvailability) {
       const { startDate, endDate } = updateData.carAvailability;
@@ -106,12 +100,7 @@ export async function PUT(request) {
       updateData.carAvailability.endDate = new Date(endDate).toISOString();
     }
 
-    await prisma.listings.update({
-      where: {
-        id: id
-      },
-      data: updateData,
-    });
+    await ListingModel.findByIdAndUpdate(_id, updateData);
 
     return NextResponse.json({ message: "Listing Updated" }, { status: 200 });
   } catch (error) {
@@ -123,14 +112,10 @@ export async function PUT(request) {
 
 export async function GET() {
   try {
-    await connectToDatabase();
+    await connectMongoDB();
 
     // Fetch all listings
-    const listings = await prisma.listings.findMany({
-      include: {
-        owner: true
-      }
-    });
+    const listings = await ListingModel.find({}).populate('ownerId');
 
     return NextResponse.json({ listings }, { status: 200 });
   } catch (error) {
@@ -142,15 +127,11 @@ export async function GET() {
 
 export async function DELETE(request) {
   try {
-    const { id } = await request.json();
+    const { _id } = await request.json();
 
-    await connectToDatabase();
+    await connectMongoDB();
 
-    const deletedListing = await prisma.listings.delete({
-      where: {
-        id: id
-      }
-    });
+    const deletedListing = await ListingModel.findByIdAndDelete(_id);
 
     if (!deletedListing) {
       return NextResponse.json({ message: "Listing not found" }, { status: 404 });

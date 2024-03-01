@@ -23,10 +23,7 @@ export const Listing4Wheel = () => {
   const itemsPerPage = 4; // Number of items to display per page
 
   const toVehicleDetails = (item: any) => {
-    // const carObject = encodeURIComponent(JSON.stringify(item));
-
     navigate.push(`/car-details-2/?id=${item}`);
-    // navigate.push(`/vehicle/details/${item}`);
 
     setTimeout(() => {
       window.scrollTo({
@@ -92,7 +89,7 @@ export const Listing4Wheel = () => {
             </CardContent>
             <div className="px-4 pb-4 pt-2 w-full flex text-center">
               <button
-                onClick={() => toVehicleDetails(item.id)}
+                onClick={() => toVehicleDetails(item._id)}
                 className="bg-yellow-300 text-dark900 rounded-full w-full py-2 bg-yellow font-bold text-md hover:shadow-md transition"
               >
                 Rent Now
@@ -188,7 +185,7 @@ export const Listing2Wheel = () => {
             <div className="px-4 pb-4 pt-2 w-full flex text-center">
               <button
                 type="button"
-                onClick={() => toVehicleDetails(item.id)}
+                onClick={() => toVehicleDetails(item._id)}
                 className="bg-yellow-300 text-dark900 rounded-full w-full py-2 bg-yellow font-bold text-md hover:shadow-md transition"
               >
                 Rent Now
@@ -245,7 +242,6 @@ export const ListingByLocation = () => {
 
   useEffect(() => {
     setData(sampleItems);
-    //fetchData();
   }, []);
 
   const handlePageChange = (newPage: any) => {
@@ -262,11 +258,11 @@ export const ListingByLocation = () => {
   // };
 
   return (
-    <div className="w-full min-h-fit flex flex-col items-center justify-center p-2 2xl:pt-10 gap-4">
-      <h4 className="md:pl-20 font-bold md:text-2xl text-xl self-start">
+    <div className="w-full min-h-fit items-center justify-center xl:p-20 p-10">
+      <h4 className="md:pl-20 font-bold md:text-2xl text-xl self-start mb-20">
         Browse by Location
       </h4>
-      <div className="w-full items-center justify-center flex flex-wrap gap-2">
+      <div className="w-full items-center justify-center flex flex-wrap gap-5">
         {currentItems.map((item: any, index: any) => (
           <Card
             className="drop-shadow-lg hover:scale-[102%] hover:transition-transform h-fit w-fit"
@@ -290,14 +286,14 @@ export const ListingByLocation = () => {
         <div className="2xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[12rem]  2xl:absolute"></div>
         <div className="2xl:w-64 xl:w-[14rem] lg:w-[16rem] w-[12rem] 2xl:absolute "></div>
       </div>
-      <Pagination
+      {/* <Pagination
         className=" self-center"
         count={count}
         color="standard"
         shape="rounded"
         page={currentPage}
         onChange={(event, newPage) => handlePageChange(newPage)}
-      />
+      /> */}
     </div>
   );
 };

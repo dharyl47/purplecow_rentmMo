@@ -2,28 +2,44 @@
 
 import { ICar } from "@/types/types";
 // React
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // Icons
 import { FaUser } from "react-icons/fa6";
 import { FcCancel, FcCheckmark } from "react-icons/fc";
 
 // Third Party Components
-import MapGL from "react-map-gl";
+import MapGL, { Marker  } from 'react-map-gl';
 
 
-interface CardInformation {
-  description: string;
-  features: string[];
-  owner: {
-    firstName: String;
-    lastName: String;
-    createdAt: String;
-  };
-}
+const CarInformationCard: React.FC<ICar> = ({ description, features, owner, lat, lon }) => {
+  const mapboxAccessToken = 'pk.eyJ1IjoiZGhhcnlsOTciLCJhIjoiY2w5NTluMDh2MXQ3YTNucW16cG9tbGU3dyJ9.z96hyUi9vkmIJDdBB6WjxA';
 
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
 
-const CarInformationCard: React.FC<CardInformation> = ({ description, features, owner }) => {
+  const [viewport, setViewport] = useState({
+    latitude: 0,
+    longitude: 0,
+    zoom: 11,
+  });
+
+  useEffect(() => {
+    const latitudeTrue = Number(lat);
+    const longitudeTrue = Number(lon);
+
+    if (latitudeTrue && longitudeTrue) {
+      setLatitude(latitudeTrue)
+      setLongitude(longitudeTrue)
+  
+      setViewport(prevViewport => ({
+        ...prevViewport,
+        latitudeTrue,
+        longitudeTrue,
+      }));
+    }
+  
+  }, [lat, lon]);
 
   const featuresName: { [key: string]: string } = {
     allWheelDrive: "All-wheel drive",
@@ -77,15 +93,15 @@ const CarInformationCard: React.FC<CardInformation> = ({ description, features, 
 
       <div>
         <MapGL
-          initialViewState={{
-            longitude: 125.601695,
-            latitude: 7.069139,
-            zoom: 11,
-          }}
+          {...viewport}
+          width="100%"
+          height="400px"
           mapStyle="mapbox://styles/mapbox/streets-v11"
-          mapboxAccessToken="pk.eyJ1IjoiZGhhcnlsOTciLCJhIjoiY2w5NTluMDh2MXQ3YTNucW16cG9tbGU3dyJ9.z96hyUi9vkmIJDdBB6WjxA"
-          attributionControl={false}
-        ></MapGL>
+          mapboxAccessToken={mapboxAccessToken}
+          onViewportChange={setViewport} 
+        >
+          <Marker latitude={latitude} longitude={longitude}></Marker>
+        </MapGL>
       </div>
 
       <hr className="my-7" />

@@ -46,7 +46,8 @@ const CarListingCard: React.FC<{
 
     // Navigate to the carDetails page with the car object as a query parameter
     // router.push(`/carDetail?car=${carObject}`);
-    router.push(`/car-details-2?car=${carObject}`);
+    // router.push(`/car-details-2?car=${carObject}`);
+    router.push(`/car-details-2/?id=${car._id}`);
   };
 
   return (

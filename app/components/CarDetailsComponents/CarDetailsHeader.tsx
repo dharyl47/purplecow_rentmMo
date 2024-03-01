@@ -1,4 +1,5 @@
 // React
+import { ICar } from "@/types/types";
 import React from "react";
 
 // Icons
@@ -6,13 +7,8 @@ import { FaStar } from "react-icons/fa";
 import { FaPesoSign } from "react-icons/fa6";
 import { IoHeartOutline, IoShareSocialOutline } from "react-icons/io5";
 
-interface CarProps {
-  brand: string;
-  model: string;
-  price: number | null;
-}
 
-const CarDetailsHeader: React.FC<CarProps> = ({ brand, model, price }) => {
+const CarDetailsHeader: React.FC<ICar> = ({ brand, model, price }) => {
 
   return (
     <div className="w-full">

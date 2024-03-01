@@ -1,7 +1,9 @@
 {
   "name": "purplecow_rentmo",
   "version": "0.1.0",
-  "prisma":  { "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts" },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -53,6 +55,7 @@
     "@types/node": "^20.11.19",
     "@types/react-datepicker": "^4.19.5",
     "@types/react-places-autocomplete": "^7.2.14",
+    "prettier": "^3.2.5",
     "prisma": "^5.9.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"

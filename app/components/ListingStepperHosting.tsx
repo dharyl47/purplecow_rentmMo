@@ -58,7 +58,7 @@ export const initialInfoState = (user: any) => ({
     tollPass: false,
     usbCharger: false,
   },
-  ownerId: user.id,
+  ownerId: user._id,
 });
 
 export default function ListingStepper() {
