@@ -53,7 +53,7 @@ const MyListings = () => {
   }
 
   const handleDelete = async () => {
-    const deleteItemID = deleteItem?.id;
+    const deleteItemID = deleteItem?._id;
 
     try {
       await axios.delete(`/api/listing`, {

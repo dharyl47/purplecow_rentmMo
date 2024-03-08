@@ -25,7 +25,8 @@ import languageIcon from "@/public/assets/logo/icons8-language.png";
 // import { useUserContext } from "../context/UserContext";
 
 // Hooks
-import { useUser } from "../hooks/useUser";
+// import { useUser } from "../hooks/useUser";
+import { useAuth } from "@/contexts/AuthProvider";
 
 const ProfileCard = () => {
   const [open, setOpen] = useState(false);
@@ -33,27 +34,11 @@ const ProfileCard = () => {
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
 
-  // const { data, fetchData } = useUserContext();
-
-  const store = useUser();
-  const user: any = store?.user || {};
-  // console.log("My data:", data);
-
-  // useEffect(() => {
-  // 	fetchData();
-  // }, []);
-  // const fetchData = async () => {
-  // 	try {
-  // 		const response = await axios.get('/api/v1/user/my-info'); // Replace with your API endpoint
-  // 		setData(response.data.user);
-  // 	} catch (error) {
-  // 		console.error('Error fetching data:', error);
-  // 	}
-  // };
+  const user: any  = useAuth();
 
   const reviews = "0 reviews";
   const userName = `${user.firstName + " " + user.lastName}`;
-  const yearJoined = `${user.createdAt.split("-")[0]}`;
+  const yearJoined = `${user?.createdAt?.split("-")[0]}`;
   const profession = user.profession ? `${user.profession}` : "Unknown"; //
   const email = `${user.email}`;
   const location =

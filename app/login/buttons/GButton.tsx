@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 import { TextField, Button, CircularProgress } from "@mui/material";
 
 import { GoogleButton } from "../../components/Buttons";
-import { useUser } from "./../../hooks/useUser";
+import { useAuth } from "@/contexts/AuthProvider";
+// import { useUser } from "./../../hooks/useUser";
 
 interface UserSignUp {
   firstName: string;
@@ -25,10 +26,13 @@ const initialUserState: UserSignUp = {
 };
 
 const GButton = () => {
+  const { login } = useAuth();
+
   const [user, setUser] = useState(initialUserState);
   const [isFailure, setIsFailure] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const store = useUser();
+  
+  // const store = useUser();
   const navigate = useRouter();
 
   const handleSubmit = async (e: any) => {
@@ -43,7 +47,7 @@ const GButton = () => {
         },
       });
 
-      await store.setUser(response.data.user);
+      await login(response.data.user);
       setIsLoading(false);
       navigate.push("/profile");
     } catch (error) {

@@ -7,16 +7,19 @@ import ProfileCard from "../components/ProfileCard";
 import MyListings from "../components/MyListings";
 
 // Hooks
-import { useUser } from "../hooks/useUser";
+// import { useUser } from "../hooks/useUser";
+import { useAuth } from "@/contexts/AuthProvider";
 
 const Profile = () => {
-  const store = useUser();
-  if (!store || !store.user) {
+  const  user: any  = useAuth();
+  // const store = useUser();
+
+  if (!user) {
     // Handle the case where store or user is null
     return <div>Loading...</div>; // You can replace this with your loading indicator or error message
   }
 
-  const { user }: any = store;
+  // const  user  = store;
   const userName = `${user?.firstName} ${user?.lastName}`;
   const yearJoined = `${user?.createdAt?.split("-")[0]}`;
   const aboutMe = `${user?.aboutMe}`;

@@ -1,16 +1,18 @@
 "use client";
 
 // React
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 // Custom Components
-import CarDetailsHeader from "../components/CarDetailsComponents/CarDetailsHeader";
-import CarInformationCard from "../components/CarDetailsComponents/CarInformationCard";
-import CarBookingCard from "../components/CarDetailsComponents/CarBookingCard";
+import CarDetailsHeader from "../components/CarDetails/CarDetailsHeader";
+import CarInformationCard from "../components/CarDetails/CarInformationCard";
+import CarBookingCard from "../components/CarDetails/CarBookingCard";
 import Navbar from "../../components/common/NavBar";
-import CarCustomerReviewCard from "../components/CarDetailsComponents/CarCustomerReviewCard";
-import axios from "axios";
+import CarCustomerReviewCard from "../components/CarDetails/CarCustomerReviewCard";
+
+
 import { ICar } from "@/types/types";
 
 

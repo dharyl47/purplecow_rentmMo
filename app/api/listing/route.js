@@ -127,11 +127,11 @@ export async function GET() {
 
 export async function DELETE(request) {
   try {
-    const { _id } = await request.json();
+    const { id } = await request.json();
 
     await connectMongoDB();
 
-    const deletedListing = await ListingModel.findByIdAndDelete(_id);
+    const deletedListing = await ListingModel.findByIdAndDelete(id);
 
     if (!deletedListing) {
       return NextResponse.json({ message: "Listing not found" }, { status: 404 });

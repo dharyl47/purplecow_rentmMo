@@ -83,7 +83,7 @@ function ImageUploader({ handleChange, imageFile }: Props) {
         </div>
       </div>
 
-      {imageFile.vehiclePhotos.length > 0 && (
+      {imageFile?.vehiclePhotos.length > 0 && (
         <div className="h-full w-full flex">
           <Carousel
             showStatus={false}
@@ -98,17 +98,18 @@ function ImageUploader({ handleChange, imageFile }: Props) {
             }
             className="carousel-container w-full"
           >
-            {imageFile.vehiclePhotos.map((image, index) => (
+            {imageFile?.vehiclePhotos.map((image, index) => (
               <div
                 key={index}
                 className="carousel-slide relative hover:scale-[1.02] mx-1 my-2 transition"
               >
                 <img
-                  src={
-                    typeof image === "string"
-                      ? image
-                      : URL.createObjectURL(image)
-                  }
+                  src={typeof image === "string" ? image : URL.createObjectURL(image)}
+                  // src={
+                  //   typeof image === "string"
+                  //     ? image
+                  //     : URL.createObjectURL(image)
+                  // }
                   alt={`Image ${index}`}
                   className="mx-auto h-24 shadow-md object-cover select-none"
                 />

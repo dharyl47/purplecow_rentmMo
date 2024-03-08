@@ -9,7 +9,7 @@ import car2 from "@/public/assets/units/vios-car.png";
 import booking from "@/public/assets/sprites/booking.png";
 import route from "@/public/assets/sprites/map-location.png";
 import calendar from "@/public/assets/sprites/canceled.png";
-import { ListingByLocation, Listing4Wheel } from "../ListingPage";
+import { ListingByLocation, Listing4Wheel } from "../../pageComponents/ListingPage";
 
 const HowItWorks = () => {
   return (

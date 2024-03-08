@@ -1,10 +1,20 @@
+"use client";
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface User {
-  // Define properties of the user object
-  // For example:
-  username: string;
-  role: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+  aboutMe: string;
+  language: string;
+  profession: string;
+  profilePicture: string;
+  authProvider: string;
+  role: 'customer' | 'admin' | 'host'; 
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface AuthContextType {
@@ -19,6 +29,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<User | null>(null);
 
   const login = (userData: User) => {
+    console.log(userData)
     // Logic to authenticate user and set user data
     setUser(userData);
   };

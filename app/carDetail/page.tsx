@@ -9,7 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 // import "react-datepicker/dist/react-datepicker.css";
 
 // components
-import CustomDateTimePicker from "../components/CustomDateTimePicker";
+import CustomDateTimePicker from "../components/Inputs/CustomDateTimePicker";
 import Gallery from "../components/Gallery";
 import ReviewCard from "../components/ReviewCard";
 

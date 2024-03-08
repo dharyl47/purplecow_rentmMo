@@ -1,9 +1,7 @@
 {
   "name": "purplecow_rentmo",
   "version": "0.1.0",
-  "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
-  },
+  
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -30,6 +28,7 @@
     "date-fns": "^2.30.0",
     "eslint": "8.53.0",
     "eslint-config-next": "14.0.1",
+    "faker": "^6.6.6",
     "googleapis": "^129.0.0",
     "mapbox-gl": "^2.15.0",
     "mongoose": "^8.0.0",
