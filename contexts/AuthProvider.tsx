@@ -1,5 +1,11 @@
 "use client";
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect
+} from "react";
 
 interface User {
   firstName: string;
@@ -12,30 +18,37 @@ interface User {
   profession: string;
   profilePicture: string;
   authProvider: string;
-  role: 'customer' | 'admin' | 'host'; 
+  role: "customer" | "admin" | "host";
   createdAt: string;
   updatedAt: string;
 }
 
 interface AuthContextType {
   user: User | null;
-  login: (userData: User) => void;
+  login: (userData: User, token: string) => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+  children
+}) => {
+  const [user, setUser] = useState<User | null>(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
-  const login = (userData: User) => {
-    console.log(userData)
-    // Logic to authenticate user and set user data
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
+
+  const login = (userData: User, token: string) => {
+    localStorage.setItem("token", JSON.stringify(token));
     setUser(userData);
   };
 
   const logout = () => {
-    // Logic to log out user
     setUser(null);
   };
 
@@ -48,8 +61,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
+
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };

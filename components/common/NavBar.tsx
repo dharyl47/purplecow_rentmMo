@@ -1,25 +1,25 @@
 "use client";
 import { useState } from "react";
-import { useUser } from "../../app/hooks/useUser";
-import {
-  ButtonLink,
-  ButtonLinkNoFillRounded,
-  ButtonLinkFill,
-} from "../../app/components/Buttons";
+
+import { ButtonLink, ButtonLinkNoFillRounded } from "./Buttons";
+
 import { FaBars, FaXmark } from "react-icons/fa6";
 import { BiUser, BiHelpCircle, BiLogOut } from "react-icons/bi";
-import axios from "axios";
-import Link from "next/link";
+
 import { useRouter } from "next/navigation"; // Import useRouter from 'next/router' to access the routing functionality
+
+import Image from "next/image";
 import logo from "@/public/assets/logo/RentMo-logo.svg";
 import avatar from "@/public/assets/logo/avatar-logo.png";
-import Image from "next/image";
+
+import { useAuth } from "@/contexts/AuthProvider";
 
 const Navbar = () => {
+  const { user, logout } = useAuth();
+  const userData: any = user;
+
   const [profile, setProfile] = useState(false);
   const [show, setShow] = useState(false);
-  const store = useUser();
-  const user: any = store?.user || {};
 
   const router = useRouter();
 
@@ -31,7 +31,7 @@ const Navbar = () => {
       const screenHeight = window.innerHeight;
       window.scrollBy({
         top: screenHeight,
-        behavior: "smooth",
+        behavior: "smooth"
       });
     }, 0); // Use a small timeout to ensure the navigation has taken place
   };
@@ -40,7 +40,7 @@ const Navbar = () => {
     try {
       // const response = await axios.get('/api/v1/auth/logout');
       // Use the router object to navigate
-      store.logout();
+      logout();
       router.push("/");
     } catch (error) {
       console.log(error);
@@ -91,13 +91,13 @@ const Navbar = () => {
                 <li className="text-yellow-300 font-bold cursor-pointer text-xl pt-10 lg:pt-0 lg:ml-5 xl:ml-10 transition">
                   <ButtonLinkNoFillRounded
                     text="Become a host"
-                    to={store.user ? "/listing" : "/login"}
+                    to={userData ? "/listing" : "/login"}
                   />
                 </li>
                 <span className=" xl:mx-10 lg:mt-0 lg:w-[2px] lg:h-10 bg-gray-600 bg-white lg:mx-5 w-3/4 h-[1px] mt-14"></span>
                 <li
                   className={
-                    store.user
+                    userData
                       ? "hidden"
                       : "text-white  cursor-pointer text-xl pt-10 lg:pt-0 transition"
                   }
@@ -106,7 +106,7 @@ const Navbar = () => {
                 </li>
                 <li
                   className={
-                    store.user
+                    userData
                       ? "hidden"
                       : "text-white cursor-pointer text-xl pt-10 lg:pt-0 lg:ml-5 xl:ml-10 transition"
                   }
@@ -115,7 +115,7 @@ const Navbar = () => {
                 </li>
                 <li
                   className={
-                    store.user
+                    userData
                       ? "flex items-center relative cursor-pointer text-white text-base xl:text-xl pt-10 lg:pt-0 transition"
                       : "hidden"
                   }
@@ -169,7 +169,7 @@ const Navbar = () => {
                 </li>
                 <li
                   className={
-                    store.user
+                    userData
                       ? "lg:hidden text-white  cursor-pointer text-xl pt-10 lg:pt-0 lg:ml-5 xl:ml-10 transition"
                       : "hidden"
                   }
@@ -178,7 +178,7 @@ const Navbar = () => {
                 </li>
                 <li
                   className={
-                    store.user
+                    userData
                       ? "lg:hidden text-white  cursor-pointer text-xl pt-10 lg:pt-0 lg:ml-5 xl:ml-10 transition"
                       : "hidden"
                   }

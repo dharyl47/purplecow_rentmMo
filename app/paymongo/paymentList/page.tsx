@@ -1,10 +1,10 @@
-import React from 'react';
-import ActualPaymentList  from '../../components/PaymentList';
+import React from "react";
+import ActualPaymentList from "../../../components/checkout/PaymentList";
 
 const PaymentList = () => {
   return (
     <div>
-      <ActualPaymentList  />
+      <ActualPaymentList />
     </div>
   );
 };

@@ -8,7 +8,7 @@ interface SidebarLinkGroupProps {
 
 const SidebarLinkGroup = ({
   children,
-  activeCondition,
+  activeCondition
 }: SidebarLinkGroupProps) => {
   const [open, setOpen] = useState<boolean>(activeCondition);
 

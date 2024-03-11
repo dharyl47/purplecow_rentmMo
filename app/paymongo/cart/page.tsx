@@ -39,7 +39,7 @@ export default function Cart() {
   const ProceedPayment = (total: any) => {
     localStorage.setItem("totalPayment", JSON.stringify(total));
     localStorage.setItem("checkoutID", JSON.stringify(`${Date.now()}-Guide`));
-    router.push("/paymongo/payment");
+    router.push("/payment");
   };
 
   return (

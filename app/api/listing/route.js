@@ -28,9 +28,8 @@ export async function POST(request) {
       zipCode,
       lat,
       lon,
-      ownerId,
+      ownerId
     } = await request.json();
-
 
     await connectMongoDB();
 
@@ -42,7 +41,7 @@ export async function POST(request) {
       carAvailability: {
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
-        checked: carAvailability.checked,
+        checked: carAvailability.checked
       },
       features: {
         automaticTransmission: features.automaticTransmission,
@@ -56,7 +55,7 @@ export async function POST(request) {
         gps: features.gps,
         petFriendly: features.petFriendly,
         tollPass: features.tollPass,
-        usbCharger: features.usbCharger,
+        usbCharger: features.usbCharger
       },
       carRegistrationNumber,
       description,
@@ -82,7 +81,10 @@ export async function POST(request) {
     return NextResponse.json({ message: "Listing Created" }, { status: 201 });
   } catch (error) {
     console.error("Error creating listing:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
 
@@ -105,25 +107,29 @@ export async function PUT(request) {
     return NextResponse.json({ message: "Listing Updated" }, { status: 200 });
   } catch (error) {
     console.error("Error updating listing:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
-
 
 export async function GET() {
   try {
     await connectMongoDB();
 
     // Fetch all listings
-    const listings = await ListingModel.find({}).populate('ownerId');
+    const listings = await ListingModel.find({}).populate("ownerId");
 
     return NextResponse.json({ listings }, { status: 200 });
   } catch (error) {
     console.error("Error fetching listings:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
-
 
 export async function DELETE(request) {
   try {
@@ -134,12 +140,18 @@ export async function DELETE(request) {
     const deletedListing = await ListingModel.findByIdAndDelete(id);
 
     if (!deletedListing) {
-      return NextResponse.json({ message: "Listing not found" }, { status: 404 });
+      return NextResponse.json(
+        { message: "Listing not found" },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json({ message: "Listing deleted" }, { status: 200 });
   } catch (error) {
     console.error("Error deleting listing:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

@@ -20,7 +20,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   let storedSidebarExpanded = "true";
 
   const [sidebarExpanded, setSidebarExpanded] = useState(
-    storedSidebarExpanded === null ? false : storedSidebarExpanded === "true",
+    storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
   );
 
   // close on click outside
@@ -124,12 +124,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               <li>
                 <Link
+                  href="/admin/listings"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-admin-bodydark1 duration-300 ease-in-out hover:bg-admin-graydark dark:hover:bg-admin-meta-4 ${
+                    pathname.includes("profile") && "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  Listings
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/admin/users"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-admin-bodydark1 duration-300 ease-in-out hover:bg-admin-graydark dark:hover:bg-admin-meta-4 ${
                     pathname.includes("profile") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-               
                   Users
                 </Link>
               </li>

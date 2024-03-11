@@ -1,12 +1,17 @@
-import DefaultLayout from '@/components/admin/Layout/DefaultLayout'
-import React from 'react'
+"use client";
 
-const page = () => {
+import React from "react";
+import DefaultLayout from "@/components/admin/Layout/DefaultLayout";
+
+// Routes
+import ProtectedRoleRoutes from "@/utils/hoc/ProtectedRoleRoutes";
+
+const Settings = async () => {
   return (
-     <DefaultLayout>
-        <div>Settings Page</div>
-     </DefaultLayout>
-  )
-}
+    <DefaultLayout>
+      <h1 className="text-3xl font-bold">Settings</h1>
+    </DefaultLayout>
+  );
+};
 
-export default page
+export default ProtectedRoleRoutes(Settings, ["admin"]);

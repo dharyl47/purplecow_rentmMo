@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import axios, { AxiosError } from "axios";
 
-import { GoogleButton } from "../../components/Buttons";
+import { GoogleButton } from "../../../components/common/Buttons";
 import { TextField, Button, CircularProgress } from "@mui/material";
 
 interface UserSignUp {
@@ -30,7 +30,7 @@ const initialUserState: UserSignUp = {
   language: "",
   profession: "",
   profilePicture: "",
-  authProvider: "form",
+  authProvider: "form"
 };
 
 const GButton = () => {
@@ -55,7 +55,8 @@ const GButton = () => {
       setIsLoading(false);
       window.location.href = "/login";
     } catch (error) {
-      if (error instanceof AxiosError) { // Check if the error is an instance of AxiosError
+      if (error instanceof AxiosError) {
+        // Check if the error is an instance of AxiosError
         const errorMessage =
           error.response?.data?.message || // Access response property safely
           "Something went wrong. Please try again.";

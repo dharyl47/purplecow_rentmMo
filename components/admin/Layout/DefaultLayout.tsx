@@ -4,7 +4,7 @@ import Header from "../Header";
 import Sidebar from "../SideBar";
 
 export default function DefaultLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {

@@ -1,5 +1,5 @@
 import React from "react";
-import PaymentCard from "../components/PaymentCard";
+import PaymentCard from "../../components/Cards/PaymentCard";
 import { TextField } from "@mui/material";
 import { ICar } from "@/types/types";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
@@ -64,14 +64,14 @@ const BillingInfoForm = ({ handleChange, billingInfo }: Props) => {
             /> */}
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
-                onChange={(value) => {
+                onChange={value => {
                   // Check if value is a valid date string
                   if (typeof value === "string" || value instanceof Date) {
                     handleChange({
                       target: {
                         name: "cardExpiration",
-                        value,
-                      },
+                        value
+                      }
                     });
                   }
                 }}

@@ -9,9 +9,9 @@ import { TbListTree } from "react-icons/tb";
 import { FaMapMarkedAlt } from "react-icons/fa";
 
 // Page Components
-import Map from "../pageComponents/MapListing";
-import CarListing from "../pageComponents/CarListingCard";
-import HeroPageSearch from "../pageComponents/HeroPageSearch";
+import Map from "../../components/search/MapListing";
+import CarListing from "../../components/Cards/CarListingCard";
+import HeroPageSearch from "../../components/landing/HeroPageSearch";
 
 // useContext
 import { useServiceCarContext } from "@/contexts/ServiceCarContext";
@@ -32,7 +32,7 @@ const CarListingPage = () => {
     setShowMap(true);
   };
   const toggleMapVisible = () => {
-    setShowMap((prevState) => {
+    setShowMap(prevState => {
       return !prevState;
     });
   };
@@ -48,7 +48,7 @@ const CarListingPage = () => {
           location: parsedSearchData.location,
           endTime: "",
           startTime: ""
-        }
+        };
 
         searchListing(parsedSearchData);
         setSearchFormData(search);

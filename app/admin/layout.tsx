@@ -1,32 +1,24 @@
 "use client";
-// import "jsvectormap/dist/css/jsvectormap.css";
-// import "flatpickr/dist/flatpickr.min.css";
-// import "@/app/admin.style.css";
-import React, { useEffect, useState } from "react";
 
+import React, { useEffect, useState } from "react";
 import Loader from "@/components/admin/common/Loader";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface RootLayoutProps {
   children: React.ReactNode;
-}>) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [loading, setLoading] = useState<boolean>(true);
+}
 
-  // const pathname = usePathname();
+const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
   return (
-    <html lang="en">
-      <body suppressHydrationWarning={true}>
-        <div className="dark:bg-admin-boxdark-2 dark:text-admin-bodydark">
-          {loading ? <Loader /> : children}
-        </div>
-      </body>
-    </html>
+    <div className="dark:bg-admin-boxdark-2 dark:text-admin-bodydark">
+      {loading ? <Loader /> : children}
+    </div>
   );
-}
+};
+
+export default RootLayout;

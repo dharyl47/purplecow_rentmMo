@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { TextField, Button, CircularProgress } from "@mui/material";
 
-import { GoogleButton } from "../../components/Buttons";
+import { GoogleButton } from "../../../components/common/Buttons";
 import { useAuth } from "@/contexts/AuthProvider";
 // import { useUser } from "./../../hooks/useUser";
 
@@ -22,7 +22,7 @@ const initialUserState: UserSignUp = {
   lastName: "",
   email: "",
   password: "",
-  authProvider: "form",
+  authProvider: "form"
 };
 
 const GButton = () => {
@@ -31,7 +31,7 @@ const GButton = () => {
   const [user, setUser] = useState(initialUserState);
   const [isFailure, setIsFailure] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   // const store = useUser();
   const navigate = useRouter();
 
@@ -43,11 +43,11 @@ const GButton = () => {
       const response = await axios.get(`/api/login`, {
         params: {
           email: user.email,
-          password: user.password,
-        },
+          password: user.password
+        }
       });
 
-      await login(response.data.user);
+      await login(response.data.user, response.data.token);
       setIsLoading(false);
       navigate.push("/profile");
     } catch (error) {
