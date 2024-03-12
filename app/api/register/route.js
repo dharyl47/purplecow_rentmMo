@@ -1,48 +1,45 @@
-// // Third Party Components
-// import bcrypt from "bcryptjs";
-// import prisma from "@/prisma";
-// import { NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
 
-// // Database Connect
-// import { connectToDatabase } from "@/helpers/ServerHelpers";
+// Next Connect
+import { NextResponse } from "next/server";
 
-// export async function POST(request) {
-//   try {
-//     let requestData = await request.json();
-//     const email = requestData.email;
-//     const password = requestData.password;
+// Mongo Connect
+import connectMongoDB from "@/lib/mongodb";
 
-//     await connectToDatabase();
+// Model
+import UserSchema from "@/lib/models/user.model";
 
-//     // Check if the email already exists
-//     const existingUser = await prisma.users.findFirst({
-//       where: {
-//         email: email
-//       }
-//     });
+export async function POST(request) {
+  try {
+    let requestData = await request.json();
+    const email = requestData.email;
+    const password = requestData.password;
 
-//     if (existingUser) {
-//       return NextResponse.json(
-//         { message: "Email already exists" },
-//         { status: 400 }
-//       );
-//     }
+    // Connect to MongoDB
+    await connectMongoDB();
 
-//     const hashedPassword = await bcrypt.hash(password, 10);
+    // Check if the email already exists
+    const existingUser = await UserSchema.findOne({ email });
+    if (existingUser) {
+      return NextResponse.json(
+        { message: "Email already exists" },
+        { status: 400 }
+      );
+    }
 
-//     requestData.password = hashedPassword;
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-//     // Create new user if email doesn't exist
-//     const newUser = await prisma.users.create({
-//       data: requestData
-//     });
+    requestData.password = hashedPassword;
 
-//     return NextResponse.json({ message: "User Created" }, { status: 200 });
-//   } catch (error) {
-//     console.error("Error creating user:", error);
-//     return NextResponse.json(
-//       { message: "Something went wrong. Please try again." },
-//       { status: 500 }
-//     );
-//   }
-// }
+    // Create new user if email doesn't exist
+    await UserSchema.create(requestData);
+
+    return NextResponse.json({ message: "User Created" }, { status: 200 });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return NextResponse.json(
+      { message: "Something went wrong. Please try again." },
+      { status: 500 }
+    );
+  }
+}
