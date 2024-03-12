@@ -6,9 +6,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { TextField, Button, CircularProgress } from "@mui/material";
 
-import { GoogleButton } from "../../../components/common/Buttons";
 import { useAuth } from "@/contexts/AuthProvider";
-// import { useUser } from "./../../hooks/useUser";
+import { GoogleButton } from "../common/Buttons";
 
 interface UserSignUp {
   firstName: string;
@@ -25,7 +24,7 @@ const initialUserState: UserSignUp = {
   authProvider: "form"
 };
 
-const GButton = () => {
+const LoginForm = () => {
   const { login } = useAuth();
 
   const [user, setUser] = useState(initialUserState);
@@ -47,9 +46,15 @@ const GButton = () => {
         }
       });
 
-      await login(response.data.user, response.data.token);
-      setIsLoading(false);
-      navigate.push("/profile");
+      if (response.data.user.role === "admin") {
+        await login(response.data.user, response.data.token);
+        setIsLoading(false);
+        navigate.push("/admin");
+      } else {
+        await login(response.data.user, response.data.token);
+        setIsLoading(false);
+        navigate.push("/profile");
+      }
     } catch (error) {
       setIsFailure(true);
       setIsLoading(false);
@@ -151,12 +156,11 @@ const GButton = () => {
             href="/"
           >
             Return
-          </a>{" "}
-          {/* Use an anchor tag for navigation */}
+          </a>
         </div>
       </form>
     </div>
   );
 };
 
-export default GButton;
+export default LoginForm;

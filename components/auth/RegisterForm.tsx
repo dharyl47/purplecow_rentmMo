@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import axios, { AxiosError } from "axios";
 
-import { GoogleButton } from "../../../components/common/Buttons";
+import { GoogleButton } from "../common/Buttons";
 import { TextField, Button, CircularProgress } from "@mui/material";
 
 interface UserSignUp {
@@ -33,7 +33,7 @@ const initialUserState: UserSignUp = {
   authProvider: "form"
 };
 
-const GButton = () => {
+const RegisterForm = () => {
   const [user, setUser] = useState(initialUserState);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -271,4 +271,4 @@ const GButton = () => {
   );
 };
 
-export default GButton;
+export default RegisterForm;

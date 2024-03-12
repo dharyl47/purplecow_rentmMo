@@ -7,7 +7,8 @@ export async function POST(request) {
     await connectMongoDB();
 
     // Extract necessary data from the request body
-    const { userId, carId, pickupDate, returnDate } = await request.json();
+    const { userId, carId, pickupDate, returnDate, totalPrice } =
+      await request.json();
 
     // Create a new booking document
     await BookingModel.create({
@@ -15,7 +16,7 @@ export async function POST(request) {
       car: carId,
       startDate: new Date(pickupDate),
       endDate: new Date(returnDate),
-      totalPrice: 1500
+      totalPrice
     });
 
     // Respond with success message

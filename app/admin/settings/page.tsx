@@ -3,9 +3,6 @@
 import React from "react";
 import DefaultLayout from "@/components/admin/Layout/DefaultLayout";
 
-// Routes
-import ProtectedRoleRoutes from "@/utils/hoc/ProtectedRoleRoutes";
-
 const Settings = async () => {
   return (
     <DefaultLayout>
@@ -14,4 +11,4 @@ const Settings = async () => {
   );
 };
 
-export default ProtectedRoleRoutes(Settings, ["admin"]);
+export default Settings;

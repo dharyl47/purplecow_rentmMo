@@ -15,6 +15,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { HiLocationMarker } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import { BsX } from "react-icons/bs";
+import Image from "next/image";
 
 type SearchHeroMobProps = {
   isvisible: boolean;
@@ -95,10 +96,11 @@ const SearchHeroModal: React.FC<SearchHeroMobProps> = ({
                   Location
                 </label>
                 <div className="flex w-full">
-                  <img
+                  <Image
                     className="h-6"
                     src="@/public/assets/logo/pin-loc.png"
-                  ></img>
+                    alt="pin"
+                  />
                   <div className="flex border-b-2 border-white hover:border-dark200 transition-colors w-full">
                     <input
                       id="input-location"

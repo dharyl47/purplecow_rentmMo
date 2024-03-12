@@ -8,12 +8,9 @@ import DataTable from "@/components/admin/common/Tables/DataTables";
 
 import { formatTimestamp } from "@/utils/utils";
 
-
-
 function Listings() {
   const [listingData, setListingData] = useState(null);
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     async function fetchData() {
@@ -66,7 +63,7 @@ function Listings() {
 
   return (
     <DefaultLayout>
-      <h1 className="text-3xl font-bold">Listings</h1>
+      <h1 className="text-3xl font-bold">Rents</h1>
 
       {loading ? (
         <Loader />

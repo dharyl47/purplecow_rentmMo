@@ -1,26 +1,34 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 
-// Components
+import Loader from "@/components/common/Loader";
 import DefaultLayout from "@/components/admin/Layout/DefaultLayout";
 import DataTable from "@/components/admin/common/Tables/DataTables";
 
-// Hoc
 import ProtectedRoleRoutes from "@/utils/hoc/ProtectedRoleRoutes";
 
-async function getAllUsers() {
-  const res = await fetch("http://localhost:3000/api/admin/users/find");
+function Users() {
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
-
-const Users = async () => {
-  const fetchUsers = await getAllUsers();
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch("http://localhost:3000/api/admin/users/find");
+        if (!res.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await res.json();
+        setUserData(data.user);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchData();
+  }, []);
 
   const headers = [
     { title: "First Name", key: "firstName" },
@@ -35,11 +43,17 @@ const Users = async () => {
     <DefaultLayout>
       <h1 className="text-3xl font-bold">Users</h1>
 
-      <Suspense fallback={<div>Loading...</div>}>
-        <DataTable headers={headers} data={fetchUsers.user} itemsPerPage={10} />
-      </Suspense>
+      {loading ? (
+        <Loader />
+      ) : (
+        <Suspense fallback={<Loader />}>
+          {userData && (
+            <DataTable headers={headers} data={userData} itemsPerPage={10} />
+          )}
+        </Suspense>
+      )}
     </DefaultLayout>
   );
-};
+}
 
-export default ProtectedRoleRoutes(Users, ["admin"]);
+export default Users;

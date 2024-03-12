@@ -1,8 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useAuth } from "@/contexts/AuthProvider";
 
 const DropdownUser = () => {
+  const { user, logout } = useAuth();
+
+  const userData: any = user;
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -43,10 +48,10 @@ const DropdownUser = () => {
         href="#"
       >
         <span className="hidden text-right lg:block">
-          <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+          <span className="block text-sm font-medium text-black dark:text-white capitalize">
+            {userData.firstName} {userData.lastName}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs capitalize">{userData.role}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
@@ -56,7 +61,7 @@ const DropdownUser = () => {
             src={"/assets/profile/sample-profile.png"}
             style={{
               width: "auto",
-              height: "auto",
+              height: "auto"
             }}
             alt="User"
           />
@@ -161,7 +166,10 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button
+          className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+          onClick={() => logout()}
+        >
           <svg
             className="fill-current"
             width="22"

@@ -7,14 +7,24 @@ import { useSearchParams, useRouter } from "next/navigation";
 // Icons
 import { FaCalendarDays, FaLocationDot, FaUser } from "react-icons/fa6";
 import Modal from "../common/Modal";
+import axios from "axios";
+
+// Context Api
+import { useAuth } from "@/contexts/AuthProvider";
 
 const PriceRecapCard = () => {
+  const { user } = useAuth();
+  const userData: any = user;
+
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const searchParams = useSearchParams();
   let bookingDetailsParam: any = searchParams.get("bookingDetails");
   bookingDetailsParam = JSON.parse(bookingDetailsParam);
+  const { carId, startTripDate, endTripDate, location, totalPrice } =
+    bookingDetailsParam;
 
   const formatDate = (timestamp: any) => {
     const date = new Date(timestamp);
@@ -26,9 +36,27 @@ const PriceRecapCard = () => {
     setIsModalOpen(true);
   };
 
-  const handleAccept = () => {
+  const handleAccept = async () => {
     // console.log("Accepted");
-    router.push(`/payment`);
+
+    const bookingParams = {
+      userId: userData._id,
+      carId: carId,
+      pickupDate: startTripDate,
+      returnDate: endTripDate,
+      location,
+      totalPrice
+    };
+
+    try {
+      await axios.post(`/api/bookings`, bookingParams);
+
+      router.push(`/payment`);
+    } catch (error) {
+      // setIsFailure(true);
+      // setIsLoading(false);
+      return;
+    }
   };
 
   const handleDecline = () => {
@@ -63,7 +91,7 @@ const PriceRecapCard = () => {
             <div className="ml-3">
               <h1 className="text-lg font-bold">Start Trip</h1>
               <p className="text-sm text-gray-500">
-                {formatDate(bookingDetailsParam.startTripDate)}
+                {formatDate(startTripDate)}
               </p>
             </div>
           </div>
@@ -72,9 +100,7 @@ const PriceRecapCard = () => {
             <FaCalendarDays size={30} />
             <div className="ml-3">
               <h1 className="text-lg font-bold">End Trip</h1>
-              <p className="text-sm text-gray-500">
-                {formatDate(bookingDetailsParam.endTripDate)}
-              </p>
+              <p className="text-sm text-gray-500">{formatDate(endTripDate)}</p>
             </div>
           </div>
 
@@ -82,9 +108,7 @@ const PriceRecapCard = () => {
             <FaLocationDot size={30} />
             <div className="ml-3">
               <h1 className="text-lg font-bold">Pickup & Return</h1>
-              <p className="text-sm text-gray-500">
-                {bookingDetailsParam.location}
-              </p>
+              <p className="text-sm text-gray-500">{location}</p>
             </div>
           </div>
         </div>

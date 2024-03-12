@@ -48,7 +48,7 @@ export default function ViewCar({ params }: any) {
             lat={carDetails.lat}
             lon={carDetails.lon}
           />
-          <CarBookingCard price={carDetails.price} />
+          <CarBookingCard price={carDetails.price} carId={carDetails._id} />
         </div>
 
         <div className="mt-10">

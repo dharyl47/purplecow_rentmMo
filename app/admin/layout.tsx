@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Loader from "@/components/admin/common/Loader";
+import Loader from "@/components/common/Loader";
+
+import ProtectedRoleRoutes from "@/utils/hoc/ProtectedRoleRoutes";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -21,4 +23,4 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   );
 };
 
-export default RootLayout;
+export default ProtectedRoleRoutes(RootLayout, ["admin"]);

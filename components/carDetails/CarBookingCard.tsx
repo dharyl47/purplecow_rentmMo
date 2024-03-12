@@ -17,7 +17,7 @@ import { calculateDateDifference } from "@/utils/utils";
 // import GcashLogo from "@/public/assets/images/gcash.png";
 // import { FaCcAmex, FaCcJcb, FaCcMastercard, FaCcVisa } from "react-icons/fa6";
 
-const CarBookingCard: React.FC<ICar> = ({ price }: any) => {
+const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
   const router = useRouter();
 
   const [location, setLocation] = useState("");
@@ -25,12 +25,19 @@ const CarBookingCard: React.FC<ICar> = ({ price }: any) => {
   const [startTripDate, setStartTripDate] = useState<Date>(new Date());
   const [endTripDate, setEndTripDate] = useState<Date>(new Date());
 
+  const computedValue = useMemo(() => {
+    const daysDifference = calculateDateDifference(startTripDate, endTripDate);
+    return daysDifference;
+  }, [startTripDate, endTripDate]);
+
   const handleCheckoutRide = () => {
     if (location && startTripDate && endTripDate && termsOfUse) {
       const data = {
         location,
         startTripDate,
-        endTripDate
+        endTripDate,
+        carId,
+        totalPrice: price * computedValue + 250
       };
       const bookingDetails = encodeURIComponent(JSON.stringify(data));
 
@@ -57,11 +64,6 @@ const CarBookingCard: React.FC<ICar> = ({ price }: any) => {
       setEndTripDate(date);
     }
   };
-
-  const computedValue = useMemo(() => {
-    const daysDifference = calculateDateDifference(startTripDate, endTripDate);
-    return daysDifference;
-  }, [startTripDate, endTripDate]);
 
   return (
     <div className="grid-item w-full  bg-white rounded-lg shadow-md border border-gray-200 py-10 lg:px-10 md:px-10 px-7">
