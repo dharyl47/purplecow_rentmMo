@@ -32,3 +32,24 @@ export async function POST(request) {
     );
   }
 }
+
+export async function GET() {
+  try {
+    await connectMongoDB();
+
+    const bookings = await BookingModel.find({})
+      .populate({
+        path: "car",
+        populate: { path: "ownerId" }
+      })
+      .populate("user");
+
+    return NextResponse.json({ bookings }, { status: 200 });
+  } catch (error) {
+    console.error("Error fetching bookings:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}

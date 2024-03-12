@@ -37,9 +37,7 @@ const Home = () => {
           <Loader />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-18">
-            <DashboardCard title="Users" sales={counts.userCount} />
             <DashboardCard title="Listings" sales={counts.listingCount} />
-            <DashboardCard title="Hosting Requests" sales={5} />
             <DashboardCard title="Rented Cars" sales={counts.bookingCount} />
           </div>
         )}

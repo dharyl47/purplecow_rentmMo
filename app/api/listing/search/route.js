@@ -42,7 +42,11 @@ export async function GET(request, { query }) {
     // Fetch listings by city, startDate, endDate
     const listings = await ListingModel.find(queryObj).populate("ownerId");
 
-    return NextResponse.json({ listings }, { status: 200 });
+    const filteredListings = listings.filter(
+      listing => listing.ownerId.role === "host"
+    );
+
+    return NextResponse.json({ listings: filteredListings }, { status: 200 });
   } catch (error) {
     console.error("Error fetching listings:", error);
     return NextResponse.json(

@@ -13,7 +13,7 @@ import Map from "../../components/search/MapListing";
 import CarListing from "../../components/cards/CarListingCard";
 import HeroPageSearch from "../../components/landing/HeroPageSearch";
 
-// useContext
+// Context Api
 import { useServiceCarContext } from "@/contexts/ServiceCarContext";
 
 const CarListingPage = () => {

@@ -4,9 +4,7 @@ import React, { useState, useEffect, Suspense } from "react";
 
 import Loader from "@/components/common/Loader";
 import DefaultLayout from "@/components/admin/Layout/DefaultLayout";
-import DataTable from "@/components/admin/common/Tables/DataTables";
-
-import ProtectedRoleRoutes from "@/utils/hoc/ProtectedRoleRoutes";
+import DataTable from "@/components/Tables/DataTables";
 
 function Users() {
   const [userData, setUserData] = useState(null);
