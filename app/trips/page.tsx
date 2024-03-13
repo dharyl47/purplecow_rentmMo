@@ -9,7 +9,11 @@ import BookedHistorySection from "@/components/trips/BookedHistorySection";
 
 const tabs = [
   {
+<<<<<<< HEAD
     title: "Booked Cars",
+=======
+    title: "Booked Cars ",
+>>>>>>> d77d4495682bc7217352ad9399b1406738ec0c9b
     content: <BookedCarsSection />
   },
   {
