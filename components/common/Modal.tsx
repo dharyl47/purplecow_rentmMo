@@ -51,7 +51,7 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <>
       {isOpen && (
-        <div className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-gray-800 bg-opacity-75">
+        <div className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-gray-800 bg-opacity-75 z-99999">
           <div className="relative p-4 w-full max-w-2xl">
             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <div className="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">

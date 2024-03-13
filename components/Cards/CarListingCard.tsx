@@ -26,6 +26,8 @@ const CarListingCard: React.FC<{
   car: Car;
   onCardClick: (car: Car) => void;
 }> = ({ car, onCardClick }) => {
+  const router = useRouter();
+
   const [isFavorite, setIsFavorite] = useState(false);
 
   const handleFavoriteClick = () => {
@@ -38,8 +40,6 @@ const CarListingCard: React.FC<{
     strokeWidth: "1",
     cursor: "pointer"
   };
-
-  const router = useRouter();
 
   const viewDetailsHandler = (car: any) => {
     router.push(`/cars/${car._id}`);

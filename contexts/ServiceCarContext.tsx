@@ -41,7 +41,7 @@ export const useServiceCarContext = (): ServiceCarContextType => {
 };
 
 export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
+  children
 }) => {
   const [data, setData] = useState<ICar[]>([]);
   const [carDetailsData, setCarDetailsData] = useState<ICar[]>([]);
@@ -51,7 +51,7 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({
     startDate: new Date(),
     endDate: new Date(),
     startTime: "",
-    endTime: "",
+    endTime: ""
   });
 
   const fetchData = async () => {
@@ -80,9 +80,10 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({
         params: {
           city: formData.location,
           startDate: formData.startDate,
-          endDate: formData.endDate,
-        },
+          endDate: formData.endDate
+        }
       });
+
       setData(response.data.listings);
       setSearchLoading(false);
     } catch (error) {
@@ -119,7 +120,7 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({
         searchListing,
         setSearchFormData,
         setSearchLoading,
-        setCarDetailsData,
+        setCarDetailsData
       }}
     >
       {children}

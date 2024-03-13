@@ -3,10 +3,17 @@
 import React, { useState, useEffect, Suspense } from "react";
 
 import Loader from "@/components/common/Loader";
-import DefaultLayout from "@/components/admin/Layout/DefaultLayout";
-import DataTable from "@/components/admin/common/Tables/DataTables";
+import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
+import DataTable from "@/components/tables/DataTables";
 
-import ProtectedRoleRoutes from "@/utils/hoc/ProtectedRoleRoutes";
+const headers = [
+  { title: "First Name", key: "firstName" },
+  { title: "Last Name", key: "lastName" },
+  { title: "Email", key: "email" },
+  { title: "Language", key: "language" },
+  { title: "Profession", key: "profession" },
+  { title: "Role", key: "role" }
+];
 
 function Users() {
   const [userData, setUserData] = useState(null);
@@ -30,21 +37,12 @@ function Users() {
     fetchData();
   }, []);
 
-  const headers = [
-    { title: "First Name", key: "firstName" },
-    { title: "Last Name", key: "lastName" },
-    { title: "Email", key: "email" },
-    { title: "Language", key: "language" },
-    { title: "Profession", key: "profession" },
-    { title: "Role", key: "role" }
-  ];
-
   return (
     <DefaultLayout>
       <h1 className="text-3xl font-bold">Users</h1>
 
       {loading ? (
-        <Loader />
+        <Loader positionStart />
       ) : (
         <Suspense fallback={<Loader />}>
           {userData && (

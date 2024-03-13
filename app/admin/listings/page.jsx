@@ -1,19 +1,27 @@
 'use client'
 
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 
 import Loader from "@/components/common/Loader";
-import DefaultLayout from "@/components/admin/Layout/DefaultLayout";
-import DataTable from "@/components/admin/common/Tables/DataTables";
+import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
+import DataTable from "@/components/Tables/DataTables";
 
 import { formatTimestamp } from "@/utils/utils";
 
 
+const headers = [
+  { title: "Owner", key: "owner" },
+  { title: "Model", key: "model" },
+  { title: "Brand", key: "brand" },
+  { title: "License Plate Number", key: "licensePlateNumber" },
+  { title: "Price", key: "price" },
+  { title: "Availability Start Date", key: "carAvailabilityStartDate" },
+  { title: "Availability End Date", key: "carAvailabilityEndDate" },
+];
 
 function Listings() {
   const [listingData, setListingData] = useState(null);
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     async function fetchData() {
@@ -33,21 +41,8 @@ function Listings() {
     fetchData();
   }, []);
 
-  const headers = [
-    { title: "Owner", key: "owner" },
-    { title: "Model", key: "model" },
-    { title: "Brand", key: "brand" },
-    { title: "License Plate Number", key: "licensePlateNumber" },
-    { title: "Price", key: "price" },
-    { title: "Availability Start Date", key: "carAvailabilityStartDate" },
-    { title: "Availability End Date", key: "carAvailabilityEndDate" },
-  ];
-
-  if (!listingData) {
-    return <Loader />;
-  }
-
-  const revisedListing = listingData.map(item => {
+ 
+  const revisedListing = listingData?.map(item => {
     const revisedItem = { 
       owner: item.ownerId,
       ...item 
@@ -68,12 +63,11 @@ function Listings() {
     <DefaultLayout>
       <h1 className="text-3xl font-bold">Listings</h1>
 
+
       {loading ? (
-        <Loader />
+         <Loader positionStart />
       ) : (
-        <Suspense fallback={<Loader />}>
           <DataTable headers={headers} data={revisedListing} itemsPerPage={10} />
-        </Suspense>
       )}
     </DefaultLayout>
   );

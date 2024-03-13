@@ -10,10 +10,10 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 
 // Page Components
 import Map from "../../components/search/MapListing";
-import CarListing from "../../components/cards/CarListingCard";
+import CarListingCard from "@/components/cards/CarListingCard";
 import HeroPageSearch from "../../components/landing/HeroPageSearch";
 
-// useContext
+// Context Api
 import { useServiceCarContext } from "@/contexts/ServiceCarContext";
 
 const CarListingPage = () => {
@@ -88,7 +88,7 @@ const CarListingPage = () => {
             </div>
           ) : (
             data.map((car: any) => (
-              <CarListing
+              <CarListingCard
                 key={car._id}
                 car={car}
                 onCardClick={handleCardClick}

@@ -53,7 +53,7 @@ const LoginForm = () => {
       } else {
         await login(response.data.user, response.data.token);
         setIsLoading(false);
-        navigate.push("/profile");
+        navigate.push("/");
       }
     } catch (error) {
       setIsFailure(true);
