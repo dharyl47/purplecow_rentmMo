@@ -1,10 +1,10 @@
 'use client'
 
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 
 import Loader from "@/components/common/Loader";
 import DefaultLayout from "@/components/admin/Layout/DefaultLayout";
-import DataTable from "@/components/admin/common/Tables/DataTables";
+import DataTable from "@/components/Tables/DataTables";
 
 import { formatTimestamp } from "@/utils/utils";
 
@@ -71,9 +71,7 @@ function Listings() {
       {loading ? (
         <Loader />
       ) : (
-        <Suspense fallback={<Loader />}>
           <DataTable headers={headers} data={revisedListing} itemsPerPage={10} />
-        </Suspense>
       )}
     </DefaultLayout>
   );

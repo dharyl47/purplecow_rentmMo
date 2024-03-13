@@ -1,26 +1,28 @@
 'use client'
 
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 
 import Loader from "@/components/common/Loader";
 import DefaultLayout from "@/components/admin/Layout/DefaultLayout";
-import DataTable from "@/components/admin/common/Tables/DataTables";
+import DataTable from "@/components/Tables/DataTables";
 
 import { formatTimestamp } from "@/utils/utils";
 
 function Listings() {
-  const [listingData, setListingData] = useState(null);
+  const [bookingData, setBookingData] = useState(null);
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("http://localhost:3000/api/admin/listing/find");
+        const res = await fetch("http://localhost:3000/api/bookings");
         if (!res.ok) {
           throw new Error("Failed to fetch data");
         }
+
         const data = await res.json();
-        setListingData(data.listing);
+        setBookingData(data.bookings);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -31,46 +33,44 @@ function Listings() {
   }, []);
 
   const headers = [
-    { title: "Owner", key: "owner" },
-    { title: "Model", key: "model" },
-    { title: "Brand", key: "brand" },
-    { title: "License Plate Number", key: "licensePlateNumber" },
-    { title: "Price", key: "price" },
-    { title: "Availability Start Date", key: "carAvailabilityStartDate" },
-    { title: "Availability End Date", key: "carAvailabilityEndDate" },
+    { title: "Owner's Name", key: "owner" },
+    { title: "Renter's Name", key: "renter" },
+    { title: "Start Date", key: "startDate" },
+    { title: "End Date", key: "endDate" },
+    { title: "Price", key: "totalPrice" },
+    { title: "Car Brand", key: "brand" },
+    { title: "Car Model", key: "model" },
+    { title: "Status", key: "status" },
+
   ];
 
-  if (!listingData) {
+  if (!bookingData) {
     return <Loader />;
   }
 
-  const revisedListing = listingData.map(item => {
+  const revisedListing = bookingData.map(item => {
     const revisedItem = { 
-      owner: item.ownerId,
-      ...item 
+      owner: `${item.car.ownerId.firstName} ${item.car.ownerId.lastName}`,
+      renter: `${item.user.firstName} ${item.user.lastName}`,
+      model: item.car.model,
+      brand: item.car.brand,
+      status: item.status,
+      startDate: formatTimestamp(item.startDate),
+      endDate: formatTimestamp(item.endDate),
+      totalPrice: item.totalPrice,
     };
-    
-    if (item.carAvailability.checked) {
-      revisedItem.carAvailabilityStartDate = `Anytime`;
-      revisedItem.carAvailabilityEndDate = `Anytime`;
-    } else {
-      revisedItem.carAvailabilityStartDate = formatTimestamp(item.carAvailability.startDate);
-      revisedItem.carAvailabilityEndDate = formatTimestamp(item.carAvailability.endDate);
-    }
   
     return revisedItem;
   });
 
   return (
     <DefaultLayout>
-      <h1 className="text-3xl font-bold">Rents</h1>
+      <h1 className="text-3xl font-bold">Listings</h1>
 
       {loading ? (
         <Loader />
       ) : (
-        <Suspense fallback={<Loader />}>
           <DataTable headers={headers} data={revisedListing} itemsPerPage={10} />
-        </Suspense>
       )}
     </DefaultLayout>
   );
