@@ -234,7 +234,7 @@
 	--buttonbox-shadow: 0px 1px 6px #000000b3;
 }
 
-h1,h2,h3,h4,h5,h6, p, label, button, span, textarea, a{
+table, h1,h2,h3,h4,h5,h6, p, label, button, span, textarea, a{
 	font-family: 'Messina Sans', sans-serif;
 }
 

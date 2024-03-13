@@ -1,12 +1,23 @@
 'use client';
 
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 import Loader from "@/components/common/Loader";
-import DefaultLayout from "@/components/admin/Layout/DefaultLayout";
+import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
 import { formatTimestamp } from "@/utils/utils";
 import DataTable from "@/components/Tables/DataTables";
-import axios from "axios";
+import { DashboardActionButtons } from "@/components/common/Buttons";
+
+const headers = [
+  { title: "Owner", key: "owner" },
+  { title: "Model", key: "model" },
+  { title: "License Plate Number", key: "licensePlateNumber" },
+  { title: "Price", key: "price" },
+  { title: "Availability Start Date", key: "carAvailabilityStartDate" },
+  { title: "Availability End Date", key: "carAvailabilityEndDate" },
+  { title: "Actions", key: "actions" } 
+];
 
 function HostingRequests() {
   const [hostingRequests, setHostingRequests] = useState(null);
@@ -33,16 +44,6 @@ function HostingRequests() {
     fetchData();
   }, []);
 
-  const headers = [
-    { title: "Owner", key: "owner" },
-    { title: "Model", key: "model" },
-    { title: "License Plate Number", key: "licensePlateNumber" },
-    { title: "Price", key: "price" },
-    { title: "Availability Start Date", key: "carAvailabilityStartDate" },
-    { title: "Availability End Date", key: "carAvailabilityEndDate" },
-    { title: "Actions", key: "actions" } 
-  ];
-
   const hostingRequestsWithActions = hostingRequests?.map(request => {
     const revisedItem =  {
       ...request,
@@ -51,8 +52,8 @@ function HostingRequests() {
       owner: `${request.ownerId.firstName} ${request.ownerId.lastName}`,
       actions: [
         <div class="flex flex-row gap-3">
-          <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onClick={() => handleAcceptClick(request)}>Accept</button>
-          <button class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded" onClick={() => handleRejectClick(request)}>Reject</button>
+          <DashboardActionButtons onClick={() => handleAcceptClick(request)} type={"accept"}>Accept</DashboardActionButtons>
+          <DashboardActionButtons onClick={() => handleRejectClick(request)}>Reject</DashboardActionButtons>
         </div>
       ] 
     }
@@ -98,7 +99,7 @@ function HostingRequests() {
       <h1 className="text-3xl font-bold">Hosting Requests</h1>
 
       {loading ? (
-        <Loader />
+        <Loader positionStart />
       ) : (
           <DataTable headers={headers} data={hostingRequestsWithActions} itemsPerPage={10} />
       )}

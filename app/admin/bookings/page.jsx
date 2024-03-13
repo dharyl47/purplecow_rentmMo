@@ -3,15 +3,26 @@
 import React, { useState, useEffect } from "react";
 
 import Loader from "@/components/common/Loader";
-import DefaultLayout from "@/components/admin/Layout/DefaultLayout";
+import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
 import DataTable from "@/components/Tables/DataTables";
 
 import { formatTimestamp } from "@/utils/utils";
 
+const headers = [
+  { title: "Owner's Name", key: "owner" },
+  { title: "Renter's Name", key: "renter" },
+  { title: "Start Date", key: "startDate" },
+  { title: "End Date", key: "endDate" },
+  { title: "Price", key: "totalPrice" },
+  { title: "Car Brand", key: "brand" },
+  { title: "Car Model", key: "model" },
+  { title: "Status", key: "status" },
+];
+
+
 function Listings() {
   const [bookingData, setBookingData] = useState(null);
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     async function fetchData() {
@@ -32,23 +43,7 @@ function Listings() {
     fetchData();
   }, []);
 
-  const headers = [
-    { title: "Owner's Name", key: "owner" },
-    { title: "Renter's Name", key: "renter" },
-    { title: "Start Date", key: "startDate" },
-    { title: "End Date", key: "endDate" },
-    { title: "Price", key: "totalPrice" },
-    { title: "Car Brand", key: "brand" },
-    { title: "Car Model", key: "model" },
-    { title: "Status", key: "status" },
-
-  ];
-
-  if (!bookingData) {
-    return <Loader />;
-  }
-
-  const revisedListing = bookingData.map(item => {
+  const revisedListing = bookingData?.map(item => {
     const revisedItem = { 
       owner: `${item.car.ownerId.firstName} ${item.car.ownerId.lastName}`,
       renter: `${item.user.firstName} ${item.user.lastName}`,
@@ -68,7 +63,7 @@ function Listings() {
       <h1 className="text-3xl font-bold">Listings</h1>
 
       {loading ? (
-        <Loader />
+        <Loader positionStart />
       ) : (
           <DataTable headers={headers} data={revisedListing} itemsPerPage={10} />
       )}
