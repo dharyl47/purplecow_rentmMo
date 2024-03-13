@@ -89,7 +89,7 @@ const Navbar = () => {
                   <ButtonLink text="Support" to="/support" />
                 </li>
                 <li className="text-yellow-300 font-bold cursor-pointer text-xl pt-10 lg:pt-0 lg:ml-5 xl:ml-10 transition">
-                  {userData.role === "host" ? (
+                  {userData?.role === "host" ? (
                     <ButtonLinkNoFillRounded
                       text="Go to Dashboard"
                       to="/host"
