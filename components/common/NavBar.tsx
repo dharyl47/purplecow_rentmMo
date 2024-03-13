@@ -102,7 +102,7 @@ const Navbar = () => {
                     />
                   )}
                 </li>
-                <span className=" xl:mx-10 lg:mt-0 lg:w-[2px] lg:h-10 bg-gray-600 bg-white lg:mx-5 w-3/4 h-[1px] mt-14"></span>
+                <span className=" xl:mx-10 lg:mt-0 lg:w-[2px] lg:h-10 bg-gray-600  lg:mx-5 w-3/4 h-[1px] mt-14"></span>
                 <li
                   className={
                     userData

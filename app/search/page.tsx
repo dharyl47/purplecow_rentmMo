@@ -10,7 +10,7 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 
 // Page Components
 import Map from "../../components/search/MapListing";
-import CarListingCard from "@/components/cards/CarListingCard";
+import CarListingCard from "@/components/cards1/CarListingCard";
 import HeroPageSearch from "../../components/landing/HeroPageSearch";
 
 // Context Api
