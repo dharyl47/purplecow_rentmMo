@@ -43,7 +43,7 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
     fetchData();
   }, []);
 
-
+ const data1 = 0;
 
   const computedValue = useMemo(() => {
     const daysDifference = calculateDateDifference(startTripDate, endTripDate);
