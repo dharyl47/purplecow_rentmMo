@@ -30,6 +30,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     if (userData.role === "admin") {
       setMenuItems([
         { label: "Dashboard", route: "/admin" },
+        { label: "Inbox", route: "/admin/inbox" },
         { label: "Rents", route: "/admin/bookings" },
         { label: "Listings", route: "/admin/listings" },
         { label: "Hosting Requests", route: "/admin/hostingRequests" },
@@ -39,6 +40,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     } else if (userData.role === "host") {
       setMenuItems([
         { label: "Dashboard", route: "/host" },
+        { label: "Inbox", route: "/host/inbox" },
         { label: "Bookings", route: "/host/bookings" },
         { label: "Listings", route: "/host/listings" },
         { label: "Settings", route: "/host/settings" }
@@ -88,9 +90,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <li key={index}>
                   <Link
                     href={item.route}
-                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-admin-bodydark1 duration-300 ease-in-out hover:bg-admin-graydark dark:hover:bg-admin-meta-4 ${
-                      pathname.includes(item.route) &&
-                      "bg-graydark dark:bg-meta-4"
+                    className={`hover:text-yellow-300 group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-admin-bodydark1 duration-300 ease-in-out  ${
+                      pathname === item.route && "text-yellow-300"
                     }`}
                   >
                     {item.label}

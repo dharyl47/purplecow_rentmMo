@@ -6,8 +6,8 @@ import { useState, useEffect } from "react";
 
 import Loader from "@/components/common/Loader";
 
-import DefaultLayout from "@/components/admin/Layout/DefaultLayout";
-import DashboardCard from "@/components/cards/DashboardCards";
+import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
+import DashboardCard from "@/components/Cards/DashboardCard";
 
 const Home = () => {
   const [counts, setCounts]: any = useState([]);
@@ -34,7 +34,7 @@ const Home = () => {
       <DefaultLayout>
         <h1 className="text-3xl font-bold">Dashboard</h1>
         {loading ? (
-          <Loader />
+          <Loader positionStart />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-18">
             <DashboardCard title="Users" sales={counts.userCount} />

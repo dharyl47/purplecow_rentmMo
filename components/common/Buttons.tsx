@@ -16,17 +16,38 @@ interface ButtonLinkProps {
   to: string;
 }
 
-export const ButtonFillRoundedSearch = ({ text }: any) => {
-  // const router = useRouter();
-  // const handleFindRide = () => {
-  //   router.push("/search");
-  // };
+export const DashboardActionButtons = ({ children, type, onClick }: any) => {
+  const getBackgroundColorClass = () => {
+    switch (type) {
+      case "accept":
+        return "bg-blue-500";
+      default:
+        return "bg-red-500";
+    }
+  };
+
+  const getHoverColorClass = () => {
+    switch (type) {
+      case "accept":
+        return "hover:bg-blue-400";
+      default:
+        return "hover:bg-red-600";
+    }
+  };
 
   return (
     <button
-      className="text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition"
-      // onClick={handleFindRide}
+      className={`text-white font-bold py-2 px-4 rounded ${getBackgroundColorClass()} ${getHoverColorClass()}`}
+      onClick={onClick}
     >
+      {children}
+    </button>
+  );
+};
+
+export const ButtonFillRoundedSearch = ({ text }: any) => {
+  return (
+    <button className="text-black rounded-full w-44 h-16 bg-yellow-300 font-bold text-xl shadow-md hover:shadow-buttonbox transition">
       {text}
     </button>
   );
