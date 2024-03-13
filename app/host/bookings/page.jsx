@@ -15,7 +15,7 @@ import DataTable from "@/components/Tables/DataTables";
 import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
 import axios from "axios";
 
-
+import { useAuth } from "@/contexts/AuthProvider";
 
 // Options
 const headers = [
@@ -62,6 +62,11 @@ function Listings() {
   const [bookingData, setBookingData] = useState(null);
   const [revisedData, setRevisedData] = useState([]);
 
+  const { user, logout } = useAuth();
+  const currentUser = user;
+
+ const isGroup = 0;
+ const [name, setName] = useState("");
 
   // Handles
   const findOptionByValue = (value) => {
@@ -76,14 +81,33 @@ function Listings() {
 
   const handleAccept = async () => {
     try {
-      await axios.put("/api/bookings/updateStatus", {_id: selectedBooking, status: updateStatus});
-        
+      await axios.put("/api/bookings/updateStatus", {_id: selectedBooking._id, status: updateStatus});
       await memoizedFetchData();
       setIsModalOpen(false);
+
     } catch (error) {
       memoizedFetchData();
       setIsModalOpen(false);
+    }  
+    
+if(updateStatus=="confirmed"){
+    try {
+  const res = await fetch("/api/chats", {
+      method: "POST",
+      body: JSON.stringify({
+        currentUserId: currentUser._id,
+        members: [selectedBooking.user],
+        isGroup,
+        name,
+      }),
+    });
+    const chat = await res.json();
+} catch (error) {
+
     }
+}
+
+
   };
 
   const handleDecline = () => {
@@ -121,7 +145,7 @@ function Listings() {
           <React.Fragment key={item._id}>
             <div className="flex flex-row gap-3">
               <Dropdown 
-                  onClick={() => setSelectedBooking(item._id)} 
+                  onClick={() => setSelectedBooking(item)} 
                   options={options} 
                   onSelect={handleUpdateStatus} 
                   defaultSelected={dropdownDefault}  
@@ -150,7 +174,7 @@ function Listings() {
 
 
       <Modal
-        title="Update Status Confimation"
+        title="Update Status Confirmation"
         onAccept={handleAccept}
         onDecline={handleDecline}
         onClose={handleClose}
