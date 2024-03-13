@@ -64,7 +64,7 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
       router.push(`/checkout?bookingDetails=${bookingDetails}`);
     } else {
       alert(
-        "Please fill in all required fields and agree to the terms of use."
+        "Please fill in all required fields and agree to the terms of use.."
       );
     }
   };
