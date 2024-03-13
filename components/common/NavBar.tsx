@@ -13,6 +13,7 @@ import logo from "@/public/assets/logo/RentMo-logo.svg";
 import avatar from "@/public/assets/logo/avatar-logo.png";
 
 import { useAuth } from "@/contexts/AuthProvider";
+import { FaCarAlt } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -130,6 +131,17 @@ const Navbar = () => {
                 >
                   {profile && (
                     <ul className="hidden lg:block p-2 w-40 border-r bg-white absolute rounded left-0 shadow-searchbox mt-16 top-0">
+                      <li className="cursor-pointer text-gray-800 text-sm leading-3 tracking-normal py-2 hover:text-yellow-400 focus:text-yellow-400 focus:outline-none transition-colors">
+                        <div className="flex items-center">
+                          <FaCarAlt size="20px" color="#131313" />
+                          <a
+                            className="w-full hover:text-yellow-400 ml-2"
+                            href="/trips"
+                          >
+                            My Trips
+                          </a>
+                        </div>
+                      </li>
                       <li className="cursor-pointer text-gray-800 text-sm leading-3 tracking-normal py-2 hover:text-yellow-400 focus:text-yellow-400 focus:outline-none transition-colors">
                         <div className="flex items-center">
                           <BiUser size="20px" color="#131313" />
