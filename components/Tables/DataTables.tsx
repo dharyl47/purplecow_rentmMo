@@ -130,7 +130,7 @@ const DataTable: React.FC<DataTableProps> = ({
                     key={colIndex}
                     className="p-4 border-b border-blue-gray-50 text-sm"
                   >
-                    <p>{row[header.key]}</p>
+                    {row[header.key]}
                   </td>
                 ))}
               </tr>
@@ -141,7 +141,7 @@ const DataTable: React.FC<DataTableProps> = ({
                 className="p-4 border-b antialiased border-blue-gray-50 text-sm text-center leading-none"
                 colSpan={headers.length}
               >
-                <p>No Data Found</p>
+                No Data Found
               </td>
             </tr>
           )}

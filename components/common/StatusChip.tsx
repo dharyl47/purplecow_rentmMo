@@ -10,36 +10,21 @@ const StatusChip: React.FC<StatusChipProps> = ({ children, onClick, type }) => {
   const getBackgroundColorClass = () => {
     switch (type) {
       case "pending":
-        return "bg-yellow-500";
+        return "bg-yellow-500 hover:bg-yellow-400";
       case "confirmed":
-        return "bg-green-500";
+        return "bg-green-500 hover:bg-green-400";
       case "cancelled":
-        return "bg-red-500";
+        return "bg-red-500 hover:bg-red-400";
       case "completed":
-        return "bg-blue-500";
+        return "bg-blue-500 hover:bg-blue-400";
       default:
-        return "bg-gray-500";
-    }
-  };
-
-  const getHoverColorClass = () => {
-    switch (type) {
-      case "pending":
-        return "hover:bg-yellow-400";
-      case "confirmed":
-        return "hover:bg-green-400";
-      case "cancelled":
-        return "hover:bg-red-400";
-      case "completed":
-        return "hover:bg-blue-400";
-      default:
-        return "hover:bg-gray-400";
+        return "bg-gray-500 hover:bg-gray-400";
     }
   };
 
   return (
     <button
-      className={`capitalize text-white font-bold py-2 px-4 rounded ${getBackgroundColorClass()} ${getHoverColorClass()}`}
+      className={`capitalize text-white font-bold py-2 px-4 rounded ${getBackgroundColorClass()}`}
       onClick={onClick}
     >
       {children}

@@ -3,11 +3,20 @@
 import React, { useState, useEffect } from "react";
 
 import Loader from "@/components/common/Loader";
-import DefaultLayout from "@/components/admin/Layout/DefaultLayout";
+import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
 import DataTable from "@/components/Tables/DataTables";
 
 import { formatTimestamp } from "@/utils/utils";
 
+const headers = [
+  { title: "Owner", key: "owner" },
+  { title: "Model", key: "model" },
+  { title: "Brand", key: "brand" },
+  { title: "License Plate Number", key: "licensePlateNumber" },
+  { title: "Price", key: "price" },
+  { title: "Availability Start Date", key: "carAvailabilityStartDate" },
+  { title: "Availability End Date", key: "carAvailabilityEndDate" },
+];
 
 
 function Listings() {
@@ -33,15 +42,6 @@ function Listings() {
     fetchData();
   }, []);
 
-  const headers = [
-    { title: "Owner", key: "owner" },
-    { title: "Model", key: "model" },
-    { title: "Brand", key: "brand" },
-    { title: "License Plate Number", key: "licensePlateNumber" },
-    { title: "Price", key: "price" },
-    { title: "Availability Start Date", key: "carAvailabilityStartDate" },
-    { title: "Availability End Date", key: "carAvailabilityEndDate" },
-  ];
 
   const revisedListing = listingData?.map(item => {
     const revisedItem = { 
@@ -65,7 +65,7 @@ function Listings() {
       <h1 className="text-3xl font-bold">Listings</h1>
 
       {loading ? (
-        <Loader />
+        <Loader positionStart />
       ) : (
           <DataTable headers={headers} data={revisedListing} itemsPerPage={10} />
       )}

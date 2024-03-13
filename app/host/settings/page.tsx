@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import DefaultLayout from "@/components/admin/Layout/DefaultLayout";
+import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
 
 const Settings = async () => {
   return (

@@ -26,6 +26,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   login: (userData: User, token: string) => void;
+  update: (userData: User) => void;
   logout: () => void;
 }
 
@@ -48,12 +49,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setUser(userData);
   };
 
+  const update = (userData: User) => {
+    setUser(userData);
+  };
+
   const logout = () => {
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, update }}>
       {children}
     </AuthContext.Provider>
   );

@@ -12,7 +12,7 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {
   // const store = useUser();
   // const user: any = store?.user || {};
 
-  const { user, login } = useAuth();
+  const { user, update } = useAuth();
   const userData: any = user;
 
   const [data, setData] = useState(userData);
@@ -27,7 +27,7 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {
       const response = await axios.put("/api/users", data);
 
       // store?.setUser(response.data.data);
-      await login(response.data.user);
+      await update(response.data.user);
       onClose();
     } catch (error) {
       console.error(error);
