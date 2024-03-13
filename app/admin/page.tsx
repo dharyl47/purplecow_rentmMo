@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import Loader from "@/components/common/Loader";
 
 import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
-import DashboardCard from "@/components/cards/DashboardCard";
+import DashboardCard from "@/components/cards1/DashboardCard";
 
 const Home = () => {
   const [counts, setCounts]: any = useState([]);

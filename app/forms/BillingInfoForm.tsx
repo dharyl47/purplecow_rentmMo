@@ -1,6 +1,6 @@
 import React from "react";
 
-import PaymentCard from "@/components/cards/PaymentCard";
+import PaymentCard from "@/components/cards1/PaymentCard";
 
 import { TextField } from "@mui/material";
 import { ICar } from "@/types/types";
