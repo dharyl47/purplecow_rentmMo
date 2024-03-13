@@ -43,11 +43,7 @@ function Listings() {
     { title: "Availability End Date", key: "carAvailabilityEndDate" },
   ];
 
-  if (!listingData) {
-    return <Loader />;
-  }
-
-  const revisedListing = listingData.map(item => {
+  const revisedListing = listingData?.map(item => {
     const revisedItem = { 
       owner: item.ownerId,
       ...item 
