@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 
 interface StatusChipProps {
-  onClick: () => void;
+  onClick?: () => void;
   children: ReactNode;
   type: String;
 }

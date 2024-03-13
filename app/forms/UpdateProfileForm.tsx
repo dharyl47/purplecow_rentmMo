@@ -27,7 +27,7 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {
       const response = await axios.put("/api/users", data);
 
       // store?.setUser(response.data.data);
-      await update(response.data.user);
+      await update(response.data.data);
       onClose();
     } catch (error) {
       console.error(error);
