@@ -1,7 +1,10 @@
 import React from "react";
-import PaymentCard from "../../components/cards/PaymentCard";
+
+import PaymentCard from "@/components/cards/PaymentCard";
+
 import { TextField } from "@mui/material";
 import { ICar } from "@/types/types";
+
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 

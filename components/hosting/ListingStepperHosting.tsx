@@ -175,7 +175,7 @@ export default function ListingStepper() {
         )
       };
 
-      const response = await axios.post("/api/listing", formattedListingInfo, {
+      await axios.post("/api/listing", formattedListingInfo, {
         headers: {
           "Content-Type": "application/json" // Set proper content type for JSON
         }
