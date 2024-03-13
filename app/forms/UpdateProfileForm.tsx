@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { InputBox } from "../components/InputBox";
 import { TextField, Box } from "@mui/material";
 import { MdCloudUpload } from "react-icons/md";
 import axios from "axios";
-import { UserUpdate } from "@/types/types";
-import { useUser } from "../hooks/useUser";
-import { initialUserUpdate } from "@/types/initialInfo";
+import { useAuth } from "@/contexts/AuthProvider";
 
 interface UpdateProfileProps {
   onClose: () => void;
 }
 
 const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {
-  const store = useUser();
-  const user: any = store?.user || {};
+  // const store = useUser();
+  // const user: any = store?.user || {};
 
-  const [data, setData] = useState(user);
+  const { user, login } = useAuth();
+  const userData: any = user;
+
+  const [data, setData] = useState(userData);
 
   const handleChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -26,7 +26,8 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {
     try {
       const response = await axios.put("/api/users", data);
 
-      store?.setUser(response.data.data);
+      // store?.setUser(response.data.data);
+      await login(response.data.user);
       onClose();
     } catch (error) {
       console.error(error);
@@ -141,7 +142,7 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {
             <Box
               component="div"
               sx={{
-                "& .MuiTextField-root": { width: "full" },
+                "& .MuiTextField-root": { width: "full" }
               }}
             >
               <TextField

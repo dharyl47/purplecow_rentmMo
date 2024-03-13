@@ -4,11 +4,11 @@ import {
   ThemeProvider,
   Modal,
   Button,
-  Backdrop,
+  Backdrop
 } from "@mui/material";
 import { ICar } from "@/types/types";
 import { theme } from "./themes/themes";
-import MapComponent from "../components/MapComponent"; // Import the MapComponent
+import MapComponent from "../../components/search/MapComponent"; // Import the MapComponent
 // import { set } from "mongoose";
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
     s2: string | undefined,
     zc: string | undefined
   ) => void;
-  personalInfo: ICar;
+  personalInfo: any;
   handleChangeLatAndLon: (lat: string, lon: string) => void;
 };
 
@@ -46,7 +46,7 @@ interface Address {
 const PersonalInfoForm = ({
   handleChange,
   handleChangeUpdate,
-  personalInfo,
+  personalInfo
 }: Props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -56,16 +56,16 @@ const PersonalInfoForm = ({
     handleChange({
       target: {
         name: name,
-        value: value,
-      },
+        value: value
+      }
     });
   };
   const handleChangeLon = (name: any, value: any) => {
     handleChange({
       target: {
         name: name,
-        value: value,
-      },
+        value: value
+      }
     });
   };
 
@@ -101,7 +101,7 @@ const PersonalInfoForm = ({
     country: "",
     lat: "",
     lon: "",
-    plain: () => "",
+    plain: () => ""
   });
 
   const initMapScript = () => {
@@ -158,12 +158,12 @@ const PersonalInfoForm = ({
 
   // Load Google Map API JS
   function loadAsyncScript(src: string): Promise<HTMLScriptElement> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const script = document.createElement("script");
       Object.assign(script, {
         type: "text/javascript",
         async: true,
-        src,
+        src
       });
       script.addEventListener("load", () => resolve(script));
       document.head.appendChild(script);
@@ -180,7 +180,7 @@ const PersonalInfoForm = ({
       locality: "city",
       administrative_area_level_2: "state",
       postal_code: "zipCode",
-      country: "country",
+      country: "country"
     };
 
     place.address_components?.forEach((component: any) => {
@@ -189,7 +189,7 @@ const PersonalInfoForm = ({
         if (type in componentMap) {
           setAddress((prevAddress: Address) => ({
             ...prevAddress,
-            [componentMap[type]]: value,
+            [componentMap[type]]: value
           }));
         }
       });
@@ -198,7 +198,7 @@ const PersonalInfoForm = ({
     setAddress((prevAddress: Address) => ({
       ...prevAddress,
       lat: latitude,
-      lon: longitude,
+      lon: longitude
     }));
 
     return { ...address };
@@ -371,7 +371,7 @@ const PersonalInfoForm = ({
             closeAfterTransition
             BackdropComponent={Backdrop}
             BackdropProps={{
-              timeout: 500,
+              timeout: 500
             }}
           >
             <div
@@ -380,7 +380,7 @@ const PersonalInfoForm = ({
                 justifyContent: "center",
                 alignItems: "center",
                 width: "100%", // Set width to occupy the entire modal
-                height: "100%", // Set height to occupy the entire modal
+                height: "100%" // Set height to occupy the entire modal
               }}
             >
               <div
@@ -390,7 +390,7 @@ const PersonalInfoForm = ({
                   height: "80%", // Adjust the height of the map container
                   backgroundColor: "white",
                   padding: "20px",
-                  borderRadius: "8px",
+                  borderRadius: "8px"
                 }}
               >
                 <Button
@@ -407,7 +407,7 @@ const PersonalInfoForm = ({
                     height: "40px", // Larger height
                     minWidth: "unset", // Remove minimum width
                     backgroundColor: buttonBackgroundColor, // Set background color dynamically
-                    transition: "background-color 0.3s ease", // Smooth transition
+                    transition: "background-color 0.3s ease" // Smooth transition
                   }}
                   variant="contained"
                 >

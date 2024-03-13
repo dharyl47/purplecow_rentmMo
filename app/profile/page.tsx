@@ -2,24 +2,24 @@
 
 // Components
 import Navbar from "../../components/common/NavBar";
-import Reviews from "../components/Reviews";
-import ProfileCard from "../components/ProfileCard";
-import MyListings from "../components/MyListings";
+import Reviews from "../../components/profile/Reviews";
+import ProfileCard from "../../components/profile/ProfileCard";
+import MyListings from "../../components/profile/MyListings";
+
+import ProtectedRoutes from "@/utils/hoc/ProtectedRoutes";
 
 // Hooks
-import { useUser } from "../hooks/useUser";
+// import { useUser } from "../hooks/useUser";
+import { useAuth } from "@/contexts/AuthProvider";
 
 const Profile = () => {
-  const store = useUser();
-  if (!store || !store.user) {
-    // Handle the case where store or user is null
-    return <div>Loading...</div>; // You can replace this with your loading indicator or error message
-  }
+  const { user } = useAuth();
+  const userData: any = user;
 
-  const { user }: any = store;
-  const userName = `${user?.firstName} ${user?.lastName}`;
-  const yearJoined = `${user?.createdAt?.split("-")[0]}`;
-  const aboutMe = `${user?.aboutMe}`;
+  const userName = `${userData.firstName} ${userData.lastName}`;
+  const yearJoined = `${userData.createdAt?.split("-")[0]}`;
+
+  const aboutMe = `${userData.aboutMe}`;
 
   return (
     <div className="flex flex-col w-full h-fit pb-20 bg-cover bg-no-repeat font-Messina-Sans">
@@ -57,4 +57,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProtectedRoutes(Profile);

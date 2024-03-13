@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../../components/common/NavBar";
-import ListingStepper from "../components/ListingStepperHosting";
+import ListingStepper from "@/components/hosting/ListingStepperHosting";
+// import ListingStepper from "../components/ListingStepperHosting";
 
 export default function page() {
   return (

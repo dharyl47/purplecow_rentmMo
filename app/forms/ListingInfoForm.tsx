@@ -8,10 +8,9 @@ import {
   FormControlLabel,
   FormGroup,
   TextField,
-  TextareaAutosize,
+  TextareaAutosize
 } from "@mui/material";
-import ImageUploader from "../components/ImageUploader";
-import { ICar } from "@/types/types";
+import ImageUploader from "../../components/Inputs/ImageUploader";
 
 type Props = {
   handleChange: (e: any) => void;
@@ -22,7 +21,7 @@ type Props = {
   //   cr: string | undefined,
   //   dc: string | undefined
   // ) => void;
-  listingInfo: ICar;
+  listingInfo: any;
 };
 
 const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
@@ -33,16 +32,16 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
     handleChange({
       target: {
         name: "startDate",
-        value: date,
-      },
+        value: date
+      }
     });
   };
   const handleEndDateChange = (date: Date | null) => {
     handleChange({
       target: {
         name: "endDate",
-        value: date,
-      },
+        value: date
+      }
     });
   };
 
@@ -66,8 +65,8 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
     handleChange({
       target: {
         name,
-        value,
-      },
+        value
+      }
     });
   };
 
@@ -79,7 +78,7 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
   const handleCheckFeature = () => {
     if (listingInfo.features) {
       const featuresCheckBox = Object.values(listingInfo.features).some(
-        (value) => !!value
+        value => !!value
       );
 
       setAddFeatsChecked(featuresCheckBox);
@@ -93,11 +92,11 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
       "brand",
       "model",
       "licensePlateNumber",
-      "carRegistrationNumber",
+      "carRegistrationNumber"
     ];
 
     // Update only the necessary car details
-    carDetailsToUpdate.forEach((detail) =>
+    carDetailsToUpdate.forEach(detail =>
       handleChangeUpdates(detail, listingInfo[detail])
     );
 
@@ -185,7 +184,7 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
             <div className="flex flex-row w-full md:gap-8 gap-2">
               <DatePicker
                 disabled={checked}
-                onChange={(date) =>
+                onChange={date =>
                   handleStartDateChange(date ? new Date(date) : null)
                 }
                 value={
@@ -201,7 +200,7 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
 
               <DatePicker
                 disabled={checked}
-                onChange={(date) =>
+                onChange={date =>
                   handleEndDateChange(date ? new Date(date) : null)
                 }
                 value={
@@ -246,7 +245,7 @@ const ListingInfoForm = ({ handleChange, listingInfo }: Props) => {
             padding: "8.5px 14px",
             borderRadius: "5px",
             border: "1px solid #ccc",
-            background: "transparent",
+            background: "transparent"
           }}
           minRows={3}
           placeholder="Enter Car Description"

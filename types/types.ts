@@ -1,27 +1,27 @@
 export interface ICar {
 	_id?: string;
-	brand: string;
-	model: string;
-	street: string;
-	street1: string;
-	street2: string;
-	city: string;
-	email: string;
-	mobileNumber: string;
-	state: string;
-	county: string;
-	country: string;
-	price: number | null;
-	zipCode: string;
-	licensePlateNumber: string;
-	lat: string;
-	lon: string;
-	carRegistrationNumber: string;
-	carAvailability: ICarAvailability;
-	vehiclePhotos: string[];
-	description: string;
-	reviews: ICarreviews;
-	features: ICarfeatures;
+	brand?: string;
+	model?: string;
+	street?: string;
+	street1?: string;
+	street2?: string;
+	city?: string;
+	email?: string;
+	mobileNumber?: string;
+	state?: string;
+	county?: string;
+	country?: string;
+	price?: number | 0 | undefined;
+	zipCode?: string;
+	licensePlateNumber?: string;
+	lat?: string;
+	lon?: string;
+	carRegistrationNumber?: string;
+	carAvailability?: ICarAvailability;
+	vehiclePhotos?: string[];
+	description?: string;
+	reviews?: ICarreviews;
+	features?: ICarfeatures;
 	[key: string]:
     | string
     | number

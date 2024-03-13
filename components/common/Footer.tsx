@@ -3,6 +3,10 @@ import logo from "@/public/assets/logo/RentMo-logo.svg";
 import { FaFacebook, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import Image from "next/image";
 const Footer = () => {
+
+
+  
+
   return (
     <div className="flex flex-col mx-auto h-fit w-full text-white bg-slate-950 shadow-buttonbox font-Messina-Sans 2xl:px-36 px-10 py-10 items-center justify-center">
       <div className="flex lg:flex-row flex-col items-center justify-between w-full h-fit pt-32 self-start">

@@ -1,8 +1,9 @@
 // Sections
-import HeroPage from "@/app/pageComponents/landing/HeroPage";
-import HowItWorks from "@/app/pageComponents/landing/HowItWorks";
-import HostBookCards from "@/app/pageComponents/landing/HostBookCards";
+
 import Footer from "@/components/common/Footer";
+import HeroPage from "../components/landing/HeroPage";
+import HowItWorks from "../components/landing/HowItWorks";
+import HostBookCards from "../components/landing/HostBookCards";
 
 export default function Home() {
   return (

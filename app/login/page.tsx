@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import BgHomepage from "@/public/assets/images/Rent-mo-hero-bg.png";
-import GButton from "./buttons/GButton";
+import React from "react";
 import Image from "next/image";
+
 import RentMoLOGO from "@/public/assets/logo/RentMo-logo.svg";
+import BgHomepage from "@/public/assets/images/Rent-mo-hero-bg.png";
+
+import LoginForm from "@/components/auth/LoginForm";
 
 function Login() {
   return (
@@ -18,7 +20,7 @@ function Login() {
             alt="logo"
           />
         </a>
-        <GButton />
+        <LoginForm />
       </div>
     </div>
   );
