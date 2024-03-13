@@ -15,10 +15,8 @@ import { useAuth } from "@/contexts/AuthProvider";
 const Profile = () => {
   const { user } = useAuth();
   const userData: any = user;
-
   const userName = `${userData.firstName} ${userData.lastName}`;
   const yearJoined = `${userData.createdAt?.split("-")[0]}`;
-
   const aboutMe = `${userData.aboutMe}`;
 
   return (

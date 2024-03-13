@@ -13,32 +13,32 @@ const HelpPage = () => {
       color: "bg-red-300",
       description: "Getting started on RentMo",
       link: "/support/getting-started",
-      imageSrc: image_1,
+      imageSrc: image_1
     },
     {
       color: "bg-blue-300",
       description: "Setting up your account",
       link: "/support/setting-up",
-      imageSrc: image_2,
+      imageSrc: image_2
     },
     {
       color: "bg-green-300",
       description: "How to access and manage your account",
       link: "/support/manage-account",
-      imageSrc: image_3,
+      imageSrc: image_3
     },
     {
       color: "bg-yellow-100",
       description: "Help with a reservation",
       link: "/support/reserving-help",
-      imageSrc: image_4,
+      imageSrc: image_4
     },
     {
       color: "bg-purple-300",
       description: "Setting up two-verification process",
       link: "/support/two-verification",
-      imageSrc: image_5,
-    },
+      imageSrc: image_5
+    }
   ];
 
   return (

@@ -1,4 +1,4 @@
-// utils/dateUtils.js
+import { format } from "date-fns";
 
 export function humanizeTimestamp(timestamp) {
   const now = new Date();
@@ -61,3 +61,8 @@ export const calculateDateDifference = (startTripDate, endTripDate) => {
 
   return daysDifference;
 };
+
+export function formatWeekDate(date) {
+  const convertedDate = new Date(date);
+  return format(convertedDate, "EEE, MMM dd, yyyy");
+}

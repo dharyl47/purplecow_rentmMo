@@ -2,6 +2,8 @@
 
 // React
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useRouter } from "next/navigation";
+
 import MapGL, { Marker, Popup } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -18,23 +20,21 @@ import { FaCity, FaPesoSign, FaStar } from "react-icons/fa6";
 // import { RouteModule } from "next/dist/server/future/route-modules/route-module";
 
 const MapComponent = ({ carList, cardSelected, onCardClick }) => {
+  const router = useRouter();
   const { data } = useServiceCarContext();
-  const [selectedCar, setSelectedCar] = useState(null);
-
   const mapRef = useRef(null);
 
-  const onSelectCar = useCallback(
-    param => {
-      if (param?.longitude && param?.latitude) {
-        mapRef.current?.flyTo({
-          center: [param.longitude, param.latitude],
-          duration: 2000,
-          zoom: 11
-        });
-      }
-    },
-    [mapRef]
-  );
+  const [selectedCar, setSelectedCar] = useState(null);
+
+  const onSelectCar = useCallback(param => {
+    if (param?.longitude && param?.latitude) {
+      mapRef.current?.flyTo({
+        center: [param.longitude, param.latitude],
+        duration: 2000,
+        zoom: 11
+      });
+    }
+  }, []);
 
   const handleMarkerClick = car => {
     onCardClick(car);
@@ -44,11 +44,15 @@ const MapComponent = ({ carList, cardSelected, onCardClick }) => {
   useEffect(() => {
     setSelectedCar(cardSelected);
     onSelectCar({ longitude: cardSelected?.lon, latitude: cardSelected?.lat });
-  }, [cardSelected, onSelectCar]);
+  }, [cardSelected]);
 
   useEffect(() => {
     onSelectCar({ longitude: data[0]?.lon, latitude: data[0]?.lat });
-  }, [data, onSelectCar]);
+  }, [data]);
+
+  const viewDetailsHandler = id => {
+    router.push(`/cars/${id}`);
+  };
 
   return (
     <MapGL
@@ -114,7 +118,10 @@ const MapComponent = ({ carList, cardSelected, onCardClick }) => {
               <p className="text-md ml-2">{selectedCar.city}</p>
             </div>
 
-            <div className="flex flex-row justify-end mt-2 w-full">
+            <div
+              className="flex flex-row justify-end mt-2 w-full"
+              onClick={() => viewDetailsHandler(selectedCar._id)}
+            >
               <p className="text-md ml-2 underline font-bold cursor-pointer">
                 View Car Details
               </p>

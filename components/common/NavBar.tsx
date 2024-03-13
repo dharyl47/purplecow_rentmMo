@@ -13,6 +13,7 @@ import logo from "@/public/assets/logo/RentMo-logo.svg";
 import avatar from "@/public/assets/logo/avatar-logo.png";
 
 import { useAuth } from "@/contexts/AuthProvider";
+import { FaCarAlt } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -89,10 +90,17 @@ const Navbar = () => {
                   <ButtonLink text="Support" to="/support" />
                 </li>
                 <li className="text-yellow-300 font-bold cursor-pointer text-xl pt-10 lg:pt-0 lg:ml-5 xl:ml-10 transition">
-                  <ButtonLinkNoFillRounded
-                    text="Become a host"
-                    to={userData ? "/listing" : "/login"}
-                  />
+                  {userData?.role === "host" ? (
+                    <ButtonLinkNoFillRounded
+                      text="Go to Dashboard"
+                      to="/host"
+                    />
+                  ) : (
+                    <ButtonLinkNoFillRounded
+                      text="Become a host"
+                      to="/listing"
+                    />
+                  )}
                 </li>
                 <span className=" xl:mx-10 lg:mt-0 lg:w-[2px] lg:h-10 bg-gray-600 bg-white lg:mx-5 w-3/4 h-[1px] mt-14"></span>
                 <li
@@ -123,6 +131,17 @@ const Navbar = () => {
                 >
                   {profile && (
                     <ul className="hidden lg:block p-2 w-40 border-r bg-white absolute rounded left-0 shadow-searchbox mt-16 top-0">
+                      <li className="cursor-pointer text-gray-800 text-sm leading-3 tracking-normal py-2 hover:text-yellow-400 focus:text-yellow-400 focus:outline-none transition-colors">
+                        <div className="flex items-center">
+                          <FaCarAlt size="20px" color="#131313" />
+                          <a
+                            className="w-full hover:text-yellow-400 ml-2"
+                            href="/trips"
+                          >
+                            My Trips
+                          </a>
+                        </div>
+                      </li>
                       <li className="cursor-pointer text-gray-800 text-sm leading-3 tracking-normal py-2 hover:text-yellow-400 focus:text-yellow-400 focus:outline-none transition-colors">
                         <div className="flex items-center">
                           <BiUser size="20px" color="#131313" />
