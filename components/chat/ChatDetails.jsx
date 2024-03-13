@@ -115,7 +115,14 @@ const ChatDetails = ({ chatId }) => {
   }, [chat?.messages]);
 
   return loading ? (
-    <Loader />
+    <div className="pb-20">
+  <div className="chat-details">
+    <div className="chat-body items-center justify-center">
+      <p className="text-center">Please select a conversation</p>
+    </div>
+  </div>
+</div>
+
   ) : (
     <div className="pb-20">
       <div className="chat-details">
@@ -140,17 +147,19 @@ const ChatDetails = ({ chatId }) => {
           ) : (
             <>
               <img
-                src={otherMembers[0].profileImage || "/assets/person.jpg"}
+                src={otherMembers[0].profilePicture || "/assets/person.jpg"}
                 alt="profile photo"
                 className="profilePhoto"
               />
               <div className="text">
                 <p>{otherMembers[0].email}</p>
               </div>
+              <br/>
+            
             </>
           )}
         </div>
-
+        <hr className="my-4 mx-6 border-t-1 border-gray-300 p-5" />
         <div className="chat-body">
           {chat?.messages?.map((message, index) => (
             <MessageBox

@@ -40,7 +40,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     } else if (userData.role === "host") {
       setMenuItems([
         { label: "Dashboard", route: "/host" },
-        { label: "Inbox", route: "/host/inbox" },
+        { label: "Inbox", route: "/chats/conversation" },
         { label: "Bookings", route: "/host/bookings" },
         { label: "Listings", route: "/host/listings" },
         { label: "Settings", route: "/host/settings" }

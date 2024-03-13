@@ -71,14 +71,16 @@ const ChatList = ({ currentChatId }) => {
       <Loader />
   ) : (
        <div className="chat-list">
-      <input
+     
+
+      <div className="chats">
+         <input
         placeholder="Search chat..."
         className="input-search"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-
-      <div className="chats">
+      <br/>
         {chats?.map((chat, index) => (
           <ChatBox
             key={chat._id}

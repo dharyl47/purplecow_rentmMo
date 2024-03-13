@@ -6,6 +6,8 @@ import { useSession } from "next-auth/react"
 import { useParams } from "next/navigation"
 import { useEffect } from "react"
 import { useAuth } from "../../../contexts/AuthProvider"
+import TopBar from"../../../components/chat/TopBar"
+import DefaultLayout from "../../../components/dashboard/Layout/DefaultLayout"
 
 
 const ChatPage = () => {
@@ -34,11 +36,17 @@ const ChatPage = () => {
     if (currentUser && chatId) seenMessages()
   }, [currentUser, chatId])
 
-  return (
+  return ( 
+    <>
+    <DefaultLayout>
+    {/* <TopBar /> */}
     <div className="main-container">
+     
       <div className="w-1/3 max-lg:hidden"><ChatList currentChatId={chatId}/></div>
       <div className="w-2/3 max-lg:w-full"><ChatDetails chatId={chatId}/></div>
     </div>
+    </DefaultLayout>
+    </>
   )
 }
 

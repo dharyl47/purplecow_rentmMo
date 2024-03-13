@@ -17,7 +17,7 @@ const ChatBox = ({ chat, currentUser, currentChatId }) => {
 
   return (
     <div
-      className={`chat-box ${chat._id === currentChatId ? "bg-blue-200" : ""}`}
+      className={`chat-box ${chat._id === currentChatId ? "bg-admin-seaBlue" : ""} text-base-bold ${chat._id === currentChatId ? "text-white" : "text-black"}`}
       onClick={() => router.push(`/chats/${chat._id}`)}
     >
       <div className="chat-info">
@@ -29,7 +29,7 @@ const ChatBox = ({ chat, currentUser, currentChatId }) => {
           />
         ) : (
           <img
-            src={otherMembers[0].profileImage || "/assets/person.jpg"}
+            src={otherMembers[0].profilePicture || "/assets/person.jpg"}
             alt="profile-photo"
             className="profilePhoto"
           />

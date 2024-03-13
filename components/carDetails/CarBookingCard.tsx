@@ -2,7 +2,7 @@
 
 // React
 import { useRouter } from "next/navigation";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 // import Image from "next/image";
 
 // Third Party Components
@@ -24,6 +24,26 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
   const [termsOfUse, setTermsOfUse] = useState(false);
   const [startTripDate, setStartTripDate] = useState<Date>(new Date());
   const [endTripDate, setEndTripDate] = useState<Date>(new Date());
+
+
+ const [bookingData, setBookingData] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch("http://localhost:3000/api/bookings");
+        if (!res.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await res.json();
+        setBookingData(data.bookings);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchData();
+  }, []);
+
+
 
   const computedValue = useMemo(() => {
     const daysDifference = calculateDateDifference(startTripDate, endTripDate);
@@ -65,6 +85,22 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
     }
   };
 
+
+   const shouldDisableDate = (date: any) => {
+  const isDisabled = bookingData.some((booking: any) => {
+    const startDate = new Date(booking.startDate);
+    const endDate = new Date(booking.endDate);
+    
+    // Adjust the logic to check if the date is within the booking range
+    return (
+      booking.status === 'confirmed' &&
+      date >= startDate.setDate(startDate.getDate() - 1) && date <= endDate.setDate(endDate.getDate())
+    );
+  });
+
+  return isDisabled;
+};
+
   return (
     <div className="grid-item w-full  bg-white rounded-lg shadow-md border border-gray-200 py-10 lg:px-10 md:px-10 px-7">
       {/* <h1 className="text-2xl font-bold mb-6 underline underline-offset-2">
@@ -97,6 +133,7 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
                 className="w-full"
                 onChange={handleStartTripDateChange}
                 minDate={new Date()}
+                shouldDisableDate={shouldDisableDate}
               />
             </div>
             <div className="flex flex-col mb-6">
@@ -109,6 +146,7 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
                 className="w-full"
                 onChange={handleEndTripDateChange}
                 minDate={new Date()}
+                shouldDisableDate={shouldDisableDate}
               />
             </div>
           </div>

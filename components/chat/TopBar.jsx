@@ -5,6 +5,10 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { useAuth } from "../../contexts/AuthProvider"
+
+import Image from "next/image";
+import logo from "@/public/assets/logo/RentMo-logo.svg";
 
 const TopBar = () => {
   const pathname = usePathname();
@@ -13,29 +17,33 @@ const TopBar = () => {
     signOut({ callbackUrl: "/" });
   };
 
-  const { data: session } = useSession();
-  const user = session?.user;
+    const { user, logout } = useAuth();
+  const currentUser = user;
 
   return (
     <div className="topbar">
       <Link href="/chats">
-        <img src="/assets/logo.png" alt="logo" className="logo" />
+          <Image
+              className="w-24 lg:w-36 sm:w-32 xl:w-48  hover:scale-105 hover:drop-shadow-md transition-all"
+              src={logo}
+              alt="logo"
+            />
       </Link>
 
       <div className="menu">
         <Link
           href="/chats"
           className={`${
-            pathname === "/chats" ? "text-red-1" : ""
-          } text-heading4-bold`}
+            pathname === "/chats" ? "text-white" : ""
+          } text-heading4-bold text-white`}
         >
           Chats
         </Link>
         <Link
           href="/contacts"
           className={`${
-            pathname === "/contacts" ? "text-red-1" : ""
-          } text-heading4-bold`}
+            pathname === "/contacts" ? "text-white" : ""
+          } text-heading4-bold text-white`}
         >
           Contacts
         </Link>
@@ -47,9 +55,9 @@ const TopBar = () => {
 
         <Link href="/profile">
           <img
-            src={user?.profileImage || "/assets/person.jpg"}
-            alt="profile"
-            className="profilePhoto"
+            src={'https://cdn-icons-png.flaticon.com/128/1326/1326405.png' || "/assets/person.jpg"}
+            alt="profile photo"
+                className="profilePhoto"
           />
         </Link>
       </div>
