@@ -11,7 +11,7 @@ import { formatTimestamp } from "@/utils/utils";
 import Modal from "@/components/common/Modal";
 import Loader from "@/components/common/Loader";
 import Dropdown from "@/components/Inputs/Dropdown";
-import DataTable from "@/components/tables/DataTables";
+import DataTable from "@/components/tables1/DataTables";
 import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
 import axios from "axios";
 

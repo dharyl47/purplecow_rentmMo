@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
 import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
 import { formatTimestamp } from "@/utils/utils";
-import DataTable from "@/components/tables/DataTables";
+import DataTable from "@/components/tables1/DataTables";
 import { DashboardActionButtons } from "@/components/common/Buttons";
 
 const headers = [
