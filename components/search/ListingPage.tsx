@@ -163,7 +163,7 @@ export const Listing2Wheel = () => {
         Featured 2-wheelers
       </h4>
       <div className="2xl:w-full w-3/4 items-center justify-center flex flex-wrap gap-4 mx-auto">
-        {currentItems.map((item, index) => (
+        {currentItems.map((item: any, index) => (
           <Card
             className="drop-shadow-lg hover:scale-[102%] hover:transition-transform h-fit w-72"
             key={index}
