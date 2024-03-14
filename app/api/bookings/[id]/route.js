@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import connectMongoDB from "@/lib/mongodb";
 import BookingModel from "@/lib/models/booking.model";
 
-export async function PUT({ params }) {
+export async function GET(req) {
+  const { params } = req;
   const { id } = params;
   try {
     await connectMongoDB();

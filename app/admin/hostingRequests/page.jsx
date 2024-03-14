@@ -51,7 +51,7 @@ function HostingRequests() {
       carAvailabilityEndDate: "Anytime",
       owner: `${request.ownerId.firstName} ${request.ownerId.lastName}`,
       actions: [
-        <div class="flex flex-row gap-3">
+        <div class="flex flex-row gap-3" key={request._id}>
           <DashboardActionButtons onClick={() => handleAcceptClick(request)} type={"accept"}>Accept</DashboardActionButtons>
           <DashboardActionButtons onClick={() => handleRejectClick(request)}>Reject</DashboardActionButtons>
         </div>
