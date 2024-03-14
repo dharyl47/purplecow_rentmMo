@@ -35,8 +35,8 @@ const HeroPage: React.FC = () => {
         height: "100%"
       }}
     >
-      {/* <NavBarMain /> */}
-      <Navbar />
+      <NavBarMain />
+      {/* <Navbar /> */}
       <div className="container mx-auto flex flex-col items-center lg:pt-12 xl:pt-32 pt-6 ">
         <div className="w-11/12 2xl:w-full sm:w-2/3 lg:flex justify-center items-center flex-col mb-5 sm:mb-10">
           <h1 className="text-2xl sm:text-4xl md:text-4xl lg:text-4xl 2xl:text-6xl text-center text-white font-dark900 leading-5 md:leading-10">

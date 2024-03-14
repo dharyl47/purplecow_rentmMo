@@ -49,6 +49,8 @@ const BookedCarsSection = () => {
       <h1 className="text-3xl font-bold mb-10">Booked Cars</h1>
       {loading ? (
         <Loader positionStart />
+      ) : myBookings.length === 0 ? (
+        <p className="text-center text-lg mt-30">No booked trips</p>
       ) : (
         <div className="grid grid-cols-3 gap-4">
           {myBookings.map((item: any) => (
@@ -68,9 +70,7 @@ const BookedCarsSection = () => {
                   </h2>
                   <StatusChip type={item.status}>{item.status}</StatusChip>
                 </div>
-
                 <hr className="my-5" />
-
                 <h1 className="text-lg font-bold mb-3">
                   Pickup Start And End Date
                 </h1>
@@ -85,12 +85,10 @@ const BookedCarsSection = () => {
                     <p className="">{formatWeekDate(item.endDate)}</p>
                   </div>
                 </div>
-
                 <div className="mb-10">
                   <h1 className="text-lg font-bold mb-3">Pickup Location</h1>
                   <p>{item.pickUpLocation}</p>
                 </div>
-
                 <div className="flex items-center gap-5">
                   <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Message Host
