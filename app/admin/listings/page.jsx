@@ -7,6 +7,7 @@ import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
 import DataTable from "@/components/tables1/DataTables";
 
 import { formatTimestamp } from "@/utils/utils";
+import axios from "axios";
 
 
 const headers = [
@@ -26,11 +27,8 @@ function Listings() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("http://localhost:3000/api/admin/listing/find");
-        if (!res.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await res.json();
+        const response = await axios.get("/api/admin/listing/find");
+        const data = response.data;
         setListingData(data.listing);
         setLoading(false);
       } catch (error) {
@@ -40,7 +38,6 @@ function Listings() {
     }
     fetchData();
   }, []);
-
  
   const revisedListing = listingData?.map(item => {
     const revisedItem = { 
@@ -61,7 +58,7 @@ function Listings() {
 
   return (
     <DefaultLayout>
-      <h1 className="text-3xl font-bold">Listings</h1>
+      <h1 className="text-3xl font-bold">All Listings</h1>
 
 
       {loading ? (

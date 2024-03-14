@@ -2,14 +2,16 @@ import { NextResponse } from "next/server";
 import connectMongoDB from "@/lib/mongodb";
 import ListingModel from "@/lib/models/listing.model";
 
-export async function GET(request, { query }) {
+export async function GET(req, res) {
   try {
     await connectMongoDB();
-    const queryParams = new URL(request.url).searchParams;
-    const ownerId = queryParams.get("ownerId");
+    const { params } = res;
+    const { id } = params;
 
     // Fetch listings by owner ID
-    const listings = await ListingModel.find({ ownerId }).populate("ownerId");
+    const listings = await ListingModel.find({ ownerId: id }).populate(
+      "ownerId"
+    );
 
     return NextResponse.json({ listings }, { status: 200 });
   } catch (error) {

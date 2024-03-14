@@ -66,3 +66,17 @@ export function formatWeekDate(date) {
   const convertedDate = new Date(date);
   return format(convertedDate, "EEE, MMM dd, yyyy");
 }
+
+export const formatCurrency = amount => {
+  let formattedAmount = String(amount);
+
+  const parts = formattedAmount.split(".");
+  let integerPart = parts[0];
+  const decimalPart = parts.length > 1 ? "." + parts[1] : "";
+
+  integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  formattedAmount = "₱ " + integerPart + decimalPart;
+
+  return formattedAmount;
+};

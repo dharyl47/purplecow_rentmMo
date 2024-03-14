@@ -49,8 +49,7 @@ const DataTable: React.FC<DataTableProps> = ({
   };
 
   return (
-    <div>
-      {/* Pagination */}
+    <>
       <div className="mt-4 flex justify-end">
         {/* Previous button */}
         <button
@@ -91,63 +90,88 @@ const DataTable: React.FC<DataTableProps> = ({
           Next
         </button>
       </div>
-      <table className="mt-4 w-full min-w-max table-auto text-left">
-        {/* Table header */}
-        <thead>
-          <tr>
-            {headers.map((header, index) => (
-              <th
-                key={index}
-                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
-              >
-                <p className="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">
-                  {header.title}
-                  {header.icon && (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="2"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                      className="h-4 w-4"
-                    >
-                      {header.icon}
-                    </svg>
-                  )}
-                </p>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        {/* Table body */}
-        <tbody>
-          {currentItems.length !== 0 ? (
-            currentItems.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {headers.map((header, colIndex) => (
-                  <td
-                    key={colIndex}
-                    className="p-4 border-b border-blue-gray-50 text-sm"
-                  >
-                    {row[header.key]}
-                  </td>
-                ))}
-              </tr>
-            ))
-          ) : (
+
+      <div className="overflow-x-scroll min-h-full">
+        {/* Pagination */}
+
+        <table className="mt-4  w-full min-w-max table-auto text-left">
+          {/* Table header */}
+          <thead>
             <tr>
-              <td
-                className="p-4 border-b antialiased border-blue-gray-50 text-sm text-center leading-none"
-                colSpan={headers.length}
-              >
-                No Data Found
-              </td>
+              {headers.map((header, index) => (
+                <th
+                  key={index}
+                  className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
+                >
+                  <p className="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">
+                    {header.title}
+                    {header.icon && (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="2"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                        className="h-4 w-4"
+                      >
+                        {header.icon}
+                      </svg>
+                    )}
+                  </p>
+                </th>
+              ))}
             </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          {/* Table body */}
+          <tbody>
+            {currentItems.length !== 0 ? (
+              <>
+                {currentItems.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {headers.map((header, colIndex) => (
+                      <td
+                        key={colIndex}
+                        className="p-4 border-b border-blue-gray-50 text-sm"
+                      >
+                        {row[header.key]}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+                {currentItems.length < itemsPerPage &&
+                  Array.from({
+                    length: itemsPerPage - currentItems.length
+                  }).map((_, rowIndex) => (
+                    <tr
+                      key={currentItems.length + rowIndex}
+                      className="invisible"
+                    >
+                      {headers.map((header, colIndex) => (
+                        <td
+                          key={colIndex}
+                          className="p-4 border-b border-blue-gray-50 text-sm invisible"
+                        >
+                          {"hidden"}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+              </>
+            ) : (
+              <tr>
+                <td
+                  className="p-4 border-b antialiased border-blue-gray-50 text-sm text-center leading-none"
+                  colSpan={headers.length}
+                >
+                  No Data Found
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 

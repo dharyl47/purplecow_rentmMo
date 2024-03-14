@@ -6,20 +6,24 @@ export async function POST(request) {
   try {
     await connectMongoDB();
 
-    // Extract necessary data from the request body
-    const { userId, carId, pickupDate, returnDate, totalPrice } =
-      await request.json();
+    const {
+      userId,
+      carId,
+      pickupDate,
+      returnDate,
+      totalPrice,
+      pickUpLocation
+    } = await request.json();
 
-    // Create a new booking document
     await BookingModel.create({
       user: userId,
       car: carId,
       startDate: new Date(pickupDate),
       endDate: new Date(returnDate),
-      totalPrice
+      totalPrice,
+      pickUpLocation
     });
 
-    // Respond with success message
     return NextResponse.json(
       { message: "Booking successful" },
       { status: 200 }

@@ -23,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <link rel="icon" href="/assets/logo/RentMo-logo-solo.svg" sizes="any" />
         <Theme>
           <ServiceCarProvider>
             <AuthProvider>{children}</AuthProvider>

@@ -1,5 +1,6 @@
 'use client'
 
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 import Loader from "@/components/common/Loader";
@@ -8,8 +9,9 @@ import DataTable from "@/components/tables1/DataTables";
 
 import { formatTimestamp } from "@/utils/utils";
 
+import { useAuth } from "@/contexts/AuthProvider";
+
 const headers = [
-  { title: "Owner", key: "owner" },
   { title: "Model", key: "model" },
   { title: "Brand", key: "brand" },
   { title: "License Plate Number", key: "licensePlateNumber" },
@@ -20,6 +22,9 @@ const headers = [
 
 
 function Listings() {
+  const { user } = useAuth();
+  const userData = user;
+
   const [listingData, setListingData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -27,12 +32,10 @@ function Listings() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("http://localhost:3000/api/admin/listing/find");
-        if (!res.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await res.json();
-        setListingData(data.listing);
+        const response = await axios.get(`/api/listing/${userData._id}`);
+        const data = response.data;
+
+        setListingData(data.listings);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -45,7 +48,6 @@ function Listings() {
 
   const revisedListing = listingData?.map(item => {
     const revisedItem = { 
-      owner: item.ownerId,
       ...item 
     };
     
@@ -62,7 +64,7 @@ function Listings() {
 
   return (
     <DefaultLayout>
-      <h1 className="text-3xl font-bold">Listings</h1>
+      <h1 className="text-3xl font-bold">My Listings</h1>
 
       {loading ? (
         <Loader positionStart />

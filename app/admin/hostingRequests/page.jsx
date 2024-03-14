@@ -25,13 +25,8 @@ function HostingRequests() {
 
   async function fetchData() {
     try {
-      const res = await fetch("http://localhost:3000/api/admin/users/request");
-      if (!res.ok) {
-        throw new Error("Failed to fetch data");
-      }
-
-      const data = await res.json();
-
+      const response = await axios.get("/api/admin/users/request");
+      const data = response.data;
       setHostingRequests(data.hostingRequest);
       setLoading(false);
     } catch (error) {
@@ -39,7 +34,7 @@ function HostingRequests() {
       console.error("Error fetching data:", error);
     }
   }
-
+  
   useEffect(() => {
     fetchData();
   }, []);

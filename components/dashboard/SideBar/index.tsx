@@ -31,7 +31,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       setMenuItems([
         { label: "Dashboard", route: "/admin" },
         { label: "Inbox", route: "/admin/inbox" },
-        { label: "Rents", route: "/admin/bookings" },
+        { label: "Bookings", route: "/admin/bookings" },
         { label: "Listings", route: "/admin/listings" },
         { label: "Hosting Requests", route: "/admin/hostingRequests" },
         { label: "Users", route: "/admin/users" },

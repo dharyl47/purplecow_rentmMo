@@ -85,9 +85,7 @@ const MyListings = () => {
 
   const fetchMyListing = async () => {
     try {
-      const response = await axios.get(
-        `/api/listing/created?ownerId=${userData._id}`
-      );
+      const response = await axios.get(`/api/listing/${userData._id}`);
 
       setMyListing(response.data.listings);
     } catch (error) {

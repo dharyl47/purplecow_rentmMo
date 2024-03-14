@@ -42,12 +42,12 @@ const CarListingCard: React.FC<{
   };
 
   const viewDetailsHandler = (car: any) => {
-    router.push(`/cars/${car._id}`);
+    window.open(`/cars/${car._id}`, "_blank");
   };
 
   return (
     <div
-      className="border mb-7 flex bg-white rounded-lg shadow-md hover:shadow-lg relative carlist-cont h-40"
+      className="border mb-7 flex bg-white rounded-lg shadow-md hover:shadow-lg relative carlist-cont h-40 cursor-pointer"
       onClick={() => onCardClick(car)}
     >
       <div className="absolute top-5 right-3 div-1">

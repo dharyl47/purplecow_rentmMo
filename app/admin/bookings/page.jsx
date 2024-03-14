@@ -6,17 +6,20 @@ import Loader from "@/components/common/Loader";
 import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
 import DataTable from "@/components/tables1/DataTables";
 
-import { formatTimestamp } from "@/utils/utils";
+import { formatCurrency, formatTimestamp } from "@/utils/utils";
+import axios from "axios";
+import StatusChip from "@/components/common/StatusChip";
 
 const headers = [
   { title: "Owner's Name", key: "owner" },
   { title: "Renter's Name", key: "renter" },
-  { title: "Start Date", key: "startDate" },
-  { title: "End Date", key: "endDate" },
-  { title: "Price", key: "totalPrice" },
+  { title: "Status", key: "status" },
+  { title: "Pickup Location", key: "location" },
+  { title: "Trip Start", key: "startDate" },
+  { title: "Trip End", key: "endDate" },
+  { title: "Total Price", key: "totalPrice" },
   { title: "Car Brand", key: "brand" },
   { title: "Car Model", key: "model" },
-  { title: "Status", key: "status" },
 ];
 
 
@@ -27,12 +30,8 @@ function Listings() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("http://localhost:3000/api/bookings");
-        if (!res.ok) {
-          throw new Error("Failed to fetch data.");
-        }
-
-        const data = await res.json();
+        const response = await axios.get("/api/bookings");
+        const data = response.data;
         setBookingData(data.bookings);
         setLoading(false);
       } catch (error) {
@@ -49,10 +48,11 @@ function Listings() {
       renter: `${item.user.firstName} ${item.user.lastName}`,
       model: item.car.model,
       brand: item.car.brand,
-      status: item.status,
+      status:  <StatusChip type={item.status}>{item.status}</StatusChip>,
       startDate: formatTimestamp(item.startDate),
       endDate: formatTimestamp(item.endDate),
-      totalPrice: item.totalPrice,
+      totalPrice: formatCurrency(item.totalPrice),
+      location: item.pickUpLocation,
     };
   
     return revisedItem;
@@ -60,7 +60,7 @@ function Listings() {
 
   return (
     <DefaultLayout>
-      <h1 className="text-3xl font-bold">Listings</h1>
+      <h1 className="text-3xl font-bold">All Bookings</h1>
 
       {loading ? (
         <Loader positionStart />

@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
 // Icons
-import { FaCalendarDays, FaLocationDot, FaUser } from "react-icons/fa6";
+import { FaCalendarDays, FaLocationDot } from "react-icons/fa6";
 import Modal from "../common/Modal";
 import axios from "axios";
 
@@ -37,14 +37,12 @@ const PriceRecapCard = () => {
   };
 
   const handleAccept = async () => {
-    // console.log("Accepted");
-
     const bookingParams = {
       userId: userData._id,
       carId: carId,
       pickupDate: startTripDate,
       returnDate: endTripDate,
-      location,
+      pickUpLocation: location,
       totalPrice
     };
 
@@ -53,18 +51,17 @@ const PriceRecapCard = () => {
 
       router.push(`/payment`);
     } catch (error) {
-      // setIsFailure(true);
-      // setIsLoading(false);
+      console.log(error);
       return;
     }
   };
 
   const handleDecline = () => {
-    console.log("Declined");
+    setIsModalOpen(false);
   };
 
   const handleClose = () => {
-    console.log("Closed");
+    setIsModalOpen(false);
   };
 
   return (

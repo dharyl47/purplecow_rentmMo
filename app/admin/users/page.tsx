@@ -5,6 +5,7 @@ import React, { useState, useEffect, Suspense } from "react";
 import Loader from "@/components/common/Loader";
 import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
 import DataTable from "@/components/tables1/DataTables";
+import axios from "axios";
 
 const headers = [
   { title: "First Name", key: "firstName" },
@@ -22,11 +23,8 @@ function Users() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("http://localhost:3000/api/admin/users/find");
-        if (!res.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await res.json();
+        const response = await axios.get("/api/admin/users/find");
+        const data = response.data;
         setUserData(data.user);
         setLoading(false);
       } catch (error) {
@@ -39,7 +37,7 @@ function Users() {
 
   return (
     <DefaultLayout>
-      <h1 className="text-3xl font-bold">Users</h1>
+      <h1 className="text-3xl font-bold">All Users</h1>
 
       {loading ? (
         <Loader positionStart />

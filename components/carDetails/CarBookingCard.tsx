@@ -12,6 +12,7 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { TextField } from "@mui/material";
 import { ICar } from "@/types/types";
 import { calculateDateDifference } from "@/utils/utils";
+import axios from "axios";
 
 // Images & Icons
 // import GcashLogo from "@/public/assets/images/gcash.png";
@@ -24,26 +25,23 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
   const [termsOfUse, setTermsOfUse] = useState(false);
   const [startTripDate, setStartTripDate] = useState<Date>(new Date());
   const [endTripDate, setEndTripDate] = useState<Date>(new Date());
+  const [bookingData, setBookingData] = useState([]);
 
-
- const [bookingData, setBookingData] = useState([]);
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("http://localhost:3000/api/bookings");
-        if (!res.ok) {
+        const response = await axios.get("/api/bookings");
+        if (!response.data) {
           throw new Error("Failed to fetch data");
         }
-        const data = await res.json();
-        setBookingData(data.bookings);
+
+        setBookingData(response.data.bookings);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
     fetchData();
   }, []);
-
- const data1 = 0;
 
   const computedValue = useMemo(() => {
     const daysDifference = calculateDateDifference(startTripDate, endTripDate);
@@ -85,21 +83,21 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
     }
   };
 
+  const shouldDisableDate = (date: any) => {
+    const isDisabled = bookingData.some((booking: any) => {
+      const startDate = new Date(booking.startDate);
+      const endDate = new Date(booking.endDate);
 
-   const shouldDisableDate = (date: any) => {
-  const isDisabled = bookingData.some((booking: any) => {
-    const startDate = new Date(booking.startDate);
-    const endDate = new Date(booking.endDate);
-    
-    // Adjust the logic to check if the date is within the booking range
-    return (
-      booking.status === 'confirmed' &&
-      date >= startDate.setDate(startDate.getDate() - 1) && date <= endDate.setDate(endDate.getDate())
-    );
-  });
+      // Adjust the logic to check if the date is within the booking range
+      return (
+        booking.status === "confirmed" &&
+        date >= startDate.setDate(startDate.getDate() - 1) &&
+        date <= endDate.setDate(endDate.getDate())
+      );
+    });
 
-  return isDisabled;
-};
+    return isDisabled;
+  };
 
   return (
     <div className="grid-item w-full  bg-white rounded-lg shadow-md border border-gray-200 py-10 lg:px-10 md:px-10 px-7">
@@ -133,7 +131,7 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
                 className="w-full"
                 onChange={handleStartTripDateChange}
                 minDate={new Date()}
-                shouldDisableDate={shouldDisableDate}
+                // shouldDisableDate={shouldDisableDate}
               />
             </div>
             <div className="flex flex-col mb-6">
@@ -146,7 +144,7 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
                 className="w-full"
                 onChange={handleEndTripDateChange}
                 minDate={new Date()}
-                shouldDisableDate={shouldDisableDate}
+                // shouldDisableDate={shouldDisableDate}
               />
             </div>
           </div>
@@ -172,7 +170,7 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
             <p className="font-bold">₱ {price * computedValue}</p>
           </div>
         </div>
-        <div className="flex items-center ">
+        <div className="flex items-center">
           <div className="ml-2">
             <p className="font">Delivery Fee</p>
           </div>

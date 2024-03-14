@@ -9,7 +9,7 @@ export async function GET(req, res) {
     await connectMongoDB();
 
     // Fetch bookings by owner ID
-    const myBookings = await BookingModel.find({ _id: id })
+    const myBookings = await BookingModel.find({ car: id })
       .populate("user")
       .populate("car");
 

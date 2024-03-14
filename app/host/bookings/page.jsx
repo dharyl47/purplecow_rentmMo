@@ -1,11 +1,14 @@
 'use client'
 
+// Axios
+import axios from "axios";
+
 // Next
 import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 
 // Utils
-import { formatTimestamp } from "@/utils/utils";
+import { formatCurrency, formatTimestamp } from "@/utils/utils";
 
 // Components
 import Modal from "@/components/common/Modal";
@@ -13,7 +16,6 @@ import Loader from "@/components/common/Loader";
 import Dropdown from "@/components/Inputs/Dropdown";
 import DataTable from "@/components/tables1/DataTables";
 import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
-import axios from "axios";
 
 import { useAuth } from "@/contexts/AuthProvider";
 
@@ -24,8 +26,8 @@ const headers = [
   { title: "Price", key: "totalPrice" },
   { title: "Car Brand", key: "brand" },
   { title: "Car Model", key: "model" },
-  { title: "Start Date", key: "startDate" },
-  { title: "End Date", key: "endDate" },
+  { title: "Trip Start", key: "startDate" },
+  { title: "Trip End", key: "endDate" },
 ];
 
 const options = [
@@ -37,12 +39,8 @@ const options = [
 
 const fetchData = async (setBookingData, setLoading) => {
   try {
-    const res = await fetch("http://localhost:3000/api/bookings");
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
-
-    const data = await res.json();
+    const response = await axios.get("/api/bookings");
+    const data = response.data;
     setLoading(false);
     setBookingData(data.bookings);
   } catch (error) {
@@ -62,7 +60,7 @@ function Listings() {
   const [bookingData, setBookingData] = useState(null);
   const [revisedData, setRevisedData] = useState([]);
 
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const currentUser = user;
 
  const isGroup = 0;
@@ -80,10 +78,13 @@ function Listings() {
   };
 
   const handleAccept = async () => {
+    setLoading(true);
+
     try {
       await axios.put("/api/bookings/updateStatus", {_id: selectedBooking._id, status: updateStatus});
       await memoizedFetchData();
       setIsModalOpen(false);
+      setLoading(false);
 
     } catch (error) {
       memoizedFetchData();
@@ -155,7 +156,7 @@ if(updateStatus=="confirmed"){
         ),
         startDate: formatTimestamp(item.startDate),
         endDate: formatTimestamp(item.endDate),
-        totalPrice: item.totalPrice,
+        totalPrice: formatCurrency(item.totalPrice),
       };
     });
 
@@ -164,7 +165,7 @@ if(updateStatus=="confirmed"){
   
   return (
     <DefaultLayout>
-      <h1 className="text-3xl font-bold">Bookings</h1>
+      <h1 className="text-3xl font-bold">My Bookings</h1>
 
       {loading ? (
         <Loader positionStart />
@@ -181,8 +182,7 @@ if(updateStatus=="confirmed"){
         triggerModal={isModalOpen}
       >
         <p>
-          Are you sure you want to proceed? This action cannot be changed once
-          accepted.
+          Are you sure you want to change the status? 
         </p>
       </Modal>
     </DefaultLayout>
