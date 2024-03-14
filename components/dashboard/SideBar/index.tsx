@@ -62,6 +62,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       <div className="flex items-center justify-center gap-2 px-6 py-5.5 lg:py-6.5">
         <Link href="/">
           <Image
+            className="duration-300 ease-in-out hover:scale-105"
             width={176}
             height={32}
             src={"/assets/logo/RentMo-logo.svg"}

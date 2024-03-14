@@ -11,6 +11,7 @@ import CarInformationCard from "@/components/carDetails/CarInformationCard";
 import { ICar } from "@/types/types";
 
 import { useEffect, useState } from "react";
+import NavBarMain from "@/components/common/NavBarMain/NavBar";
 
 export default function ViewCar({ params }: any) {
   const [carDetails, setCarDetails] = useState<ICar>({});
@@ -31,7 +32,7 @@ export default function ViewCar({ params }: any) {
   return (
     <div>
       <div className="bg-black">
-        <Navbar />
+        <NavBarMain />
       </div>
       <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6 lg:max-w-[90%] lg:px-8">
         <CarDetailsHeader

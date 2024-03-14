@@ -11,6 +11,7 @@ import ProtectedRoutes from "@/utils/hoc/ProtectedRoutes";
 // Hooks
 // import { useUser } from "../hooks/useUser";
 import { useAuth } from "@/contexts/AuthProvider";
+import NavBarMain from "@/components/common/NavBarMain/NavBar";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -21,7 +22,7 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col w-full h-fit pb-20 bg-cover bg-no-repeat font-Messina-Sans">
-      <Navbar />
+      <NavBarMain />
       <div className="absolute w-full h-72 bg-gradient-to-br from-gray-700 to-gray-900 -z-10"></div>
       <div className="items-center flex lg:flex-row flex-col w-full h-full 2xl:px-44 sm:px-12 px-4 relative text-white 2xl:gap-20 gap-10">
         <ProfileCard />

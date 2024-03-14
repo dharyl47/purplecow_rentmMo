@@ -3,12 +3,13 @@ import React from "react";
 // Components
 import Navbar from "@/components/common/NavBar";
 import PriceRecapCard from "../../components/checkout/PriceRecapCard";
+import NavBarMain from "@/components/common/NavBarMain/NavBar";
 
 const Checkout = () => {
   return (
     <div>
       <div className="bg-black">
-        <Navbar />
+        <NavBarMain />
       </div>
 
       <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6 lg:max-w-[80%] lg:px-8">

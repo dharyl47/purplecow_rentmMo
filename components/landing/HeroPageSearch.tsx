@@ -10,6 +10,7 @@ import SearchHero from "../search/SearchHero";
 
 // Types
 import { SearchFormData } from "@/types/searchCar";
+import NavBarMain from "../common/NavBarMain/NavBar";
 
 const HeroPage = () => {
   const router = useRouter();
@@ -25,7 +26,7 @@ const HeroPage = () => {
 
   return (
     <div className="bg-black bg-cover pb-12 max-h-100 font-Messina-Sans hero-page-search-bg">
-      <Navbar />
+      <NavBarMain />
       <div className="search-modal-btn text-center">
         <SearchHero onFindRide={handleFindRide} />
       </div>

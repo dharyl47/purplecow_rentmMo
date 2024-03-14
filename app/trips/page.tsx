@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 // Components
@@ -6,6 +8,9 @@ import TabComponent from "@/components/common/TabsComponent";
 
 import BookedCarsSection from "@/components/trips/BookedCarsSection";
 import BookedHistorySection from "@/components/trips/BookedHistorySection";
+
+import ProtectedRoutes from "@/utils/hoc/ProtectedRoutes";
+import NavBarMain from "@/components/common/NavBarMain/NavBar";
 
 const tabs = [
   {
@@ -22,7 +27,7 @@ const Trips = () => {
   return (
     <div>
       <div className="bg-black">
-        <Navbar />
+        <NavBarMain />
       </div>
       <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6 lg:max-w-[90%] lg:px-8">
         <TabComponent tabs={tabs} />
@@ -31,4 +36,4 @@ const Trips = () => {
   );
 };
 
-export default Trips;
+export default ProtectedRoutes(Trips);

@@ -1,11 +1,12 @@
 import React from "react";
 import Navbar from "../../../components/common/NavBar";
+import NavBarMain from "@/components/common/NavBarMain/NavBar";
 
 const ManageAccount = () => {
   return (
     <div className=" font-Messina-Sans">
       <div className="flex flex-col w-full h-fit pb-20 bg-cover bg-no-repeat">
-        <Navbar />
+        <NavBarMain />
         <div className="absolute w-full h-32 bg-gradient-to-br from-gray-700 to-gray-900 -z-10"></div>
       </div>
       <div className="flex flex-col items-center justify-center w-full h-full">

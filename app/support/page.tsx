@@ -6,6 +6,7 @@ import image_3 from "@/public/assets/images/cebu.png";
 import image_4 from "@/public/assets/images/davao.png";
 import image_5 from "@/public/assets/images/iloilo@2x.png";
 import Image from "next/image";
+import NavBarMain from "@/components/common/NavBarMain/NavBar";
 
 const HelpPage = () => {
   const quickGuide = [
@@ -44,7 +45,7 @@ const HelpPage = () => {
   return (
     <>
       <div className="flex flex-col w-full h-fit bg-cover bg-no-repeat font-Messina-Sans">
-        <Navbar />
+        <NavBarMain />
         <div className="absolute w-full h-32 bg-gradient-to-br from-gray-700 to-gray-800 -z-10"></div>
       </div>
       <div className="flex flex-col gap-12 items-center mt-20 justify-start lg:px-20 px-8 min-h-screen">
