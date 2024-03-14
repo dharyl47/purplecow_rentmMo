@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 import Loader from "@/components/common/Loader";
 import DefaultLayout from "@/components/dashboard/Layout/DefaultLayout";
-import DataTable from "@/components/Tables/DataTables";
+import DataTable from "@/components/tables1/DataTables";
 
 import { formatTimestamp } from "@/utils/utils";
 
