@@ -62,7 +62,7 @@ const NavBarMain = () => {
         </div>
         <span className=" xl:mx-10 lg:mt-0 lg:w-[2px] lg:h-10 bg-gray-600  lg:mx-5 w-3/4 h-[1px] mt-14 2xsm:hidden lg:block md:hidden sm:hidden xl:block" />
         {userData ? (
-          <div className="flex items-center gap-3 2xsm:gap-7">
+          <div className="flex items-center gap-3 2xsm:gap-7 z-999">
             <DropdownUser />
           </div>
         ) : (

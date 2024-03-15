@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+
 import Link from "next/link";
 import Image from "next/image";
+
 import { useAuth } from "@/contexts/AuthProvider";
+
 import {
   IoCarSportOutline,
   IoChatboxOutline,
