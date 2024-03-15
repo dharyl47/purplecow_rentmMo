@@ -1,6 +1,8 @@
+// Next
 import { NextResponse } from "next/server";
-import connectMongoDB from "@/lib/mongodb";
-import BookingModel from "@/lib/models/booking.model.js";
+
+// Mongo Connect
+import { connectMongoDB, BookingsModel } from "@/lib/mongodb";
 
 export async function PUT(request) {
   try {
@@ -17,13 +19,13 @@ export async function PUT(request) {
 
     const { _id, status } = requestData;
 
-    const booking = await BookingModel.findById(_id);
+    const booking = await BookingsModel.findById(_id);
 
     if (!booking) {
       return NextResponse.json({ error: "Booking not found" }, { status: 404 });
     }
 
-    await BookingModel.findByIdAndUpdate(_id, { status });
+    await BookingsModel.findByIdAndUpdate(_id, { status });
 
     return NextResponse.json(
       { message: "Booking updated successfully", updatedBookings: booking },

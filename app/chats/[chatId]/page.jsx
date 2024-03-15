@@ -13,7 +13,7 @@ import DefaultLayout from "../../../components/dashboard/Layout/DefaultLayout"
 const ChatPage = () => {
   const { chatId } = useParams()
 
-    const { user, logout } = useAuth();
+  const { user, logout } = useAuth();
   const currentUser = user;
 
   const seenMessages = async () => {

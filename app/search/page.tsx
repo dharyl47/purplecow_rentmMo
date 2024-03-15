@@ -14,9 +14,13 @@ import CarListingCard from "@/components/cards1/CarListingCard";
 import HeroPageSearch from "../../components/landing/HeroPageSearch";
 
 // Context Api
+import { useAuth } from "@/contexts/AuthProvider";
 import { useServiceCarContext } from "@/contexts/ServiceCarContext";
 
 const CarListingPage = () => {
+  const { user } = useAuth();
+  const currentUser: any = user;
+
   const { data, searchListing, setSearchFormData } = useServiceCarContext();
 
   const getParams = useSearchParams();
@@ -50,7 +54,12 @@ const CarListingPage = () => {
           startTime: ""
         };
 
-        searchListing(parsedSearchData);
+        const parsedDataWithUser = {
+          ...parsedSearchData,
+          userId: currentUser._id
+        };
+
+        searchListing(parsedDataWithUser);
         setSearchFormData(search);
       } catch (error) {
         console.error("Error parsing search data:", error);

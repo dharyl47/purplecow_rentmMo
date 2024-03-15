@@ -48,14 +48,14 @@ const NavBarMain = () => {
 
           {userValid ? (
             <button
-              className="border text-lg border-yellow-300 border-2 text-yellow-300 font-bold py-2 px-7 rounded-full bg-transparent"
+              className="text-lg border-yellow-300 border-2 text-yellow-300 font-bold py-2 px-7 rounded-full bg-transparent"
               onClick={() => router.push(`/${userData?.role}`)}
             >
               Go to dashboard
             </button>
           ) : (
             <button
-              className="border text-lg border-yellow-300 border-2 text-yellow-300 font-bold py-2 px-7 rounded-full bg-transparent"
+              className="text-lg border-yellow-300 border-2 text-yellow-300 font-bold py-2 px-7 rounded-full bg-transparent"
               onClick={() => router.push("/listing")}
             >
               Become a host

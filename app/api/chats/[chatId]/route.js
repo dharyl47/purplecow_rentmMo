@@ -1,7 +1,10 @@
-import Chat from "../../../../lib/models/Chat";
-import Message from "../../../../lib/models/Message";
-import UserSchema from "../../../../lib/models/user.model";
-import connectMongoDB from "../../../../lib/mongodb";
+// Mongo Connect
+import {
+  connectMongoDB,
+  UsersModel,
+  ChatModel,
+  MessageModel
+} from "@/lib/mongodb";
 
 export const GET = async (req, { params }) => {
   try {
@@ -9,18 +12,18 @@ export const GET = async (req, { params }) => {
 
     const { chatId } = params;
 
-    const chat = await Chat.findById(chatId)
+    const chat = await ChatModel.findById(chatId)
       .populate({
         path: "members",
-        model: UserSchema,
+        model: UsersModel
       })
       .populate({
         path: "messages",
-        model: Message,
+        model: MessageModel,
         populate: {
           path: "sender seenBy",
-          model: UserSchema,
-        },
+          model: UsersModel
+        }
       })
       .exec();
 
@@ -41,14 +44,14 @@ export const POST = async (req, { params }) => {
 
     const { currentUserId } = body;
 
-    await Message.updateMany(
+    await MessageModel.updateMany(
       { chat: chatId },
       { $addToSet: { seenBy: currentUserId } },
       { new: true }
     )
       .populate({
         path: "sender seenBy",
-        model: User,
+        model: UsersModel
       })
       .exec();
 

@@ -1,4 +1,5 @@
 // Sections
+import React from "react";
 
 import Footer from "@/components/common/Footer";
 import HeroPage from "../components/landing/HeroPage";

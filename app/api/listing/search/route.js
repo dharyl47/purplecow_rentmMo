@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
-import connectMongoDB from "@/lib/mongodb";
-import ListingModel from "@/lib/models/listing.model";
+
+import { connectMongoDB, ListingsModel } from "@/lib/mongodb";
 
 export async function GET(request, { query }) {
+  await connectMongoDB();
+
   try {
-    await connectMongoDB();
     const queryParams = new URL(request.url).searchParams;
     const city = queryParams.get("city");
     const startDate = queryParams.get("startDate");
@@ -40,7 +41,7 @@ export async function GET(request, { query }) {
     };
 
     // Fetch listings by city, startDate, endDate
-    const listings = await ListingModel.find(queryObj).populate("ownerId");
+    const listings = await ListingsModel.find(queryObj).populate("ownerId");
 
     const filteredListings = listings.filter(
       listing => listing.ownerId.role === "host"

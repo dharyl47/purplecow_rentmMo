@@ -1,5 +1,4 @@
-import UserSchema from "../../../../../lib/models/user.model";
-import connectMongoDB from "../../../../../lib/mongodb";
+import { connectMongoDB, UsersModel } from "@/lib/mongodb";
 
 export const POST = async (req, { params }) => {
   try {
@@ -11,11 +10,11 @@ export const POST = async (req, { params }) => {
 
     const { email, profileImage } = body;
 
-    const updatedUser = await User.findByIdAndUpdate(
+    const updatedUser = await UsersModel.findByIdAndUpdate(
       userId,
       {
         email,
-        profileImage,
+        profileImage
       },
       { new: true }
     );
@@ -23,6 +22,6 @@ export const POST = async (req, { params }) => {
     return new Response(JSON.stringify(updatedUser), { status: 200 });
   } catch (err) {
     console.log(err);
-    return new Response("Failed to update user", { status: 500 })
+    return new Response("Failed to update user", { status: 500 });
   }
 };

@@ -1,7 +1,10 @@
-import Chat from "../../../../../../lib/models/Chat";
-import Message from "../../../../../../lib/models/Message";
-import UserSchema from "../../../../../../lib/models/user.model";
-import connectMongoDB from "../../../../../../lib/mongodb";
+// Mongo Connect
+import {
+  connectMongoDB,
+  UsersModel,
+  ChatModel,
+  MessageModel
+} from "@/lib/mongodb";
 
 export const GET = async (req, { params }) => {
   try {
@@ -12,21 +15,21 @@ export const GET = async (req, { params }) => {
 
     const { userId, query } = params;
 
-    const searchedChat = await Chat.find({
+    const searchedChat = await ChatModel.find({
       members: userId,
-      name: { $regex: query, $options: "i" },
+      name: { $regex: query, $options: "i" }
     })
       .populate({
         path: "members",
-        model: UserSchema,
+        model: UsersModel
       })
       .populate({
         path: "messages",
-        model: Message,
+        model: MessageModel,
         populate: {
           path: "sender seenBy",
-          model: UserSchema,
-        },
+          model: UsersModel
+        }
       })
       .exec();
 

@@ -2,15 +2,12 @@
 import { NextResponse } from "next/server";
 
 // Mongo Connect
-import connectMongoDB from "@/lib/mongodb";
-
-// Model
-import ListingModel from "@/lib/models/listing.model";
+import { connectMongoDB, ListingsModel } from "@/lib/mongodb";
 
 export async function GET() {
   await connectMongoDB();
 
-  const listing = await ListingModel.find({});
+  const listing = await ListingsModel.find({});
 
   return NextResponse.json({ listing });
 }

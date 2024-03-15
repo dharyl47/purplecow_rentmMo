@@ -2,15 +2,12 @@
 import { NextResponse } from "next/server";
 
 // Mongo Connect
-import connectMongoDB from "@/lib/mongodb";
-
-// Model
-import UserSchema from "@/lib/models/user.model";
+import { connectMongoDB, UsersModel } from "@/lib/mongodb";
 
 export async function GET() {
   await connectMongoDB();
 
-  const user = await UserSchema.find();
+  const user = await UsersModel.find();
 
   return NextResponse.json({ user });
 }
