@@ -6,7 +6,7 @@ import Navbar from "../../components/common/NavBar";
 import ListingStepper from "@/components/hosting/ListingStepperHosting";
 
 import ProtectedRoutes from "@/utils/hoc/ProtectedRoutes";
-import NavBarMain from "@/components/common/NavBarMain/NavBar";
+import NavBarMain from "@/components/common/NavBarMain";
 // import StepsMainContainer from "@/components/steps/StepsMainContainer";
 
 const Listing = () => {

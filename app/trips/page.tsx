@@ -10,7 +10,7 @@ import BookedCarsSection from "@/components/trips/BookedCarsSection";
 import BookedHistorySection from "@/components/trips/BookedHistorySection";
 
 import ProtectedRoutes from "@/utils/hoc/ProtectedRoutes";
-import NavBarMain from "@/components/common/NavBarMain/NavBar";
+import NavBarMain from "@/components/common/NavBarMain";
 
 const tabs = [
   {

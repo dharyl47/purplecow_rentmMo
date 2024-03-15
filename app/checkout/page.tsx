@@ -3,7 +3,7 @@ import React from "react";
 // Components
 import Navbar from "@/components/common/NavBar";
 import PriceRecapCard from "../../components/checkout/PriceRecapCard";
-import NavBarMain from "@/components/common/NavBarMain/NavBar";
+import NavBarMain from "@/components/common/NavBarMain";
 
 const Checkout = () => {
   return (

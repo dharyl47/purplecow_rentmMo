@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 
 // Types
 import { SearchFormData } from "@/types/searchCar";
-import NavBarMain from "../common/NavBarMain/NavBar";
+import NavBarMain from "../common/NavBarMain";
 
 const HeroPage: React.FC = () => {
   const router = useRouter();

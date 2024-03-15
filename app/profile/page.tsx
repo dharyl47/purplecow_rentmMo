@@ -11,7 +11,7 @@ import ProtectedRoutes from "@/utils/hoc/ProtectedRoutes";
 // Hooks
 // import { useUser } from "../hooks/useUser";
 import { useAuth } from "@/contexts/AuthProvider";
-import NavBarMain from "@/components/common/NavBarMain/NavBar";
+import NavBarMain from "@/components/common/NavBarMain";
 
 const Profile = () => {
   const { user } = useAuth();

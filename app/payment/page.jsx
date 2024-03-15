@@ -1,15 +1,13 @@
 import React from 'react'
 
-// import Navbar from '@/components/common/NavBar'
-import NavBarMain from "@/components/common/NavBarMain/NavBar";
 import PaymentForm from '@/components/payment/PaymentForm'
+import NavBarMain from '@/components/common/NavBarMain'
 
 const Payment = () => {
   return (
     <div>
         <div className="bg-black">
-            {/* <NavBarMain /> */}
-            <NavbarMain />
+            <NavBarMain />
         </div>
         
         <PaymentForm />

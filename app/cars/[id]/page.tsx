@@ -1,6 +1,6 @@
 "use client";
 
-import Navbar from "@/components/common/NavBar";
+// import Navbar from "@/components/common/NavBar";
 import axios from "axios";
 
 import CarBookingCard from "@/components/carDetails/CarBookingCard";
@@ -11,7 +11,7 @@ import CarInformationCard from "@/components/carDetails/CarInformationCard";
 import { ICar } from "@/types/types";
 
 import { useEffect, useState } from "react";
-import NavBarMain from "@/components/common/NavBarMain/NavBar";
+import NavBarMain from "@/components/common/NavBarMain";
 
 export default function ViewCar({ params }: any) {
   const [carDetails, setCarDetails] = useState<ICar>({});

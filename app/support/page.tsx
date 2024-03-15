@@ -6,7 +6,7 @@ import image_3 from "@/public/assets/images/cebu.png";
 import image_4 from "@/public/assets/images/davao.png";
 import image_5 from "@/public/assets/images/iloilo@2x.png";
 import Image from "next/image";
-import NavBarMain from "@/components/common/NavBarMain/NavBar";
+import NavBarMain from "@/components/common/NavBarMain";
 
 const HelpPage = () => {
   const quickGuide = [

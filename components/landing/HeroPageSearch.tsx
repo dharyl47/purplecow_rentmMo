@@ -10,7 +10,7 @@ import SearchHero from "../search/SearchHero";
 
 // Types
 import { SearchFormData } from "@/types/searchCar";
-import NavBarMain from "../common/NavBarMain/NavBar";
+import NavBarMain from "../common/NavBarMain";
 
 const HeroPage = () => {
   const router = useRouter();

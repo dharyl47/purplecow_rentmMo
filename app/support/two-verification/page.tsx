@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../../../components/common/NavBar";
-import NavBarMain from "@/components/common/NavBarMain/NavBar";
+import NavBarMain from "@/components/common/NavBarMain";
 
 const TwoVerification = () => {
   return (
