@@ -1,6 +1,10 @@
+// Next
 import { NextResponse } from "next/server";
-import connectMongoDB from "@/lib/mongodb";
-import UserSchema from "@/lib/models/user.model";
+
+// Mongo Connect
+import { connectMongoDB, UsersModel } from "@/lib/mongodb";
+
+// Third Party Components
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -11,7 +15,7 @@ export async function GET(request, { query }) {
   const password = queryParams.get("password"); // Extract the password from the query parameters
 
   // Find the user by email
-  const user = await UserSchema.findOne({ email });
+  const user = await UsersModel.findOne({ email });
 
   // If user doesn't exist, return error
   if (!user) {

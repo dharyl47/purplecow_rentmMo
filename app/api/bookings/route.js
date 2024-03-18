@@ -1,6 +1,8 @@
+// Next
 import { NextResponse } from "next/server";
-import connectMongoDB from "@/lib/mongodb";
-import BookingModel from "@/lib/models/booking.model.js";
+
+// Mongo Connect
+import { connectMongoDB, BookingsModel } from "@/lib/mongodb";
 
 export async function POST(request) {
   try {
@@ -15,7 +17,7 @@ export async function POST(request) {
       pickUpLocation
     } = await request.json();
 
-    await BookingModel.create({
+    await BookingsModel.create({
       user: userId,
       car: carId,
       startDate: new Date(pickupDate),
@@ -41,7 +43,7 @@ export async function GET() {
   try {
     await connectMongoDB();
 
-    const bookings = await BookingModel.find({})
+    const bookings = await BookingsModel.find({})
       .populate({
         path: "car",
         populate: { path: "ownerId" }

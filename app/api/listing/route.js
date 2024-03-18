@@ -1,8 +1,7 @@
 // route.js
 
 import { NextResponse } from "next/server";
-import connectMongoDB from "@/lib/mongodb";
-import ListingModel from "@/lib/models/listing.model";
+import { connectMongoDB, ListingsModel } from "@/lib/mongodb";
 
 export async function POST(request) {
   try {
@@ -36,7 +35,7 @@ export async function POST(request) {
     const startDate = new Date(carAvailability.startDate);
     const endDate = new Date(carAvailability.endDate);
 
-    await ListingModel.create({
+    await ListingsModel.create({
       brand,
       carAvailability: {
         startDate: startDate.toISOString(),
@@ -102,7 +101,7 @@ export async function PUT(request) {
       updateData.carAvailability.endDate = new Date(endDate).toISOString();
     }
 
-    await ListingModel.findByIdAndUpdate(_id, updateData);
+    await ListingsModel.findByIdAndUpdate(_id, updateData);
 
     return NextResponse.json({ message: "Listing Updated" }, { status: 200 });
   } catch (error) {
@@ -119,7 +118,7 @@ export async function GET() {
     await connectMongoDB();
 
     // Fetch all listings
-    const listings = await ListingModel.find({}).populate("ownerId");
+    const listings = await ListingsModel.find({}).populate("ownerId");
 
     return NextResponse.json({ listings }, { status: 200 });
   } catch (error) {
@@ -137,7 +136,7 @@ export async function DELETE(request) {
 
     await connectMongoDB();
 
-    const deletedListing = await ListingModel.findByIdAndDelete(id);
+    const deletedListing = await ListingsModel.findByIdAndDelete(id);
 
     if (!deletedListing) {
       return NextResponse.json(

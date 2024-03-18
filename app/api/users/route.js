@@ -4,10 +4,7 @@ import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
 // Mongo Connect
-import connectMongoDB from "@/lib/mongodb";
-
-// Model
-import UserSchema from "@/lib/models/user.model";
+import { connectMongoDB, UsersModel } from "@/lib/mongodb";
 
 export async function POST(request) {
   try {
@@ -19,7 +16,7 @@ export async function POST(request) {
     await connectMongoDB();
 
     // Check if the email already exists
-    const existingUser = await UserSchema.findOne({ email });
+    const existingUser = await UsersModel.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
         { message: "Email already exists" },
@@ -32,7 +29,7 @@ export async function POST(request) {
     requestData.password = hashedPassword;
 
     // Create new user if email doesn't exist
-    await UserSchema.create(requestData);
+    await UsersModel.create(requestData);
 
     return NextResponse.json({ message: "User Created" }, { status: 200 });
   } catch (error) {
@@ -48,7 +45,7 @@ export async function GET(request, { query }) {
   await connectMongoDB();
   const queryParams = new URL(request.url).searchParams;
   const email = queryParams.get("email"); // Extract the email from the query parameters
-  const user = await UserSchema.findOne({ email });
+  const user = await UsersModel.findOne({ email });
 
   if (user) {
     return NextResponse.json({ user });
@@ -65,7 +62,7 @@ export async function PUT(request) {
 
     await connectMongoDB();
 
-    await UserSchema.findByIdAndUpdate(_id, updateData);
+    await UsersModel.findByIdAndUpdate(_id, updateData);
 
     return NextResponse.json(
       { message: "User Updated", data: requestData },

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import connectMongoDB from "@/lib/mongodb";
-import ListingModel from "@/lib/models/listing.model";
+
+import { connectMongoDB, ListingsModel } from "@/lib/mongodb";
 
 export async function GET(req, res) {
   try {
@@ -9,7 +9,7 @@ export async function GET(req, res) {
     const { id } = params;
 
     // Fetch listings by owner ID
-    const listings = await ListingModel.find({ ownerId: id }).populate(
+    const listings = await ListingsModel.find({ ownerId: id }).populate(
       "ownerId"
     );
 

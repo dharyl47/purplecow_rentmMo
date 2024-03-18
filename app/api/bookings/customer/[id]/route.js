@@ -1,6 +1,8 @@
+// Next
 import { NextResponse } from "next/server";
-import connectMongoDB from "@/lib/mongodb";
-import BookingModel from "@/lib/models/booking.model";
+
+// Mongo Connect
+import { connectMongoDB, BookingsModel } from "@/lib/mongodb";
 
 export async function GET(req, res) {
   const { params } = res;
@@ -9,7 +11,7 @@ export async function GET(req, res) {
     await connectMongoDB();
 
     // Fetch bookings by owner ID
-    const myBookings = await BookingModel.find({ user: id })
+    const myBookings = await BookingsModel.find({ user: id })
       .populate("user")
       .populate("car");
 

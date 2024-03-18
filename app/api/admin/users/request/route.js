@@ -2,16 +2,12 @@
 import { NextResponse } from "next/server";
 
 // Mongo Connect
-import connectMongoDB from "@/lib/mongodb";
-
-// Model
-import ListingModel from "@/lib/models/listing.model";
-import UserSchema from "@/lib/models/user.model";
+import { connectMongoDB, ListingsModel } from "@/lib/mongodb";
 
 export async function GET() {
   await connectMongoDB();
 
-  const hostingRequests = await ListingModel.find({}).populate("ownerId");
+  const hostingRequests = await ListingsModel.find({}).populate("ownerId");
 
   const filteredRequests = hostingRequests.filter(
     listing => listing.ownerId.role === "customer"

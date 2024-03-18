@@ -4,10 +4,7 @@ import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
 // Mongo Connect
-import connectMongoDB from "@/lib/mongodb";
-
-// Model
-import UserSchema from "@/lib/models/user.model";
+import { connectMongoDB, UsersModel } from "@/lib/mongodb";
 
 export async function POST(request) {
   try {
@@ -19,7 +16,7 @@ export async function POST(request) {
     await connectMongoDB();
 
     // Check if the email already exists
-    const existingUser = await UserSchema.findOne({ email });
+    const existingUser = await UsersModel.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
         { message: "Email already exists" },
@@ -32,7 +29,7 @@ export async function POST(request) {
     requestData.password = hashedPassword;
 
     // Create new user if email doesn't exist
-    await UserSchema.create(requestData);
+    await UsersModel.create(requestData);
 
     return NextResponse.json({ message: "User Created" }, { status: 200 });
   } catch (error) {

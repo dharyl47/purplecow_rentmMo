@@ -1,9 +1,9 @@
 import { pusherServer } from "../../../lib/pusher";
-import Chat from "../../../lib/models/Chat";
-import UserSchema from "../../../lib/models/user.model";
-import connectMongoDB from "../../../lib/mongodb";
 
-export const POST = async (req) => {
+// Mongo Connect
+import { connectMongoDB, ChatModel, UsersModel } from "@/lib/mongodb";
+
+export const POST = async req => {
   try {
     await connectMongoDB();
 
@@ -16,7 +16,7 @@ export const POST = async (req) => {
       ? { isGroup, name, groupPhoto, members: [currentUserId, ...members] }
       : { members: { $all: [currentUserId, ...members], $size: 2 } };
 
-    let chat = await Chat.findOne(query);
+    let chat = await ChatModel.findOne(query);
 
     if (!chat) {
       chat = await new Chat(
@@ -25,27 +25,26 @@ export const POST = async (req) => {
 
       await chat.save();
 
-      const updateAllMembers = chat.members.map(async (memberId) => {
-        await UserSchema.findByIdAndUpdate(
+      const updateAllMembers = chat.members.map(async memberId => {
+        await UsersModel.findByIdAndUpdate(
           memberId,
           {
-            $addToSet: { chats: chat._id },
+            $addToSet: { chats: chat._id }
           },
           { new: true }
         );
-      }) 
+      });
       Promise.all(updateAllMembers);
-      
-      /* Trigger a Pusher event for each member to notify a new chat */
-      chat.members.map(async (member) => {
-        await pusherServer.trigger(member._id.toString(), "new-chat", chat)
-      })
-    }
 
+      /* Trigger a Pusher event for each member to notify a new chat */
+      chat.members.map(async member => {
+        await pusherServer.trigger(member._id.toString(), "new-chat", chat);
+      });
+    }
 
     return new Response(JSON.stringify(chat), { status: 200 });
   } catch (err) {
     console.error(err);
-    return new Response("Failed to create a new chat", { status: 500 })
+    return new Response("Failed to create a new chat", { status: 500 });
   }
 };

@@ -8,13 +8,13 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 const theme = createTheme({
   typography: {
     fontSize: 16,
-    fontFamily: "Messina Sans",
+    fontFamily: "Messina Sans"
   },
   palette: {
     text: {
-      secondary: "#c2c2c2",
-    },
-  },
+      secondary: "#c2c2c2"
+    }
+  }
 });
 
 // MUI Inputs
@@ -24,7 +24,7 @@ import {
   InputAdornment,
   IconButton,
   OutlinedInput,
-  CircularProgress,
+  CircularProgress
 } from "@mui/material";
 
 // Icons
@@ -63,10 +63,10 @@ const SearchHero: React.FC<SearchHeroProps> = ({ onFindRide }) => {
                   id="location"
                   type="text"
                   value={searchFormData.location}
-                  onChange={(e) =>
+                  onChange={e =>
                     setSearchFormData({
                       ...searchFormData,
-                      location: e.target.value,
+                      location: e.target.value
                     })
                   }
                   endAdornment={
@@ -87,7 +87,7 @@ const SearchHero: React.FC<SearchHeroProps> = ({ onFindRide }) => {
                   label="Start Trip"
                   slotProps={{ textField: { variant: "outlined" } }}
                   value={searchFormData.startDate}
-                  onChange={(date) =>
+                  onChange={date =>
                     setSearchFormData({ ...searchFormData, startDate: date })
                   }
                 />
@@ -100,7 +100,7 @@ const SearchHero: React.FC<SearchHeroProps> = ({ onFindRide }) => {
                 label="End Trip"
                 slotProps={{ textField: { variant: "outlined" } }}
                 value={searchFormData.endDate}
-                onChange={(date) =>
+                onChange={date =>
                   setSearchFormData({ ...searchFormData, endDate: date })
                 }
               />
@@ -132,10 +132,10 @@ const SearchHero: React.FC<SearchHeroProps> = ({ onFindRide }) => {
                   id="location"
                   type="text"
                   value={searchFormData.location}
-                  onChange={(e) =>
+                  onChange={e =>
                     setSearchFormData({
                       ...searchFormData,
-                      location: e.target.value,
+                      location: e.target.value
                     })
                   }
                 />
@@ -150,7 +150,7 @@ const SearchHero: React.FC<SearchHeroProps> = ({ onFindRide }) => {
                   label="Start Trip"
                   slotProps={{ textField: { variant: "outlined" } }}
                   value={searchFormData.startDate}
-                  onChange={(date) =>
+                  onChange={date =>
                     setSearchFormData({ ...searchFormData, startDate: date })
                   }
                 />
@@ -162,7 +162,7 @@ const SearchHero: React.FC<SearchHeroProps> = ({ onFindRide }) => {
                   className="w-full"
                   slotProps={{ textField: { variant: "outlined" } }}
                   value={searchFormData.endDate}
-                  onChange={(date) =>
+                  onChange={date =>
                     setSearchFormData({ ...searchFormData, endDate: date })
                   }
                 />

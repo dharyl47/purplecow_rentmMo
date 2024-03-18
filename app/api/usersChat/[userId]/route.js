@@ -1,7 +1,10 @@
-import Chat from "../../../../lib/models/Chat";
-import Message from "../../../../lib/models/Message";
-import UserSchema from "../../../../lib/models/user.model";
-import connectMongoDB from "../../../../lib/mongodb";
+// Mongo Connect
+import {
+  connectMongoDB,
+  UsersModel,
+  ChatModel,
+  MessageModel
+} from "@/lib/mongodb";
 
 export const GET = async (req, { params }) => {
   try {
@@ -9,19 +12,19 @@ export const GET = async (req, { params }) => {
 
     const { userId } = params;
 
-    const allChats = await Chat.find({ members: userId })
+    const allChats = await ChatModel.find({ members: userId })
       .sort({ lastMessageAt: -1 })
       .populate({
         path: "members",
-        model: UserSchema,
+        model: UsersModel
       })
       .populate({
         path: "messages",
-        model: Message,
+        model: MessageModel,
         populate: {
           path: "sender seenBy",
-          model: UserSchema,
-        },
+          model: UsersModel
+        }
       })
       .exec();
 
@@ -29,7 +32,7 @@ export const GET = async (req, { params }) => {
   } catch (err) {
     console.log(err);
     return new Response("Failed to get all chats of current user", {
-      status: 500,
+      status: 500
     });
   }
 };

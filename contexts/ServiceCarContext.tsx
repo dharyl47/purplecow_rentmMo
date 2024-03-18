@@ -11,6 +11,7 @@ interface ServiceSearchHeroProps {
   endDate: Date | null;
   endTime: Date | null;
   startTime: Date | null;
+  userId: string;
 }
 
 interface ServiceCarContextType {
@@ -67,7 +68,7 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({
   const updateListing = async (id: number, updatedData: Partial<ICar>) => {
     try {
       await axios.put(`/api/listing/${id}`, updatedData);
-      await fetchData(); // Refresh the data after the update
+      await fetchData();
     } catch (error) {
       console.error("Error updating listing:", error);
       throw new Error("Failed to update listing. Please try again.");
@@ -76,11 +77,12 @@ export const ServiceCarProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const searchListing = async (formData: ServiceSearchHeroProps) => {
     try {
-      const response = await axios.get("/api/listing/search", {
+      const response = await axios.get("/api/listing/search2", {
         params: {
           city: formData.location,
           startDate: formData.startDate,
-          endDate: formData.endDate
+          endDate: formData.endDate,
+          userId: formData.userId
         }
       });
 

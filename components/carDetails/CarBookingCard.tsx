@@ -1,36 +1,29 @@
-"use client";
-
 // React
 import { useRouter } from "next/navigation";
 import React, { useMemo, useState, useEffect } from "react";
-// import Image from "next/image";
 
 // Third Party Components
-import { ThemeProvider } from "@material-tailwind/react";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { TextField } from "@mui/material";
 import { ICar } from "@/types/types";
 import { calculateDateDifference } from "@/utils/utils";
 import axios from "axios";
-
-// Images & Icons
-// import GcashLogo from "@/public/assets/images/gcash.png";
-// import { FaCcAmex, FaCcJcb, FaCcMastercard, FaCcVisa } from "react-icons/fa6";
+import TripBookingForm from "../forms/TripBookingForm";
 
 const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
   const router = useRouter();
 
   const [location, setLocation] = useState("");
-  const [termsOfUse, setTermsOfUse] = useState(false);
   const [startTripDate, setStartTripDate] = useState<Date>(new Date());
   const [endTripDate, setEndTripDate] = useState<Date>(new Date());
+
+  const [termsOfUse, setTermsOfUse] = useState(false);
+
   const [bookingData, setBookingData] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get("/api/bookings");
+
         if (!response.data) {
           throw new Error("Failed to fetch data");
         }
@@ -49,7 +42,13 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
   }, [startTripDate, endTripDate]);
 
   const handleCheckoutRide = () => {
-    if (location && startTripDate && endTripDate && termsOfUse) {
+    if (
+      location &&
+      startTripDate &&
+      endTripDate &&
+      termsOfUse &&
+      endTripDate >= startTripDate // Check if end date is greater than or equal to start date
+    ) {
       const data = {
         location,
         startTripDate,
@@ -62,7 +61,7 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
       router.push(`/checkout?bookingDetails=${bookingDetails}`);
     } else {
       alert(
-        "Please fill in all required fields and agree to the terms of use.."
+        "Please fill in all required fields and ensure end date is not greater than start date."
       );
     }
   };
@@ -71,32 +70,16 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
     setTermsOfUse(event.target.checked);
   };
 
-  const handleStartTripDateChange = (date: Date | null) => {
-    if (date) {
-      setStartTripDate(date);
-    }
+  const handleLocationChange = (value: string) => {
+    setLocation(value);
   };
 
-  const handleEndTripDateChange = (date: Date | null) => {
-    if (date) {
-      setEndTripDate(date);
-    }
+  const handleStartTripDateChange = (date: Date) => {
+    setStartTripDate(date);
   };
 
-  const shouldDisableDate = (date: any) => {
-    const isDisabled = bookingData.some((booking: any) => {
-      const startDate = new Date(booking.startDate);
-      const endDate = new Date(booking.endDate);
-
-      // Adjust the logic to check if the date is within the booking range
-      return (
-        booking.status === "confirmed" &&
-        date >= startDate.setDate(startDate.getDate() - 1) &&
-        date <= endDate.setDate(endDate.getDate())
-      );
-    });
-
-    return isDisabled;
+  const handleEndTripDateChange = (date: Date) => {
+    setEndTripDate(date);
   };
 
   return (
@@ -104,52 +87,14 @@ const CarBookingCard: React.FC<ICar> = ({ price, carId }: any) => {
       {/* <h1 className="text-2xl font-bold mb-6 underline underline-offset-2">
         Book Information
       </h1> */}
-
-      <ThemeProvider>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <div className="flex flex-col justify-between w-full">
-            <div className="flex flex-col mb-6">
-              <label className="mb-2 font-semibold" htmlFor="outlined-basic">
-                Pickup & Return Location
-              </label>
-              <TextField
-                id="outlined-basic"
-                label="Pickup & Return Location"
-                variant="outlined"
-                onChange={event => setLocation(event.target.value)}
-                size="small"
-              />
-            </div>
-
-            <div className="flex flex-col mb-6">
-              <label className="mb-2 font-semibold" htmlFor="startTrip">
-                Start Trip
-              </label>
-              <DateTimePicker
-                label="Start Trip"
-                slotProps={{ textField: { size: "small" } }}
-                className="w-full"
-                onChange={handleStartTripDateChange}
-                minDate={new Date()}
-                // shouldDisableDate={shouldDisableDate}
-              />
-            </div>
-            <div className="flex flex-col mb-6">
-              <label className="mb-2 font-semibold" htmlFor="endTrip">
-                End Trip
-              </label>
-              <DateTimePicker
-                label="End Trip"
-                slotProps={{ textField: { size: "small" } }}
-                className="w-full"
-                onChange={handleEndTripDateChange}
-                minDate={new Date()}
-                // shouldDisableDate={shouldDisableDate}
-              />
-            </div>
-          </div>
-        </LocalizationProvider>
-      </ThemeProvider>
+      <div>
+        <TripBookingForm
+          bookingData={bookingData}
+          onLocationChange={handleLocationChange}
+          onStartTripDateChange={handleStartTripDateChange}
+          onEndTripDateChange={handleEndTripDateChange}
+        />
+      </div>
 
       <hr className="my-7" />
 
